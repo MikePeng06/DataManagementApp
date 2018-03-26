@@ -1,8 +1,13 @@
 # HKUST COMP3111 Software Engineering (Spring 2018)
 
-This is the modified README for the dev-Zhixuan branch
+Team name: Fanta
 
-Here is my second attemp to make changes to README.
+Team members:
+
+Lam Ka Chun  (kclamapconnect.ust.hk), Team Leader
+PENG Zhixuan (zpengaa@connect.ust.hk)
+Zeyang Bao   (zbao@connect.ust.hk)
+
 
 
 
