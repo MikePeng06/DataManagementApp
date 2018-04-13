@@ -1,11 +1,20 @@
 package ui.comp3111;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataType;
 import core.comp3111.SampleDataGenerator;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,6 +26,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -41,13 +51,14 @@ public class Main extends Application {
 	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen" };
 	private Stage stage = null;
 	private Scene[] scenes = null;
+	private ArrayList<Button> buttonList = new ArrayList<Button>();
 
 	// To keep this application more structural,
 	// The following UI components are used to keep references after invoking
 	// createScene()
 
 	// Screen 1: paneMainScreen
-	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart;
+	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 
 	// Screen 2: paneSampleLineChartScreen
@@ -90,7 +101,8 @@ public class Main extends Application {
 			putSceneOnStage(SCENE_MAIN_SCREEN);
 		});
 	}
-
+	
+	
 	/**
 	 * Populate sample data table values to the chart view
 	 */
@@ -168,6 +180,21 @@ public class Main extends Application {
 		btSampleLineChart.setOnAction(e -> {
 			putSceneOnStage(SCENE_LINE_CHART);
 		});
+		
+		btSelectFile.setOnAction(e ->{
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.getExtensionFilters().addAll(
+					new FileChooser.ExtensionFilter("CSV", "*.csv")
+			);
+			fileChooser.setTitle("Open Resource File");
+			File file = fileChooser.showOpenDialog(stage);
+			Button fileBt = new Button(file.getName());
+			buttonList.add(fileBt);
+			System.out.println(file+"add a filebutton");
+			
+			scenes[0] = new Scene(paneMainScreen(), 400, 500);
+			putSceneOnStage(0);
+		});
 
 	}
 
@@ -214,17 +241,29 @@ public class Main extends Application {
 		btSampleLineChartDataV2 = new Button("Sample 2");
 		btSampleLineChart = new Button("Sample Line Chart");
 		lbSampleDataTable = new Label("DataTable: empty");
-
+		btSelectFile = new Button("Select DataSet");
+				
 		// Layout the UI components
 
 		HBox hc = new HBox(20);
 		hc.setAlignment(Pos.CENTER);
 		hc.getChildren().addAll(btSampleLineChartData, btSampleLineChartDataV2);
+		Button x = new Button("x");
+		System.out.println("string");
+		for (int i = 0; i < buttonList.size(); i++) {	
+			hc.getChildren().addAll(buttonList.get(i));
+			System.out.println(buttonList.get(i));
+		}
+		
+		HBox hc2 = new HBox(20);
+		hc2.setAlignment(Pos.CENTER);
+		hc2.getChildren().addAll(btSelectFile);
 
 		VBox container = new VBox(20);
-		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart);
+		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, new Separator(), hc2);
 		container.setAlignment(Pos.CENTER);
 
+		
 		BorderPane pane = new BorderPane();
 		pane.setCenter(container);
 
@@ -245,11 +284,10 @@ public class Main extends Application {
 	 *            - The sceneID defined above (see SCENE_XXX)
 	 */
 	private void putSceneOnStage(int sceneID) {
-
+		
 		// ensure the sceneID is valid
 		if (sceneID < 0 || sceneID >= SCENE_NUM)
 			return;
-
 		stage.hide();
 		stage.setTitle(SCENE_TITLES[sceneID]);
 		stage.setScene(scenes[sceneID]);
@@ -263,6 +301,9 @@ public class Main extends Application {
 	 */
 	@Override
 	public void start(Stage primaryStage) {
+		
+		
+		
 		try {
 
 			stage = primaryStage; // keep a stage reference as an attribute
@@ -276,6 +317,7 @@ public class Main extends Application {
 		}
 	}
 
+	
 	/**
 	 * main method - only use if running via command line
 	 * 
