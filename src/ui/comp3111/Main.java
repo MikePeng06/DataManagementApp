@@ -12,6 +12,9 @@ import core.comp3111.DataTable;
 import core.comp3111.DataType;
 import core.comp3111.SampleDataGenerator;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,7 +23,9 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -51,15 +56,23 @@ public class Main extends Application {
 	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen" };
 	private Stage stage = null;
 	private Scene[] scenes = null;
-	private ArrayList<Button> buttonList = new ArrayList<Button>();
+	private ArrayList<String> dataTableName = new ArrayList<String>();
+	private ArrayList<String> charName = new ArrayList<String>();
+	private ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
+	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
+	private String DataTemp;
+	
 
 	// To keep this application more structural,
 	// The following UI components are used to keep references after invoking
 	// createScene()
 
 	// Screen 1: paneMainScreen
-	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile;
+	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart;
 	private Label lbSampleDataTable, lbMainScreenTitle;
+	private ChoiceBox<String> cb;
+	private ListView<String> DataSetList = new ListView<>();  
+	private ListView<String> ChartList = new ListView<>(); 
 
 	// Screen 2: paneSampleLineChartScreen
 	private LineChart<Number, Number> lineChart = null;
@@ -71,8 +84,13 @@ public class Main extends Application {
 	 * create all scenes in this application
 	 */
 	private void initScenes() {
+		dataTableList.add(SampleDataGenerator.generateSampleLineData());
+		dataTableList.add(SampleDataGenerator.generateSampleLineDataV2());
+		dataTableName.add("Sample 1");
+		dataTableName.add("Sample 2");
+		
 		scenes = new Scene[SCENE_NUM];
-		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 400, 500);
+		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 500, 550);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		for (Scene s : scenes) {
 			if (s != null)
@@ -159,7 +177,7 @@ public class Main extends Application {
 			sampleDataTable = SampleDataGenerator.generateSampleLineData();
 			lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
 					sampleDataTable.getNumCol()));
-
+			
 			populateSampleDataTableValuesToChart("Sample 1");
 
 		});
@@ -188,14 +206,16 @@ public class Main extends Application {
 			);
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
-			Button fileBt = new Button(file.getName());
-			buttonList.add(fileBt);
+			DataSetList.getItems().add(file.getName());
 			System.out.println(file+"add a filebutton");
-			
-			scenes[0] = new Scene(paneMainScreen(), 400, 500);
-			putSceneOnStage(0);
+			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
+			//putSceneOnStage(0);
 		});
-
+		
+		btGenerateChart.setOnAction(e -> {
+			ChartList.getItems().add("chart");
+		});
+		
 	}
 
 	/**
@@ -242,25 +262,65 @@ public class Main extends Application {
 		btSampleLineChart = new Button("Sample Line Chart");
 		lbSampleDataTable = new Label("DataTable: empty");
 		btSelectFile = new Button("Select DataSet");
+		btGenerateChart = new Button("Transfer to Chart");
 				
 		// Layout the UI components
-
-		HBox hc = new HBox(20);
-		hc.setAlignment(Pos.CENTER);
-		hc.getChildren().addAll(btSampleLineChartData, btSampleLineChartDataV2);
-		Button x = new Button("x");
-		System.out.println("string");
-		for (int i = 0; i < buttonList.size(); i++) {	
-			hc.getChildren().addAll(buttonList.get(i));
-			System.out.println(buttonList.get(i));
+		
+		DataSetList =  new ListView<>(FXCollections.observableArrayList()); 
+		for(int i=0; i<=dataTableList.size()-1;i++) {
+			DataSetList.setItems(FXCollections.observableArrayList(dataTableName));
+		}
+		ChartList =  new ListView<>(FXCollections.observableArrayList());
+		for(int i=0; i<=dataTableList.size()-1;i++) {
+			ChartList.setItems(FXCollections.observableArrayList(charName));
 		}
 		
-		HBox hc2 = new HBox(20);
+		DataSetList.getSelectionModel().selectedIndexProperty()
+        .addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue ov, Number value, Number new_value) {
+        	  sampleDataTable = dataTableList.get(new_value.intValue());
+        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	  populateSampleDataTableValuesToChart(ov.getValue().toString());
+        	  DataTemp = ov.getValue().toString();
+          }
+        });
+		
+		ChartList.getSelectionModel().selectedIndexProperty()
+        .addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue ov, Number value, Number new_value) {
+        	  sampleDataTable = dataTableList.get(new_value.intValue());
+        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	  populateSampleDataTableValuesToChart(DataTemp);
+          }
+        });
+		
+		
+//		HBox hc = new HBox(20);
+//		hc.setAlignment(Pos.CENTER);
+//		hc.getChildren().addAll(btSampleLineChartData, btSampleLineChartDataV2);
+//		Button x = new Button("x");
+//		System.out.println("string");
+//		for (int i = 0; i < buttonList.size(); i++) {	
+//			hc.getChildren().addAll(buttonList.get(i));
+//			System.out.println(buttonList.get(i));
+//		}
+		
+		HBox data = new HBox(DataSetList);
+		data.setAlignment(Pos.CENTER);
+		HBox chart = new HBox(ChartList);
+		chart.setAlignment(Pos.CENTER);
+		
+		HBox hc = new HBox(data, chart);
+		//hc.setAlignment(Pos.CENTER);
+		//hc.getChildren().addAll(DataSetList, ChartList);
+		
+		
+		HBox hc2 = new HBox(10);
 		hc2.setAlignment(Pos.CENTER);
 		hc2.getChildren().addAll(btSelectFile);
 
 		VBox container = new VBox(20);
-		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, new Separator(), hc2);
+		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, btGenerateChart,new Separator(), hc2);
 		container.setAlignment(Pos.CENTER);
 
 		
@@ -303,7 +363,6 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		
-		
 		try {
 
 			stage = primaryStage; // keep a stage reference as an attribute
@@ -315,6 +374,8 @@ public class Main extends Application {
 
 			e.printStackTrace(); // exception handling: print the error message on the console
 		}
+		
+		
 	}
 
 	
