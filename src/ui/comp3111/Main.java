@@ -27,6 +27,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -68,7 +70,8 @@ public class Main extends Application {
 	// createScene()
 
 	// Screen 1: paneMainScreen
-	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart;
+	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
+	btSaveChart;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -206,6 +209,7 @@ public class Main extends Application {
 			);
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
+
 			DataSetList.getItems().add(file.getName());
 			System.out.println(file+"add a filebutton");
 			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
@@ -213,6 +217,7 @@ public class Main extends Application {
 		});
 		
 		btGenerateChart.setOnAction(e -> {
+			
 			ChartList.getItems().add("chart");
 		});
 		
@@ -279,7 +284,9 @@ public class Main extends Application {
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
         	  sampleDataTable = dataTableList.get(new_value.intValue());
-        	  lbSampleDataTable.setText(ov.getValue().toString());
+//        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+  					sampleDataTable.getNumCol()));
         	  populateSampleDataTableValuesToChart(ov.getValue().toString());
         	  DataTemp = ov.getValue().toString();
           }
@@ -289,7 +296,9 @@ public class Main extends Application {
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
         	  sampleDataTable = dataTableList.get(new_value.intValue());
-        	  lbSampleDataTable.setText(ov.getValue().toString());
+//        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+    					sampleDataTable.getNumCol()));
         	  populateSampleDataTableValuesToChart(DataTemp);
           }
         });
