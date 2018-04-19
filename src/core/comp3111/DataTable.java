@@ -124,6 +124,10 @@ public class DataTable {
 		Map.Entry<String, DataColumn> entry = dc.entrySet().iterator().next();
 		return dc.get(entry.getKey()).getSize();
 	}
+	
+	public Map getDC() {
+		return dc;
+	}
 
 	// attribute: A java.util.Map interface
 	// KeyType: String
