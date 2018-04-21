@@ -3,14 +3,17 @@ package ui.comp3111;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
+import core.comp3111.DataTableException;
 import core.comp3111.DataType;
 import core.comp3111.SampleDataGenerator;
+import core.comp3111.LoadData;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -209,8 +213,29 @@ public class Main extends Application {
 			);
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
-
-			DataSetList.getItems().add(file.getName());
+			//DataSetList.getItems().add(file.getName());
+			
+			try {
+				dataTableList.add(LoadData.ToDataTable(file.getAbsolutePath()));
+			} catch (DataTableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		
+			TextInputDialog dialog = new TextInputDialog(file.getName());
+			dialog.setTitle("Enter the DataSet Name");
+			dialog.setHeaderText("Enter the DataSet Name");
+			dialog.setContentText("文本内容");
+			dialog.show();
+			
+			String savename = "";
+			
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()) {
+				savename = result.get();
+				System.out.println("save name is"+savename);
+			}
+			
 			System.out.println(file+"add a filebutton");
 			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
 			//putSceneOnStage(0);
