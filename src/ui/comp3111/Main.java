@@ -1,5 +1,7 @@
 package ui.comp3111;
 
+import java.nio.file.attribute.PosixFilePermission;
+
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataType;
@@ -61,7 +63,7 @@ public class Main extends Application {
 	 */
 	private void initScenes() {
 		scenes = new Scene[SCENE_NUM];
-		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 400, 500);
+		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 700, 600);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		for (Scene s : scenes) {
 			if (s != null)
@@ -217,8 +219,9 @@ public class Main extends Application {
 
 		// Layout the UI components
 
+		
 		HBox hc = new HBox(20);
-		hc.setAlignment(Pos.CENTER);
+		hc.setAlignment(Pos.BASELINE_LEFT);
 		hc.getChildren().addAll(btSampleLineChartData, btSampleLineChartDataV2);
 
 		VBox container = new VBox(20);
