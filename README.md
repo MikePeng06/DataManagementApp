@@ -4,10 +4,6 @@ Team name: Fanta
 
 Team members:
 
-Lam Ka Chun  (kclamapconnect.ust.hk), Team Leader
-PENG Zhixuan (zpengaa@connect.ust.hk)
-Zeyang Bao   (zbao@connect.ust.hk)
-
-
-
-
+* Lam Ka Chun (kclamapconnect.ust.hk), 
+* Team Leader PENG Zhixuan (zpengaa@connect.ust.hk) 
+* Zeyang Bao (zbao@connect.ust.hk)
