@@ -1,11 +1,9 @@
 package core.comp3111;
 
 
-public class ManageData {
+public class SplitTable {
 
-	protected String[][] inputTable;
-
-	public DataTable[] splitDataTable(String[][] inputdt, int partition1) {
+	public static DataTable[] splitDataTable(String[][] inputdt, int partition1) {
 
 		int firstDtRowNum = (int)(partition1 * inputdt.length / 10) ;
 		int tDtColNum = inputdt[0].length;
@@ -14,7 +12,7 @@ public class ManageData {
 		String[][] table2 = new String[SecDtRowNum][tDtColNum];
 		DataTable temp1 = null;
 		DataTable temp2 = null;
-		
+
 		//copy related data in the first DataTable
 		DataTable[] DtArray = new DataTable[2];
 		for (int i = 0; i < firstDtRowNum; i++) {
@@ -22,7 +20,7 @@ public class ManageData {
 				table1[i][j] = inputdt[i][j]; 
 			}
 		}
-		
+
 		//copy related data in the Second DataTable
 		for (int i = 0; i <= SecDtRowNum; i++) {		
 			for (int j = 0; j < tDtColNum; j++) {
@@ -50,6 +48,7 @@ public class ManageData {
 		return DtArray;
 	}
 
+	//from LoadData function, but change the argument
 	public static DataTable ToDataTable(String[][] table) throws DataTableException {
 		DataTable Dataset = new DataTable();
 		int linenumber = table.length;
@@ -59,10 +58,10 @@ public class ManageData {
 			String type = "";
 			char typecheck = table[1][c].charAt(0);
 			if((typecheck<='9'&&typecheck>='0')) {
-				type = "numeric";
+				type = "TYPE_NUMBER";
 			}
 			else {
-				type = "text";
+				type = "TYPE_STRING";
 			}
 			Object[] string = new Object[linenumber];
 			for(int row=1;row<=linenumber-1;row++) {
@@ -73,5 +72,7 @@ public class ManageData {
 		}
 		return Dataset;
 	}
+
+
 
 }

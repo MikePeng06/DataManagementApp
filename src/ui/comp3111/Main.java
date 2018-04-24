@@ -66,6 +66,7 @@ public class Main extends Application {
 	private ArrayList<String> charName = new ArrayList<String>();
 	private ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
+	private ArrayList<String[][]>  tableList = new ArrayList<String[][]>();
 	private String DataTemp;
 	
 
