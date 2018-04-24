@@ -2,7 +2,7 @@ package core.comp3111;
 
 import java.util.Random;
 
-/**
+/** 
  * A helper class to illustrate how to generate data and store it into a
  * DataTable object
  * 

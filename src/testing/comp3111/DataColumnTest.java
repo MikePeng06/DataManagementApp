@@ -12,12 +12,12 @@ import core.comp3111.DataType;
  * @author cspeter
  *
  */
-class DataColumnTest {
+class DataColumnTest { 
 
-	@Test
+	@Test 
 	void testCoverageEmptyDataColumnConstructor() {
 
-		DataColumn dc = new DataColumn();
+		DataColumn dc = new DataColumn(); 
 		assert (dc.getSize() == 0);
 
 	}

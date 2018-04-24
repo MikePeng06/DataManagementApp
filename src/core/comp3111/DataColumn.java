@@ -14,7 +14,7 @@ public class DataColumn {
 	 * Constructor. Create an empty data column
 	 */
 	public DataColumn() {
-		data = null;
+		data = null;  
 		typeName = "";
 	}
 

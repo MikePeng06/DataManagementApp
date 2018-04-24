@@ -1,7 +1,9 @@
 package ui.comp3111;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -9,15 +11,19 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 
 import core.comp3111.DataColumn;
+import core.comp3111.DataPack;
 import core.comp3111.DataTable;
 import core.comp3111.DataTableException;
 import core.comp3111.DataType;
 import core.comp3111.SampleDataGenerator;
 import core.comp3111.LoadData;
+import core.comp3111.DataPack;
+import core.comp3111.ToProject;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -39,6 +45,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * The Main class of this GUI application
@@ -75,7 +82,7 @@ public class Main extends Application {
 
 	// Screen 1: paneMainScreen
 	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
-	btSaveChart;
+	btSaveChart, LoadProject;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -220,6 +227,9 @@ public class Main extends Application {
 			} catch (DataTableException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		
 			TextInputDialog dialog = new TextInputDialog(file.getName());
@@ -244,6 +254,19 @@ public class Main extends Application {
 		btGenerateChart.setOnAction(e -> {
 			
 			ChartList.getItems().add("chart");
+		});
+		
+		//反序列化
+		LoadProject.setOnAction(e -> {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.getExtensionFilters().addAll(
+					new FileChooser.ExtensionFilter("comp3311", "*.comp3311")
+			);
+			fileChooser.setTitle("LoadProject");
+			File file = fileChooser.showOpenDialog(stage);
+			DataPack dp = ToProject.SaveProject(file.getAbsolutePath());
+			
+			System.out.println(dp.dataTableList);
 		});
 		
 	}
@@ -277,7 +300,7 @@ public class Main extends Application {
 		pane.getStyleClass().add("screen-background");
 
 		return pane;
-	}
+	} 
 
 	/**
 	 * Creates the main screen and layout its UI components
@@ -293,6 +316,7 @@ public class Main extends Application {
 		lbSampleDataTable = new Label("DataTable: empty");
 		btSelectFile = new Button("Select DataSet");
 		btGenerateChart = new Button("Transfer to Chart");
+		LoadProject = new Button("LoadProject");
 				
 		// Layout the UI components
 		
@@ -351,7 +375,7 @@ public class Main extends Application {
 		
 		HBox hc2 = new HBox(10);
 		hc2.setAlignment(Pos.CENTER);
-		hc2.getChildren().addAll(btSelectFile);
+		hc2.getChildren().addAll(btSelectFile, LoadProject);
 
 		VBox container = new VBox(20);
 		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, btGenerateChart,new Separator(), hc2);
@@ -407,8 +431,22 @@ public class Main extends Application {
 		} catch (Exception e) {
 
 			e.printStackTrace(); // exception handling: print the error message on the console
-		}
+		} 
 		
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+            	FileChooser fileChooser = new FileChooser();
+    			fileChooser.getExtensionFilters().addAll(
+    					new FileChooser.ExtensionFilter("comp3311", "*.comp3311")
+    			);
+    			fileChooser.setTitle("Save File");
+    			File file = fileChooser.showOpenDialog(stage);
+    			dataTableList.add(SampleDataGenerator.generateSampleLineData());
+    			DataPack  dp = new DataPack(dataTableList, chartList);
+    			ToProject.SaveProject(dp);            
+            }
+        });
 		
 	}
 
