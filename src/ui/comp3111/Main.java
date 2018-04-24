@@ -8,6 +8,8 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -35,9 +37,10 @@ public class Main extends Application {
 	private DataTable sampleDataTable = null;
 
 	// Attributes: Scene and Stage
-	private static final int SCENE_NUM = 2;
+	private static final int SCENE_NUM = 3;
 	private static final int SCENE_MAIN_SCREEN = 0;
 	private static final int SCENE_LINE_CHART = 1;
+	private static final int SCENE_BAR_CHART = 2;
 	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen" };
 	private Stage stage = null;
 	private Scene[] scenes = null;
@@ -47,11 +50,12 @@ public class Main extends Application {
 	// createScene()
 
 	// Screen 1: paneMainScreen
-	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart;
+	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btBarChart;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 
 	// Screen 2: paneSampleLineChartScreen
 	private LineChart<Number, Number> lineChart = null;
+	private BarChart<String, Number> barChart = null;
 	private NumberAxis xAxis = null;
 	private NumberAxis yAxis = null;
 	private Button btLineChartBackMain = null;
@@ -63,6 +67,7 @@ public class Main extends Application {
 		scenes = new Scene[SCENE_NUM];
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 400, 500);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
+		scenes[SCENE_BAR_CHART] = new Scene(paneBarChartScreen(),800,600);
 		for (Scene s : scenes) {
 			if (s != null)
 				// Assumption: all scenes share the same stylesheet
@@ -134,12 +139,73 @@ public class Main extends Application {
 		}
 
 	}
+	
+	private void populateSampleDataTableValuesToBarChart (DataTable dataset) {
+		int numKey = dataset.getNumCol();
+		int numTextCol = 1;
+		int numNumericCol = numKey - numTextCol;
+		int rowSize = dataset.getNumRow();
+		String temp = "";
+		
+		String[] textCol = new String[rowSize - 1];
+		String[] Key = new String[numKey];
+		float[][] data = new float[numNumericCol][rowSize];
+		int j = 1;
+		for (Object key:dataset.getDC().keySet()) {
+			temp = (String) dataset.getDC().get(key);
+			if (dataset.getCol(temp).getTypeName() == "text") {
+				Key[0] = temp;
+				for (int i = 0; i < rowSize - 1; i++) {
+					textCol[i] = (String) dataset.getCol(temp).getData()[i];
+				}
+			}
+			if (dataset.getCol(temp).getTypeName() == "numeric") {
+				Key[j] = temp;
+				for (int i = 0; i < rowSize - 1; i++) {
+					data[j][i] = (float) dataset.getCol(temp).getData()[i];
+				}
+				j++;
+			}
+		}
+		XYChart.Series series[] = new XYChart.Series[rowSize-1];
+		for (int i = 1; i < rowSize; i++) {
+			series[i].setName(textCol[i]);
+			for (int k = 1; k < numKey; k++) {
+				series[i].getData().add(new XYChart.Data(Key[k], data[k][i]));
+			}
+		}
+		
+		final CategoryAxis xAxis = new CategoryAxis();
+        final NumberAxis yAxis = new NumberAxis();
+        final BarChart<String,Number> bc = 
+            new BarChart<String,Number>(xAxis,yAxis);
+        bc.setTitle("Country Summary");
+        xAxis.setLabel("Country");       
+        yAxis.setLabel("Value");
+		bc.getData().clear();
+		for (int i = 0; i < rowSize - 1; i++) {
+			bc.getData().add(series[i]);
+		}
+	}
 
 	/**
 	 * Initialize event handlers of the main screen
 	 */
 	private void initMainScreenHandlers() {
 
+		
+		btBarChart.setOnAction(e -> {
+//			DataTable testData = new DataTable();
+//			DataColumn testCol1 = new DataColumn("text", {"a", "b", "c"});
+//			testData.addCol("col1", newCol);
+			sampleDataTable = SampleDataGenerator.generateSampleLineData();
+			lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+					sampleDataTable.getNumCol()));
+
+			populateSampleDataTableValuesToChart("Sample 1");
+			
+			
+		});
 		// click handler
 		btSampleLineChartData.setOnAction(e -> {
 
@@ -201,6 +267,32 @@ public class Main extends Application {
 
 		return pane;
 	}
+	
+	private Pane paneBarChartScreen() {
+		xAxis = new NumberAxis();
+		yAxis = new NumberAxis();
+		final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
+		
+		btLineChartBackMain = new Button("Back");
+		
+		xAxis.setLabel("undefined");
+		yAxis.setLabel("undefined");
+		lineChart.setTitle("An empty line chart");
+		
+		// Layout the UI components
+		VBox container = new VBox(20);
+		container.getChildren().addAll(lineChart, btLineChartBackMain);
+		container.setAlignment(Pos.CENTER);
+		
+		BorderPane pane = new BorderPane();
+		pane.setCenter(container);
+		
+		// Apply CSS to style the GUI components
+		pane.getStyleClass().add("screen-background");
+
+		return pane;
+	}
+	
 
 	/**
 	 * Creates the main screen and layout its UI components
