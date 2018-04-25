@@ -25,28 +25,28 @@ public class BarChart_ extends Application {
 
         //
         String[] Year = new String[] {"2003", "2004", "2005"};
-        DataColumn YearCol = new DataColumn("text", Year);
+        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
         
         
 		// Sample: An array of integer
 		Number[] austria = new Integer[] { 25601, 57401, 45000};
-		DataColumn austriaCol = new DataColumn("numeric", austria);
+		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
 		
 		// Sample: An array of integer
 		Number[] brazil = new Integer[] { 20148, 41941, 44835};
-		DataColumn brazilCol = new DataColumn("numeric", brazil);
+		DataColumn brazilCol = new DataColumn(DataType.TYPE_NUMBER, brazil);
 		
 		// Sample: An array of integer
 		Number[] france = new Integer[] { 10000, 45263, 18722};
-		DataColumn franceCol = new DataColumn("numeric", france);
+		DataColumn franceCol = new DataColumn(DataType.TYPE_NUMBER, france);
 		
 		// Sample: An array of integer
 		Number[] italy = new Integer[] { 35407, 117320, 17557};
-		DataColumn italyCol = new DataColumn("numeric", italy);
+		DataColumn italyCol = new DataColumn(DataType.TYPE_NUMBER, italy);
 		
 		// Sample: An array of integer
 		Number[] usa = new Integer[] { 12000, 14845, 92633};
-		DataColumn usaCol = new DataColumn("numeric", usa);
+		DataColumn usaCol = new DataColumn(DataType.TYPE_NUMBER, usa);
 				
 
 		t.addCol("Year", YearCol);
@@ -78,8 +78,8 @@ public class BarChart_ extends Application {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	float[][] data = new float[numNumericCol][rowSize];
-    	int j = 1;
+    	int[][] data = new int[numNumericCol][rowSize];
+    	int j = 0;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -90,8 +90,8 @@ public class BarChart_ extends Application {
     		}
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
-    			for (int i = 0; i < rowSize; i++) {
-    				data[j][i] = Float.parseFloat((String) dataset.getCol(key).getData()[i]);
+    			for (int i = 0; i < rowSize ; i++) {
+    				data[j][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
