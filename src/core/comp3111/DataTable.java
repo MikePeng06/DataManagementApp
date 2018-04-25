@@ -13,7 +13,7 @@ import java.util.Map;
  * @author cspeter
  *
  */
-public class DataTable {
+public class DataTable implements java.io.Serializable{
  
 	/**
 	 * Construct - Create an empty DataTable

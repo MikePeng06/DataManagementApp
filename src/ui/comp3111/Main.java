@@ -34,6 +34,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
@@ -76,13 +77,13 @@ public class Main extends Application {
 	private String DataTemp;
 	
 
-	// To keep this application more structural,
+	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
 
 	// Screen 1: paneMainScreen
 	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
-	btSaveChart, LoadProject;
+	btSaveChart, LoadProject, SaveProject;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -98,10 +99,10 @@ public class Main extends Application {
 	 * create all scenes in this application
 	 */
 	private void initScenes() {
-		dataTableList.add(SampleDataGenerator.generateSampleLineData());
-		dataTableList.add(SampleDataGenerator.generateSampleLineDataV2());
-		dataTableName.add("Sample 1");
-		dataTableName.add("Sample 2");
+//		dataTableList.add(SampleDataGenerator.generateSampleLineData());
+//		dataTableList.add(SampleDataGenerator.generateSampleLineDataV2());
+//		dataTableName.add("Sample 1");
+//		dataTableName.add("Sample 2");
 		
 		scenes = new Scene[SCENE_NUM];
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 500, 550);
@@ -224,6 +225,10 @@ public class Main extends Application {
 			
 			try {
 				dataTableList.add(LoadData.ToDataTable(file.getAbsolutePath()));
+				dataTableName.add(file.getName());
+				DataSetList.getItems().add(file.getName());
+				System.out.println("dataTableList: ");
+				System.out.println(dataTableList);
 			} catch (DataTableException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -232,21 +237,19 @@ public class Main extends Application {
 				e1.printStackTrace();
 			}
 		
-			TextInputDialog dialog = new TextInputDialog(file.getName());
+			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 			dialog.setTitle("Enter the DataSet Name");
 			dialog.setHeaderText("Enter the DataSet Name");
 			dialog.setContentText("文本内容");
 			dialog.show();
 			
 			String savename = "";
-			
 			Optional<String> result = dialog.showAndWait();
-			if (result.isPresent()) {
-				savename = result.get();
-				System.out.println("save name is"+savename);
+			if (result.isPresent()){
+			    System.out.println("Your name: " + result.get());
 			}
 			
-			System.out.println(file+"add a filebutton");
+			System.out.println(savename);
 			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
 			//putSceneOnStage(0);
 		});
@@ -254,6 +257,24 @@ public class Main extends Application {
 		btGenerateChart.setOnAction(e -> {
 			
 			ChartList.getItems().add("chart");
+			charName.add("chart");
+			
+			ArrayList<String> choices = new ArrayList<>();
+			choices.add("a");
+			choices.add("b");
+			choices.add("c");
+
+			ChoiceDialog<String> dialog = new ChoiceDialog<>("b", choices);
+			dialog.setTitle("Choice Dialog");
+			dialog.setHeaderText("Look, a Choice Dialog");
+			dialog.setContentText("Choose your letter:");
+
+			// Traditional way to get the response value.
+			Optional<String> result = dialog.showAndWait();
+			if (result.isPresent()){
+			    System.out.println("Your choice: " + result.get());
+			}
+
 		});
 		
 		//反序列化
@@ -264,9 +285,41 @@ public class Main extends Application {
 			);
 			fileChooser.setTitle("LoadProject");
 			File file = fileChooser.showOpenDialog(stage);
-			DataPack dp = ToProject.SaveProject(file.getAbsolutePath());
+			DataPack dp = ToProject.LoadProject(file.getAbsolutePath());
+			dataTableList = dp.dataTableList;
+			chartList = dp.chartList;
+			charName = dp.charName;
+			dataTableName = dp.dataTableName;
 			
-			System.out.println(dp.dataTableList);
+			for(int i =0; i<=dataTableName.size()-1;i++) {
+				DataSetList.getItems().add(dataTableName.get(i));
+			}
+			
+			for(int i =0; i<=charName.size()-1;i++) {
+				ChartList.getItems().add(charName.get(i));
+			}
+			
+			System.out.println(dp.dataTableName.get(0));
+		});
+		
+		SaveProject.setOnAction(e -> {
+            	FileChooser fileChooser = new FileChooser();
+    			fileChooser.getExtensionFilters().addAll(
+    					new FileChooser.ExtensionFilter("comp3311", "*.comp3311")
+    			);
+    			fileChooser.setTitle("Save File");
+    			fileChooser.setInitialFileName("comp3311");
+    			File file = fileChooser.showSaveDialog(stage);
+    			//File file = fileChooser.showOpenDialog(stage);
+    			//dataTableList.add(SampleDataGenerator.generateSampleLineData());
+    			if (file != null) {
+    				DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName);
+        			System.out.println(file.toString());
+        			ToProject.SaveProject(dp, file.toString());       			
+                }
+//    			DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName);
+//    			System.out.println(dataTableName.get(0));
+//    			ToProject.SaveProject(dp, file.getPath());            
 		});
 		
 	}
@@ -317,6 +370,7 @@ public class Main extends Application {
 		btSelectFile = new Button("Select DataSet");
 		btGenerateChart = new Button("Transfer to Chart");
 		LoadProject = new Button("LoadProject");
+		SaveProject = new Button("SaveProject");
 				
 		// Layout the UI components
 		
@@ -375,7 +429,7 @@ public class Main extends Application {
 		
 		HBox hc2 = new HBox(10);
 		hc2.setAlignment(Pos.CENTER);
-		hc2.getChildren().addAll(btSelectFile, LoadProject);
+		hc2.getChildren().addAll(btSelectFile, LoadProject, SaveProject);
 
 		VBox container = new VBox(20);
 		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, btGenerateChart,new Separator(), hc2);
@@ -433,20 +487,7 @@ public class Main extends Application {
 			e.printStackTrace(); // exception handling: print the error message on the console
 		} 
 		
-		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-            	FileChooser fileChooser = new FileChooser();
-    			fileChooser.getExtensionFilters().addAll(
-    					new FileChooser.ExtensionFilter("comp3311", "*.comp3311")
-    			);
-    			fileChooser.setTitle("Save File");
-    			File file = fileChooser.showOpenDialog(stage);
-    			dataTableList.add(SampleDataGenerator.generateSampleLineData());
-    			DataPack  dp = new DataPack(dataTableList, chartList);
-    			ToProject.SaveProject(dp);            
-            }
-        });
+		
 		
 	}
 

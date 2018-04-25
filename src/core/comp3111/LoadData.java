@@ -96,10 +96,10 @@ public class LoadData {
 			String type = "";
 			char typecheck = table[1][c].charAt(0);
 			if(Character.isDigit(typecheck)) {  
-				type = "numeric";
+				type = "java.lang.Number";
 			} 
 			else {
-				type = "text";
+				type = "java.lang.String";
 			}
 			Object[] string = new Object[linenumber];
 			for(int row=1;row<=linenumber-1;row++) {
