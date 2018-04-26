@@ -27,12 +27,8 @@ public class SplitColumn_delimiter {
 			DataColumn cols[] = new DataColumn[colNum];
 			String[][] mulCol = new String[colNum][selectCol.getSize()]; 
 
-				//get Column name
-				for(int i = 0; i< colNum; i++)
-					mulCol[i][0] = ((String) selectData[0]);
-
-				//get rest Column Data
-				for(int i =1; i< selectData.length; i++) {
+				//get Column Data
+				for(int i = 0; i< selectData.length; i++) {
 					String[] temp = ((String) selectData[i]).split(target);
 					for(int j = 0; j < colNum; j++) {
 						mulCol[j][i] = temp[j];
@@ -42,13 +38,13 @@ public class SplitColumn_delimiter {
 
 				//set new generated Col, also get the type
 				for(int i = 0; i< colNum; i++)
-					cols[i].set(selectCol.getTypeName(), mulCol[i]);
+					cols[i] = new DataColumn(selectCol.getTypeName(), mulCol[i]);
 			
 			
 			return cols;
 		}
 
-		//cant split case
+		//handle the case if dont need to split
 		DataColumn[] cols = new DataColumn[1];
 		cols[0] = selectCol;
 		return cols;

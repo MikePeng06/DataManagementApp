@@ -73,6 +73,15 @@ public class DataColumn {
 			return 0;
 		return data.length;
 	}
+	
+	
+	public String toString() {
+		String output;
+		output = "dataType: " + typeName + "\n";
+		for(int i = 0; i < data.length; i++)
+		output += data[i] + "   " + "\n" ;
+		return output;
+	}
 
 	// attributes
 	private Object[] data;
