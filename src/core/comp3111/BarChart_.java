@@ -79,7 +79,7 @@ public class BarChart_ extends Application {
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	int[][] data = new int[numNumericCol][rowSize];
-    	int j = 0;
+    	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -91,7 +91,7 @@ public class BarChart_ extends Application {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j][i] = (Integer) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
@@ -103,29 +103,35 @@ public class BarChart_ extends Application {
     	System.out.println();
     	for (int m = 0; m < rowSize; m++) {
     		for (int k = 0; k < numNumericCol; k++) {
-    			System.out.print(textCol[m] + " ");
-    			System.out.print(data[k][m]);
+    			if (k == 0) {
+    				System.out.print(textCol[m] + " ");
+    			}
+    			System.out.print(data[k][m] + " ");
     		}
     		System.out.println();
     	}
     	
-//    	XYChart.Series series[] = new XYChart.Series[rowSize-1];
-//    	for (int i = 0; i < rowSize - 1 ; i++) {
-//    		series[i].setName(textCol[i]);
-//    		for (int k = 1; k < numKey; k++) {
-//    			series[i].getData().add(new XYChart.Data(Key[k], data[k][i]));
-//    		}
-//    	}
-//    	
-//    	bc.getData().clear();
-//
-//    	
-//        Scene scene  = new Scene(bc,800,600);
-//    	for (int i = 0; i < rowSize - 1; i++) {
-//    		bc.getData().add(series[i]);
-//    	}
-//        stage.setScene(scene);
-//        stage.show();
+    	XYChart.Series [] series = new XYChart.Series[rowSize];
+    	for (int i = 0; i < series.length ;i++)
+    		series[i] = new  XYChart.Series();
+    
+    	System.out.println(series.length);
+    	for (int i = 0; i < rowSize ; i++) {
+    		series[i].setName(textCol[i]);
+    		for (int k = 1; k < numKey; k++) {
+    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k=1][i]));
+    		}
+    	}
+    	
+    	bc.getData().clear();
+
+    	
+        Scene scene  = new Scene(bc,800,600);
+    	for (int i = 0; i < rowSize - 1; i++) {
+    		bc.getData().add(series[i]);
+    	}
+        stage.setScene(scene);
+        stage.show();
     	}
 	public static void main(String[] args) {
         launch(args);
