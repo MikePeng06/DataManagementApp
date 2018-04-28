@@ -29,23 +29,23 @@ public class BarChart_ extends Application {
         
         
 		// Sample: An array of integer
-		Number[] austria = new Integer[] { 25601, 57401, 45000};
+		Number[] austria = new Float[] { (float) 25601, (float) 57401, (float) 45000};
 		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
 		
 		// Sample: An array of integer
-		Number[] brazil = new Integer[] { 20148, 41941, 44835};
+		Number[] brazil = new Float[] { (float) 20148, (float) 41941, (float) 44835};
 		DataColumn brazilCol = new DataColumn(DataType.TYPE_NUMBER, brazil);
 		
 		// Sample: An array of integer
-		Number[] france = new Integer[] { 10000, 45263, 18722};
+		Number[] france = new Float[] { (float) 10000, (float) 45263, (float) 18722};
 		DataColumn franceCol = new DataColumn(DataType.TYPE_NUMBER, france);
 		
 		// Sample: An array of integer
-		Number[] italy = new Integer[] { 35407, 117320, 17557};
+		Number[] italy = new Float[] { (float) 35407, (float) 117320, (float) 17557};
 		DataColumn italyCol = new DataColumn(DataType.TYPE_NUMBER, italy);
 		
 		// Sample: An array of integer
-		Number[] usa = new Integer[] { 12000, 14845, 92633};
+		Number[] usa = new Float[] { (float) 12000, (float) 14845, (float) 92633};
 		DataColumn usaCol = new DataColumn(DataType.TYPE_NUMBER, usa);
 				
 
@@ -78,7 +78,7 @@ public class BarChart_ extends Application {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	int[][] data = new int[numNumericCol][rowSize];
+    	float[][] data = new float[numNumericCol][rowSize];
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
@@ -91,7 +91,7 @@ public class BarChart_ extends Application {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Float) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
@@ -112,8 +112,9 @@ public class BarChart_ extends Application {
     	}
     	
     	XYChart.Series [] series = new XYChart.Series[rowSize];
-    	for (int i = 0; i < series.length ;i++)
+    	for (int i = 0; i < series.length ;i++) {
     		series[i] = new  XYChart.Series();
+    	}
     
     	System.out.println(series.length);
     	for (int i = 0; i < rowSize ; i++) {
