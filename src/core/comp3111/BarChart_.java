@@ -70,7 +70,7 @@ public class BarChart_ extends Application {
 
         ///////////////////////////////////////////////////////////////////
         
-      DataTable dataset = t;
+        DataTable dataset = t;
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
@@ -123,11 +123,11 @@ public class BarChart_ extends Application {
     		}
     	}
     	
-    	bc.getData().clear();
+    	//bc.getData().clear();
 
     	
         Scene scene  = new Scene(bc,800,600);
-    	for (int i = 0; i < rowSize - 1; i++) {
+    	for (int i = 0; i < rowSize ; i++) {
     		bc.getData().add(series[i]);
     	}
         stage.setScene(scene);
