@@ -20,9 +20,9 @@ public class SplitColumn_delimiter {
 	public static DataColumn[] splitDataColumn(DataColumn selectCol, String target) {
 
 		Object[] selectData = selectCol.getData();
-		int colNum =0;
+		int colNum = getNumOfCol(selectCol, target);
 
-		if(canSplit(selectCol, target, colNum) == true) {
+		if(canSplit(selectCol, target) == true) {
 
 			DataColumn cols[] = new DataColumn[colNum];
 			String[][] mulCol = new String[colNum][selectCol.getSize()]; 
@@ -50,6 +50,8 @@ public class SplitColumn_delimiter {
 		return cols;
 	}
 
+	
+	
 
 	/**return whether canSplit the selected Column
 	 * 
@@ -61,33 +63,59 @@ public class SplitColumn_delimiter {
 	 *   
 	 * @return - whether it can split into multiple columns
 	 */
-	public static boolean canSplit(DataColumn selectCol, String target, int colNum) {
+	public static boolean canSplit(DataColumn selectCol, String target) {
 
-		Integer[] lengths = new Integer[selectCol.getSize()];
-		Object[] selectData = selectCol.getData();
-
-
-		//check if every rows have same size
-		for(int i =1; i< selectData.length; i++) {
-
-			String[] temp = ((String) selectData[i]).split(target); 
-
-			// store the ith rows lengths after splitting
-			lengths[i] = temp.length; 
-
-			if(i > 1)
-				if(lengths[i] != lengths[i-1])
-					return false;
-
-			colNum = temp.length;
-		}
-
+		
+		int numOfCol = getNumOfCol(selectCol, target);
 
 		//colNum is 1 means no splitting happen, so return false
-		if(colNum == 1)
+		if(numOfCol == 1)
 			return false;
 
 		return true;
+	}
+	
+	
+	
+	//retrun numOfColumn 1 if cantsplit
+	public static int getNumOfCol(DataColumn selectCol, String target) {
+		
+		Integer[] lengths = new Integer[selectCol.getSize()];
+		Object[] selectData = selectCol.getData();
+		int num = 1;
+		
+		//check if every rows have same size
+		for(int i = 0; i< selectData.length; i++) {
+
+			String[] temp = ((String) selectData[i]).split(target); 
+
+			// store the i-th rows lengths after splitting
+			lengths[i] = temp.length; 
+
+			if(i > 0)
+				if(lengths[i] != lengths[i-1])
+					return 1;
+
+			num =  temp.length;
+		}
+		
+		return num;
+	}
+	
+	
+	public static void main(String[] args) {
+
+		
+		// Sample: A array of String
+		String[] labels = new String[] { "P1eroqrueh", "P2ewrgr3", "P3r09r12g", "P4rqewrs", "P56r3kwrbd" };
+		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
+		DataColumn[] outputs = splitDataColumn(labelsCol, "r");
+		
+		for(DataColumn x : outputs)
+			System.out.println(x);
+		
+		//System.out.println(labelsCol.toString());
+
 	}
 	
 }
