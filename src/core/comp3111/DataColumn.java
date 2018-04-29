@@ -8,13 +8,13 @@ package core.comp3111;
  * @author cspeter
  *
  */
-public class DataColumn {
+public class DataColumn implements java.io.Serializable{
 
 	/**
 	 * Constructor. Create an empty data column
 	 */
 	public DataColumn() {
-		data = null;
+		data = null;  
 		typeName = "";
 	}
 
