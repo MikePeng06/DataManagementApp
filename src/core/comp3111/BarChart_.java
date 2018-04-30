@@ -56,14 +56,14 @@ public class BarChart_ extends Application {
 		t.addCol("Italy", italyCol);
 		t.addCol("USA", usaCol);
 		
-		Set<String> keys_before = t.getDC().keySet();
-    	for (String key_before : keys_before) {
-    		System.out.print(key_before + " ");
-    		for (int i = 0; i < t.getNumRow(); i++) {
-    			System.out.print(t.getCol(key_before).getData()[i] + " ");
-    		}
-    		System.out.println();
-    	}
+//		Set<String> keys_before = t.getDC().keySet();
+//    	for (String key_before : keys_before) {
+//    		System.out.print(key_before + " ");
+//    		for (int i = 0; i < t.getNumRow(); i++) {
+//    			System.out.print(t.getCol(key_before).getData()[i] + " ");
+//    		}
+//    		System.out.println();
+//    	}
 		
 		
 		
@@ -78,7 +78,7 @@ public class BarChart_ extends Application {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	float[][] data = new float[numNumericCol][rowSize];
+    	Float[][] data = new Float[numNumericCol][rowSize];
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
@@ -97,33 +97,34 @@ public class BarChart_ extends Application {
     		}
     	}
     	
-    	for (int i = 0; i < numKey; i++) {
-    		System.out.print(keyRow[i] + " ");
-    	}
-    	System.out.println();
-    	for (int m = 0; m < rowSize; m++) {
-    		for (int k = 0; k < numNumericCol; k++) {
-    			if (k == 0) {
-    				System.out.print(textCol[m] + " ");
-    			}
-    			System.out.print(data[k][m] + " ");
-    		}
-    		System.out.println();
-    	}
+//    	for (int i = 0; i < numKey; i++) {
+//    		System.out.print(keyRow[i] + " ");
+//    	}
+//    	System.out.println();
+//    	for (int m = 0; m < rowSize; m++) {
+//    		for (int k = 0; k < numNumericCol; k++) {
+//    			if (k == 0) {
+//    				System.out.print(textCol[m] + " ");
+//    			}
+//    			System.out.print(data[k][m] + " ");
+//    		}
+//    		System.out.println();
+//    	}
+
     	
     	XYChart.Series [] series = new XYChart.Series[rowSize];
     	for (int i = 0; i < series.length ;i++) {
     		series[i] = new  XYChart.Series();
     	}
     
-    	System.out.println(series.length);
+//    	System.out.println(series.length);
     	for (int i = 0; i < rowSize ; i++) {
     		series[i].setName(textCol[i]);
     		for (int k = 1; k < numKey; k++) {
-    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k=1][i]));
+    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k-1][i]));
     		}
     	}
-    	
+
     	//bc.getData().clear();
 
     	

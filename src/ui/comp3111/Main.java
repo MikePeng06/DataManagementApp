@@ -67,7 +67,7 @@ public class Main extends Application {
 		scenes = new Scene[SCENE_NUM];
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 400, 500);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
-		scenes[SCENE_BAR_CHART] = new Scene(paneBarChartScreen(),800,600);
+		//scenes[SCENE_BAR_CHART] = new Scene(paneBarChartScreen(),800,600);
 		for (Scene s : scenes) {
 			if (s != null)
 				// Assumption: all scenes share the same stylesheet
@@ -224,30 +224,30 @@ public class Main extends Application {
 		return pane;
 	}
 	
-	private Pane paneBarChartScreen() {
-		xAxis = new NumberAxis();
-		yAxis = new NumberAxis();
-		final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
-		
-		btLineChartBackMain = new Button("Back");
-		
-		xAxis.setLabel("undefined");
-		yAxis.setLabel("undefined");
-		lineChart.setTitle("An empty line chart");
-		
-		// Layout the UI components
-		VBox container = new VBox(20);
-		container.getChildren().addAll(lineChart, btLineChartBackMain);
-		container.setAlignment(Pos.CENTER);
-		
-		BorderPane pane = new BorderPane();
-		pane.setCenter(container);
-		
-		// Apply CSS to style the GUI components
-		pane.getStyleClass().add("screen-background");
-
-		return pane;
-	}
+//	private Pane paneBarChartScreen() {
+//		xAxis = new NumberAxis();
+//		yAxis = new NumberAxis();
+//		final BarChart<String,Number> bc = new BarChart<String,Number>(xAxis,yAxis);
+//		
+//		btLineChartBackMain = new Button("Back");
+//		
+//		xAxis.setLabel("undefined");
+//		yAxis.setLabel("undefined");
+//		lineChart.setTitle("An empty line chart");
+//		
+//		// Layout the UI components
+//		VBox container = new VBox(20);
+//		container.getChildren().addAll(lineChart, btLineChartBackMain);
+//		container.setAlignment(Pos.CENTER);
+//		
+//		BorderPane pane = new BorderPane();
+//		pane.setCenter(container);
+//		
+//		// Apply CSS to style the GUI components
+//		pane.getStyleClass().add("screen-background");
+//
+//		return pane;
+//	}
 	
 
 	/**
