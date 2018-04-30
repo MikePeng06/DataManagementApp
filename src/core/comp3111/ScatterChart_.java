@@ -2,27 +2,139 @@ package core.comp3111;
 
 import java.util.Set;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
-public class ScatterChart_ extends Application {
-	 
-    @Override public void start(Stage stage) throws DataTableException {
-        stage.setTitle("Scatter Chart Sample");
-        final NumberAxis xAxis = new NumberAxis(0, 10, 1);
-        final NumberAxis yAxis = new NumberAxis(-100, 500, 100);        
-        final ScatterChart<Number,Number> sc = new
-            ScatterChart<Number,Number>(xAxis,yAxis);
-        xAxis.setLabel("Age (years)");                
-        yAxis.setLabel("Returns to date");
-        sc.setTitle("Investment Overview");
-       
-        ////////////////////////////////////////////////////
-        DataTable t = new DataTable();
+public class ScatterChart_ extends Chart {
+	
+	private NumberAxis xAxis = null;
+    private NumberAxis yAxis = null;        
+    private ScatterChart<Number,Number> sc = null;
+    
+    public ScatterChart_(DataTable t, int xAxisBegin, int xAxisEnd, int xAxisInter, int yAxisBegin, int yAxisEnd, int yAxisInter){
+    	xAxis = new NumberAxis(xAxisBegin, xAxisEnd, xAxisInter);
+    	yAxis = new NumberAxis(yAxisBegin, yAxisEnd, yAxisInter);
+    	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
+    	setDataset(t);
+    	setType(1);
+    }
+
+    private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
+		btLineChartBackMain = new Button("Back");
+
+		xAxis.setLabel(xAxisLabel);
+		yAxis.setLabel(yAxisLabel);
+		sc.setTitle(chartTitle);
+
+		// Layout the UI components
+		VBox container = new VBox(20);
+		container.getChildren().addAll(sc, btLineChartBackMain);
+		container.setAlignment(Pos.CENTER);
+
+		BorderPane pane = new BorderPane();
+		pane.setCenter(container);
+
+		// Apply CSS to style the GUI components
+		pane.getStyleClass().add("screen-background");
+
+		return pane;
+    }
+    
+	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
+		return paneScatterChartScreen(xAxisLabel, yAxisLabel, chartTitle);
+	}
+	
+	private void populateDataToScatterChart() {
+		int numKey = dataset.getNumCol();
+    	int numTextCol = 1;
+    	int numNumericCol = numKey - numTextCol;
+    	int rowSize = dataset.getNumRow();
+    	
+    	String[] textCol = new String[rowSize];
+    	String[] keyRow = new String[numKey];
+    	float[][] data = new float[numNumericCol][rowSize];
+    	int j = 1;
+    	Set<String> keys = dataset.getDC().keySet();
+    	for (String key : keys) {
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
+    			keyRow[0] = key;
+    			for (int i = 0; i < rowSize; i++) {
+    				textCol[i] = (String) dataset.getCol(key).getData()[i];
+    			}
+    		}
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
+    			keyRow[j] = key;
+    			for (int i = 0; i < rowSize ; i++) {
+    				data[j-1][i] = (float) dataset.getCol(key).getData()[i] ;
+    			}
+    			j++;
+    		}
+    	}
+    	
+    	int numDistinctElement = 1;
+    	boolean same = false;
+    	for (int i = 1; i< rowSize; i++) {
+    		same = false;
+    		for (int n = 0; n < i; n++) {
+    			if (textCol[i] == textCol[n]) {
+    				same = true;
+    				break;
+    			}
+    		}
+    		if (same == false) {
+    			numDistinctElement++;
+    		}
+    	}
+    	String[] textColDistinct = new String[numDistinctElement];
+    	int numNonEmptytextColDistinct = 0;
+    	for (int i = 0; i < rowSize; i++) {
+    		same = false;
+    		for (int k = 0; k < numNonEmptytextColDistinct; k++) {
+    			if (textCol[i] == textColDistinct[k]) {
+    				same = true;
+    			}
+    		}
+    		if (!same) {
+    			textColDistinct[numNonEmptytextColDistinct] = textCol[i];
+    			numNonEmptytextColDistinct++;
+    		}
+    	}
+    	
+    	XYChart.Series [] series = new XYChart.Series[numDistinctElement];
+    	for (int i = 0; i < series.length ;i++) {
+    		series[i] = new  XYChart.Series();
+    	}
+    	for (int i = 0; i < numDistinctElement ; i++) {
+    		series[i].setName(textColDistinct[i]);
+
+    		
+    	}
+    	for (int i = 0; i < rowSize; i++) {
+    		for (int k = 0; k < numDistinctElement; k++) {
+    			if (textCol[i] == textColDistinct[k]) {
+    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+    			}
+    		}
+    	}
+    	
+    	for (int i = 0; i < numDistinctElement ; i++) {
+    		sc.getData().add(series[i]);
+    	}
+    	
+	}
+	
+	public void populateDataToChart(){
+		populateDataToScatterChart();
+	}
+	
+	private DataTable generateDummyDataTable() throws DataTableException {
+		DataTable t = new DataTable();
         String[] category = new String[25];
         for (int i = 0; i < 25; i++) {
         	if (i <= 15) {
@@ -54,121 +166,19 @@ public class ScatterChart_ extends Application {
 		t.addCol("Age", ageCol);
 		t.addCol("Return To Date", returnToDateCol);
 		
-//		Set<String> keys_before = t.getDC().keySet();
-//    	for (String key_before : keys_before) {
-//    		System.out.print(key_before + " ");
-//    		for (int i = 0; i < t.getNumRow(); i++) {
-//    			System.out.print(t.getCol(key_before).getData()[i] + " ");
-//    		}
-//    		System.out.println();
-//    	}
-        
-        
-        ////////////////////////////////////////////////////
-        
-        DataTable dataset = t;
-    	int numKey = dataset.getNumCol();
-    	int numTextCol = 1;
-    	int numNumericCol = numKey - numTextCol;
-    	int rowSize = dataset.getNumRow();
-    	
-    	String[] textCol = new String[rowSize];
-    	String[] keyRow = new String[numKey];
-    	float[][] data = new float[numNumericCol][rowSize];
-    	int j = 1;
-    	Set<String> keys = dataset.getDC().keySet();
-    	for (String key : keys) {
-    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
-    			keyRow[0] = key;
-    			for (int i = 0; i < rowSize; i++) {
-    				textCol[i] = (String) dataset.getCol(key).getData()[i];
-    			}
+		return t;
+	}
+	
+	public void printDataTable() {
+		Set<String> keys_before = dataset.getDC().keySet();
+    	for (String key_before : keys_before) {
+    		System.out.print(key_before + " ");
+    		for (int i = 0; i < dataset.getNumRow(); i++) {
+    			System.out.print(dataset.getCol(key_before).getData()[i] + " ");
     		}
-    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
-    			keyRow[j] = key;
-    			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (float) dataset.getCol(key).getData()[i] ;
-    			}
-    			j++;
-    		}
+    		System.out.println();
     	}
-    	
-    	
-//    	for (int i = 0; i < numKey; i++) {
-//    		System.out.print(keyRow[i] + " ");
-//    	}
-//    	System.out.println();
-//    	for (int m = 0; m < rowSize; m++) {
-//    		for (int k = 0; k < numNumericCol; k++) {
-//    			if (k == 0) {
-//    				System.out.print(textCol[m] + " ");
-//    			}
-//    			System.out.print(data[k][m] + " ");
-//    		}
-//    		System.out.println();
-//    	}
-    	
-    	
-    	int numDistinctElement = 1;
-    	boolean same = false;
-    	for (int i = 1; i< rowSize; i++) {
-    		same = false;
-    		for (int n = 0; n < i; n++) {
-    			if (textCol[i] == textCol[n]) {
-    				same = true;
-    				break;
-    			}
-    		}
-    		if (same == false) {
-    			numDistinctElement++;
-    		}
-    	}
-    	String[] textColDistinct = new String[numDistinctElement];
-    	int numNonEmptytextColDistinct = 0;
-    	for (int i = 0; i < rowSize; i++) {
-    		same = false;
-    		for (int k = 0; k < numNonEmptytextColDistinct; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
-    				same = true;
-    			}
-    		}
-    		if (!same) {
-    			textColDistinct[numNonEmptytextColDistinct] = textCol[i];
-    			numNonEmptytextColDistinct++;
-    		}
-    	}
-    	
-    	
-    	
-    	XYChart.Series [] series = new XYChart.Series[numDistinctElement];
-    	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series();
-    	}
-    	for (int i = 0; i < numDistinctElement ; i++) {
-    		series[i].setName(textColDistinct[i]);
-
-    		
-    	}
-    	for (int i = 0; i < rowSize; i++) {
-    		for (int k = 0; k < numDistinctElement; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
-    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
-//    				System.out.println(data[0][i] + "  " + data[1][i]);
-    			}
-    		}
-    	}
-    	
-
- 
-    	for (int i = 0; i < numDistinctElement ; i++) {
-    		sc.getData().add(series[i]);
-    	}
-        Scene scene  = new Scene(sc, 500, 400);
-        stage.setScene(scene);
-        stage.show();
-    }
- 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	}
+	
 }
+
