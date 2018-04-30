@@ -13,8 +13,8 @@ import java.util.Map;
  * @author cspeter
  *
  */
-public class DataTable {
-
+public class DataTable implements java.io.Serializable{
+ 
 	/**
 	 * Construct - Create an empty DataTable
 	 */
@@ -39,8 +39,8 @@ public class DataTable {
 	public void addCol(String colName, DataColumn newCol) throws DataTableException {
 		if (containsColumn(colName)) {
 			throw new DataTableException("addCol: The column already exists");
-		}
-
+		} 
+  
 		int curNumCol = getNumCol();
 		if (curNumCol == 0) {
 			dc.put(colName, newCol); // add the column
