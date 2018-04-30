@@ -123,28 +123,49 @@ public class ScatterChart_ extends Application {
     			numDistinctElement++;
     		}
     	}
-    	System.out.println(numDistinctElement);
+    	String[] textColDistinct = new String[numDistinctElement];
+    	int numNonEmptytextColDistinct = 0;
+    	for (int i = 0; i < rowSize; i++) {
+    		same = false;
+    		for (int k = 0; k < numNonEmptytextColDistinct; k++) {
+    			if (textCol[i] == textColDistinct[k]) {
+    				same = true;
+    			}
+    		}
+    		if (!same) {
+    			textColDistinct[numNonEmptytextColDistinct] = textCol[i];
+    			numNonEmptytextColDistinct++;
+    		}
+    	}
     	
     	
-//    	XYChart.Series [] series = new XYChart.Series[rowSize];
-//    	for (int i = 0; i < series.length ;i++) {
-//    		series[i] = new  XYChart.Series();
-//    	}
-//    	for (int i = 0; i < rowSize ; i++) {
-//    		series[i].setName(textCol[i]);
-//    		for (int k = 1; k < numKey; k++) {
-//    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k=1][i]));
-//    		}
-//    	}
+    	
+    	XYChart.Series [] series = new XYChart.Series[numDistinctElement];
+    	for (int i = 0; i < series.length ;i++) {
+    		series[i] = new  XYChart.Series();
+    	}
+    	for (int i = 0; i < numDistinctElement ; i++) {
+    		series[i].setName(textColDistinct[i]);
+
+    		
+    	}
+    	for (int i = 0; i < rowSize; i++) {
+    		for (int k = 0; k < numDistinctElement; k++) {
+    			if (textCol[i] == textColDistinct[k]) {
+    				series[k].getData().add(new XYChart.Data(data[0][i], data[1][i]));
+    				System.out.println(data[0][i] + "  " + data[1][i]);
+    			}
+    		}
+    	}
     	
     	
  
-//    	for (int i = 0; i < rowSize ; i++) {
-//    		sc.getData().add(series[i]);
-//    	}
-//        Scene scene  = new Scene(sc, 500, 400);
-//        stage.setScene(scene);
-//        stage.show();
+    	for (int i = 0; i < numDistinctElement ; i++) {
+    		sc.getData().add(series[i]);
+    	}
+        Scene scene  = new Scene(sc, 500, 400);
+        stage.setScene(scene);
+        stage.show();
     }
  
     public static void main(String[] args) {
