@@ -54,14 +54,14 @@ public class ScatterChart_ extends Application {
 		t.addCol("Age", ageCol);
 		t.addCol("Return To Date", returnToDateCol);
 		
-		Set<String> keys_before = t.getDC().keySet();
-    	for (String key_before : keys_before) {
-    		System.out.print(key_before + " ");
-    		for (int i = 0; i < t.getNumRow(); i++) {
-    			System.out.print(t.getCol(key_before).getData()[i] + " ");
-    		}
-    		System.out.println();
-    	}
+//		Set<String> keys_before = t.getDC().keySet();
+//    	for (String key_before : keys_before) {
+//    		System.out.print(key_before + " ");
+//    		for (int i = 0; i < t.getNumRow(); i++) {
+//    			System.out.print(t.getCol(key_before).getData()[i] + " ");
+//    		}
+//    		System.out.println();
+//    	}
         
         
         ////////////////////////////////////////////////////
@@ -87,26 +87,26 @@ public class ScatterChart_ extends Application {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (Float) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (float) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
     	}
     	
     	
-    	for (int i = 0; i < numKey; i++) {
-    		System.out.print(keyRow[i] + " ");
-    	}
-    	System.out.println();
-    	for (int m = 0; m < rowSize; m++) {
-    		for (int k = 0; k < numNumericCol; k++) {
-    			if (k == 0) {
-    				System.out.print(textCol[m] + " ");
-    			}
-    			System.out.print(data[k][m] + " ");
-    		}
-    		System.out.println();
-    	}
+//    	for (int i = 0; i < numKey; i++) {
+//    		System.out.print(keyRow[i] + " ");
+//    	}
+//    	System.out.println();
+//    	for (int m = 0; m < rowSize; m++) {
+//    		for (int k = 0; k < numNumericCol; k++) {
+//    			if (k == 0) {
+//    				System.out.print(textCol[m] + " ");
+//    			}
+//    			System.out.print(data[k][m] + " ");
+//    		}
+//    		System.out.println();
+//    	}
     	
     	
     	int numDistinctElement = 1;
@@ -152,13 +152,13 @@ public class ScatterChart_ extends Application {
     	for (int i = 0; i < rowSize; i++) {
     		for (int k = 0; k < numDistinctElement; k++) {
     			if (textCol[i] == textColDistinct[k]) {
-    				series[k].getData().add(new XYChart.Data(data[0][i], data[1][i]));
-    				System.out.println(data[0][i] + "  " + data[1][i]);
+    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+//    				System.out.println(data[0][i] + "  " + data[1][i]);
     			}
     		}
     	}
     	
-    	
+
  
     	for (int i = 0; i < numDistinctElement ; i++) {
     		sc.getData().add(series[i]);
