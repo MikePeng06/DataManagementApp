@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 
 public abstract class Chart {
 	private String[] typeSet = {"BarChart", "ScatterChart", "AnimatedChart"};
-	private int type = -1;
+	protected int type = -1;
 	protected DataTable dataset;
 	protected Button btLineChartBackMain = null;
 	
