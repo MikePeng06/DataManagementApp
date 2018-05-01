@@ -14,16 +14,23 @@ import javafx.scene.chart.BarChart;
 
 public class BarChart_ extends Chart {
 	
-	private static CategoryAxis xAxis = null;
-	private static NumberAxis yAxis = null;
-    private static BarChart<String,Number> bc = null;
+	private static CategoryAxis xAxis;
+	private static NumberAxis yAxis;
+	protected BarChart<String,Number> bc;
+	
+	public BarChart_() {
+		xAxis = null;
+		yAxis = null;
+		bc = null;
+		dataset = null;
+		type = 0;
+	}
 	
 	public BarChart_(DataTable t) {
 		xAxis = new CategoryAxis();
 		yAxis = new NumberAxis();
 		bc = new BarChart<String,Number>(xAxis,yAxis);
 		setDataset(t);
-		setType(0);
 	}
 	
 	private Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
@@ -100,6 +107,10 @@ public class BarChart_ extends Chart {
 		populateDataToBarChart();
 	}
 
+	public BarChart<String, Number> getBC(){
+		return bc;
+	}
+	
 	private DataTable generateDummyDataTable() throws DataTableException {
 
 		DataTable t = new DataTable();

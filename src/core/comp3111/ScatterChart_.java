@@ -13,16 +13,23 @@ import javafx.scene.layout.VBox;
 
 public class ScatterChart_ extends Chart {
 	
-	private NumberAxis xAxis = null;
-    private NumberAxis yAxis = null;        
-    private ScatterChart<Number,Number> sc = null;
+	private NumberAxis xAxis;
+    private NumberAxis yAxis;        
+    private ScatterChart<Number,Number> sc;
+    
+    public ScatterChart_() {
+    	xAxis = null;
+    	yAxis = null;
+    	sc = null;
+    	dataset = null;
+    	type = 1;
+    }
     
     public ScatterChart_(DataTable t, int xAxisBegin, int xAxisEnd, int xAxisInter, int yAxisBegin, int yAxisEnd, int yAxisInter){
     	xAxis = new NumberAxis(xAxisBegin, xAxisEnd, xAxisInter);
     	yAxis = new NumberAxis(yAxisBegin, yAxisEnd, yAxisInter);
     	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
     	setDataset(t);
-    	setType(1);
     }
 
     private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
@@ -131,6 +138,10 @@ public class ScatterChart_ extends Chart {
 	
 	public void populateDataToChart(){
 		populateDataToScatterChart();
+	}
+	
+	public ScatterChart<Number, Number> getSC(){
+		return sc;
 	}
 	
 	private DataTable generateDummyDataTable() throws DataTableException {
