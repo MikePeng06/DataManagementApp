@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.BarChart;
 
-public class BarChart_ extends Chart {
+public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
