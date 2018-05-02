@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class ScatterChart_ extends Chart {
+public class ScatterChart_ extends Chart implements java.io.Serializable{
 	
 	private NumberAxis xAxis;
     private NumberAxis yAxis;        
@@ -91,7 +91,7 @@ public class ScatterChart_ extends Chart {
     	for (int i = 1; i< rowSize; i++) {
     		same = false;
     		for (int n = 0; n < i; n++) {
-    			if (textCol[i] == textCol[n]) {
+    			if (textCol[i].equals( textCol[n])) {
     				same = true;
     				break;
     			}
@@ -107,7 +107,7 @@ public class ScatterChart_ extends Chart {
     	for (int i = 0; i < rowSize; i++) {
     		same = false;
     		for (int k = 0; k < numNonEmptytextColDistinct; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
+    			if (textCol[i].equals( textColDistinct[k])) {
     				same = true;
     			}
     		}
@@ -128,7 +128,7 @@ public class ScatterChart_ extends Chart {
     	}
     	for (int i = 0; i < rowSize; i++) {
     		for (int k = 0; k < numDistinctElement; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
+    			if (textCol[i].equals( textColDistinct[k]) ){
     				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
     			}
     		}
