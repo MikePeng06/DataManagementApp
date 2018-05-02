@@ -16,6 +16,7 @@ public class ScatterChart_ extends Chart {
 	private NumberAxis xAxis;
     private NumberAxis yAxis;        
     private ScatterChart<Number,Number> sc;
+    public Button btLineChartBackMain; 
     
     public ScatterChart_() {
     	xAxis = null;
@@ -25,9 +26,9 @@ public class ScatterChart_ extends Chart {
     	type = 1;
     }
     
-    public ScatterChart_(DataTable t, int xAxisBegin, int xAxisEnd, int xAxisInter, int yAxisBegin, int yAxisEnd, int yAxisInter){
-    	xAxis = new NumberAxis(xAxisBegin, xAxisEnd, xAxisInter);
-    	yAxis = new NumberAxis(yAxisBegin, yAxisEnd, yAxisInter);
+    public ScatterChart_(DataTable t){
+    	xAxis = new NumberAxis();
+    	yAxis = new NumberAxis();
     	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
     	setDataset(t);
     }
@@ -67,6 +68,7 @@ public class ScatterChart_ extends Chart {
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
     	int j = 1;
+    	sc.getData().clear();
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -98,6 +100,8 @@ public class ScatterChart_ extends Chart {
     			numDistinctElement++;
     		}
     	}
+    	System.out.println(numDistinctElement);
+    	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
     	for (int i = 0; i < rowSize; i++) {
@@ -132,7 +136,10 @@ public class ScatterChart_ extends Chart {
     	
     	for (int i = 0; i < numDistinctElement ; i++) {
     		sc.getData().add(series[i]);
+    		
     	}
+    	
+    	System.out.println(series.length);
     	
 	}
 	

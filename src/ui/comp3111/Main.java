@@ -286,19 +286,22 @@ public class Main extends Application {
 				if(result.get() == "BarChart") {
 					BarChart_  x = new BarChart_(sampleDataTable);
 					x.btLineChartBackMain = this.btLineChartBackMain;
-					//sampleDataTable
-//					scenes[SCENE_BAR_CHART] = new Scene(x.paneChart("X", "y", "HELLO"), 800, 600); 
-//					x.populateDataToChart();
-//					SCENE_INDEX = SCENE_BAR_CHART;
 					ChartObject.add(x);
-					ChartList.getItems().add("chart");
+					ChartList.getItems().add(sampleDataTable.toString());
 					charName.add("chart");
 				}
 				else if(result.get() =="ScatterChart") {
-//					ScatterChart_ x =new ScatterChart_(sampleDataTable,1,3,1,1,3,1);
+					ScatterChart_ x =new ScatterChart_(sampleDataTable);
 //					scenes[SCENE_SCATTER_CHART] = new Scene(x.paneChart("X", "y", "HELLO"), 800, 600); 
 //					x.populateDataToChart();
 //					SCENE_INDEX = SCENE_SCATTER_CHART;
+					x.btLineChartBackMain = this.btLineChartBackMain;
+					ChartObject.add(x);
+					ChartList.getItems().add(sampleDataTable.toString());
+					charName.add("chart");
+					System.out.println(sampleDataTable.getCol("X").getTypeName());
+					System.out.println(sampleDataTable.getCol("E").getTypeName());
+					System.out.println(sampleDataTable.getCol("C").getTypeName());
 				}
 			}
 
@@ -427,6 +430,20 @@ public class Main extends Application {
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
         	 Chart chart =  ChartObject.get(new_value.intValue());
+        	 if(chart instanceof BarChart_) {
+        		        BarChart_  chart1  = (BarChart_)ChartObject.get(new_value.intValue());
+					scenes[SCENE_BAR_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
+					chart1.populateDataToChart();
+					SCENE_INDEX = SCENE_BAR_CHART;
+        	 }
+        	 else  if(chart instanceof ScatterChart_) {
+        		  ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
+				scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
+				chart1.populateDataToChart();
+				SCENE_INDEX = SCENE_SCATTER_CHART;
+				chart1.getSC();
+ 	 }
+        	 
         	 
         	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
     					sampleDataTable.getNumCol()));
