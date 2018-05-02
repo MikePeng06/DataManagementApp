@@ -34,7 +34,7 @@ public class ScatterChart_ extends Chart {
     }
 
     private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = new Button("Back");
+		btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
 		yAxis.setLabel(yAxisLabel);

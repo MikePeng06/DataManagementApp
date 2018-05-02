@@ -318,9 +318,6 @@ public class Main extends Application {
 					ChartObject.add(x);
 					ChartList.getItems().add(sampleDataTable.toString());
 					charName.add("chart");
-					System.out.println(sampleDataTable.getCol("X").getData()); 
-					System.out.println(sampleDataTable.getCol("E").getTypeName());
-					System.out.println(sampleDataTable.getCol("C").getTypeName());
 				}
 			}
 
