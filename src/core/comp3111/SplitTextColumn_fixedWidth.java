@@ -1,6 +1,6 @@
 package core.comp3111;
 
-public class SplitColumn_fixedWidth {
+public class SplitTextColumn_fixedWidth {
 
 
 	public static DataColumn[] splitDataColumn(DataColumn selectCol, int[] widths) {
@@ -85,19 +85,19 @@ public class SplitColumn_fixedWidth {
 
 
 
-	public static void main(String[] args) {
-
-		
-		// Sample: A array of String
-		String[] labels = new String[] { "P1eoquehr", "P2ewrg3", "P30912g", "P4qewrs", "P563kwbd" };
-		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
-		int[] widths = {3,4,5};
-		DataColumn[] outputs = splitDataColumn(labelsCol, widths);
-		//String[] test = splitFixedWidth(labels[0], widths);
-		for(DataColumn x : outputs)
-			System.out.println(x);
-		System.out.println(labelsCol.toString());
-
-	}
+//	public static void main(String[] args) {
+//
+//		
+//		// Sample: A array of String
+//		String[] labels = new String[] { "P1eoquehr", "P2ewrg3", "P30912g", "P4qewrs", "P563kwbd" };
+//		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
+//		int[] widths = {3,4,5};
+//		DataColumn[] outputs = splitDataColumn(labelsCol, widths);
+//		//String[] test = splitFixedWidth(labels[0], widths);
+//		for(DataColumn x : outputs)
+//			System.out.println(x);
+//		System.out.println(labelsCol.toString());
+//
+//	}
 
 }

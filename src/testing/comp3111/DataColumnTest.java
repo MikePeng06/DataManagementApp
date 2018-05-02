@@ -27,6 +27,7 @@ class DataColumnTest {
 
 		Number[] arr = new Integer[] { 1, 2, 3, 4, 5 };
 		DataColumn dc = new DataColumn(DataType.TYPE_NUMBER, arr);
+		System.out.println(dc);
 		assert (dc.getSize() == 5);
 
 	}
