@@ -72,6 +72,7 @@ public class Main extends Application {
 	private Stage stage = null;
 	private Scene[] scenes = null;
 	private ArrayList<String> dataTableName = new ArrayList<String>();
+	private ArrayList<String> columnName = new ArrayList<String>();
 	private ArrayList<String> charName = new ArrayList<String>();
 	private ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
@@ -83,11 +84,12 @@ public class Main extends Application {
 	// createScene()
 
 	// Screen 1: paneMainScreen
-	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
+	private Button btSampleLineChartData, btSampleLineChartDataV2, btSelectColumn, btSampleLineChart, btSelectFile, btGenerateChart, 
 	btSaveChart, LoadProject, SaveProject;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
+	private ListView<String> ColumnList = new ListView<>();
 	private ListView<String> ChartList = new ListView<>(); 
 
 	// Screen 2: paneSampleLineChartScreen
@@ -241,7 +243,7 @@ public class Main extends Application {
 //			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 //			dialog.setTitle("Enter the DataSet Name");
 //			dialog.setHeaderText("Enter the DataSet Name");
-//			dialog.setContentText("文本内容");
+//			dialog.setContentText("æ–‡æœ¬å†…å®¹");
 //			dialog.show();
 //			
 //			String savename = "";
@@ -278,7 +280,7 @@ public class Main extends Application {
 
 		});
 		
-		//反序列化
+		//å��åº�åˆ—åŒ–
 		LoadProject.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(
@@ -366,6 +368,7 @@ public class Main extends Application {
 		lbMainScreenTitle = new Label("COMP3111 Chart");
 		btSampleLineChartData = new Button("Sample 1");
 		btSampleLineChartDataV2 = new Button("Sample 2");
+		btSelectColumn = new Button("Select Column");
 		btSampleLineChart = new Button("Sample Line Chart");
 		lbSampleDataTable = new Label("DataTable: empty");
 		btSelectFile = new Button("Select DataSet");
@@ -379,12 +382,31 @@ public class Main extends Application {
 		for(int i=0; i<=dataTableList.size()-1;i++) {
 			DataSetList.setItems(FXCollections.observableArrayList(dataTableName));
 		}
+		
+		ColumnList = new ListView<>(FXCollections.observableArrayList());
+		for(int i=0; i<=dataTableList.size()-1;i++) {
+			ColumnList.setItems(FXCollections.observableArrayList(columnName));
+		}
+		
 		ChartList =  new ListView<>(FXCollections.observableArrayList());
 		for(int i=0; i<=dataTableList.size()-1;i++) {
 			ChartList.setItems(FXCollections.observableArrayList(charName));
 		}
 		
 		DataSetList.getSelectionModel().selectedIndexProperty()
+        .addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue ov, Number value, Number new_value) {
+        	  sampleDataTable = dataTableList.get(new_value.intValue());
+//        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+  					sampleDataTable.getNumCol()));
+        	  populateSampleDataTableValuesToChart("Sample2");
+        	  System.out.println(sampleDataTable.getCol("W"));
+        	  //DataTemp = ov.getValue().toString();
+          }
+        });
+		
+		ColumnList.getSelectionModel().selectedIndexProperty()
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
         	  sampleDataTable = dataTableList.get(new_value.intValue());
@@ -421,10 +443,12 @@ public class Main extends Application {
 		
 		HBox data = new HBox(DataSetList);
 		data.setAlignment(Pos.CENTER);
+		HBox column = new HBox(ColumnList);
+		data.setAlignment(Pos.CENTER);
 		HBox chart = new HBox(ChartList);
 		chart.setAlignment(Pos.CENTER);
 		
-		HBox hc = new HBox(data, chart);
+		HBox hc = new HBox(data, column, chart);
 		//hc.setAlignment(Pos.CENTER);
 		//hc.getChildren().addAll(DataSetList, ChartList);
 		
@@ -434,7 +458,7 @@ public class Main extends Application {
 		hc2.getChildren().addAll(btSelectFile, LoadProject, SaveProject);
 
 		VBox container = new VBox(20);
-		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, btGenerateChart,new Separator(), hc2);
+		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSelectColumn, btSampleLineChart, btGenerateChart,new Separator(), hc2);
 		container.setAlignment(Pos.CENTER);
 
 		
