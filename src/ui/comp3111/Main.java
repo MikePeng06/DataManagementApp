@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -37,6 +38,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
@@ -96,6 +98,7 @@ public class Main extends Application {
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
 	private ListView<String> ChartList = new ListView<>(); 
+	private ListView<CheckBox> ColumnList = new ListView<>();
 
 	// Screen 2: paneSampleLineChartScreen
 	private LineChart<Number, Number> lineChart = null;
@@ -299,7 +302,7 @@ public class Main extends Application {
 					ChartObject.add(x);
 					ChartList.getItems().add(sampleDataTable.toString());
 					charName.add("chart");
-					System.out.println(sampleDataTable.getCol("X").getTypeName());
+					System.out.println(sampleDataTable.getCol("X").getData()); 
 					System.out.println(sampleDataTable.getCol("E").getTypeName());
 					System.out.println(sampleDataTable.getCol("C").getTypeName());
 				}
@@ -413,9 +416,12 @@ public class Main extends Application {
 			ChartList.setItems(FXCollections.observableArrayList(charName));
 		}
 		
+	
+		
 		DataSetList.getSelectionModel().selectedIndexProperty()
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
+        	  ColumnList.getItems().clear();
         	  sampleDataTable = dataTableList.get(new_value.intValue());
 //        	  lbSampleDataTable.setText(ov.getValue().toString());
         	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
@@ -423,6 +429,14 @@ public class Main extends Application {
         	  populateSampleDataTableValuesToChart("Sample2");
         	  System.out.println(sampleDataTable.getCol("W"));
         	  //DataTemp = ov.getValue().toString();
+        	  
+        	
+          Set<String> set = sampleDataTable.getDC().keySet();
+          for(String s : set) {
+        	  ColumnList.getItems().add(new CheckBox(s));
+          }
+        	 
+        	  //ColumnList.getItems().add(new CheckBox("Second"));
           }
         });
 		
@@ -467,8 +481,11 @@ public class Main extends Application {
 		data.setAlignment(Pos.CENTER);
 		HBox chart = new HBox(ChartList);
 		chart.setAlignment(Pos.CENTER);
+		HBox column = new HBox(ColumnList);
+		chart.setAlignment(Pos.CENTER);
 		
-		HBox hc = new HBox(data, chart);
+		
+		HBox hc = new HBox(data, column,chart);
 		//hc.setAlignment(Pos.CENTER);
 		//hc.getChildren().addAll(DataSetList, ChartList);
 		
