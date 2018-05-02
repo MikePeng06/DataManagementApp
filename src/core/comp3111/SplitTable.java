@@ -1,5 +1,6 @@
 package core.comp3111;
 
+import java.io.IOException;
 import java.util.Set;
 
 public class SplitTable {
@@ -87,24 +88,46 @@ public class SplitTable {
 
 		for(String key: keys) {
 
-
 			DataColumn temp = inputdt.getCol(key);
-			String[] copy = (String[])temp.getData();
-			String typename = temp.getTypeName();
-			String[] data1 = new String[firstDtRowNum];
-			String[] data2 = new String[secDtRowNum];
 
-			for(int j = 0; j < firstDtRowNum; j++)
-				data1[j] = copy[j];
 
-			for(int z = 0; z < secDtRowNum; z++) 
-				data2[z] = copy[z+firstDtRowNum];
+			if(temp.getTypeName() == DataType.TYPE_STRING) {
 
-			DataColumn add1 = new DataColumn(temp.getTypeName(), data1);
-			DataColumn add2 = new DataColumn(temp.getTypeName(), data2);
+				String[] copyString = (String[])temp.getData();
+				String[] data1 = new String[firstDtRowNum];
+				String[] data2 = new String[secDtRowNum];
 
-			temp1.addCol(key, add1);
-			temp2.addCol(key, add2);	
+				for(int j = 0; j < firstDtRowNum; j++)
+					data1[j] = copyString[j];
+
+				for(int z = 0; z < secDtRowNum; z++) 
+					data2[z] = copyString[z+firstDtRowNum];
+
+				DataColumn add1 = new DataColumn(temp.getTypeName(), data1);
+				DataColumn add2 = new DataColumn(temp.getTypeName(), data2);
+
+				temp1.addCol(key, add1);
+				temp2.addCol(key, add2);
+			}
+
+			if(temp.getTypeName() == DataType.TYPE_NUMBER) {
+
+				Number[] copyNumber = (Number[])temp.getData();
+				Number[] data1 = new Number[firstDtRowNum];
+				Number[] data2 = new Number[secDtRowNum];
+
+				for(int j = 0; j < firstDtRowNum; j++)
+					data1[j] = copyNumber[j];
+
+				for(int z = 0; z < secDtRowNum; z++) 
+					data2[z] = copyNumber[z+firstDtRowNum];
+
+				DataColumn add1 = new DataColumn(temp.getTypeName(), data1);
+				DataColumn add2 = new DataColumn(temp.getTypeName(), data2);
+
+				temp1.addCol(key, add1);
+				temp2.addCol(key, add2);
+			}
 		}
 
 		result[0] = temp1;
@@ -144,21 +167,29 @@ public class SplitTable {
 
 		DataTable t = new DataTable();
 
-		// Sample: An array of integer
-		String[] xvalues = new String[] { "1", "2", "3", "4", "5" };
-		DataColumn xvaluesCol = new DataColumn(DataType.TYPE_NUMBER, xvalues);
+		//		// Sample: An array of integer
+		//		String[] xvalues = new String[] { "1", "2", "3", "4", "5" };
+		//		DataColumn xvaluesCol = new DataColumn(DataType.TYPE_NUMBER, xvalues);
+		//
+		//		// Sample: Can also mixed Number types
+		//		String[] yvalues = new String[] { "30.0", "25", " 16", "8.0", " 22" };
+		//		DataColumn yvaluesCol = new DataColumn(DataType.TYPE_NUMBER, yvalues);
+		//
+		//		// Sample: A array of String
+		//		String[] labels = new String[] { "P1", "P2", "P3", "P4", "P5" };
+		//		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
 
-		// Sample: Can also mixed Number types
-		String[] yvalues = new String[] { "30.0", "25", " 16", "8.0", " 22" };
-		DataColumn yvaluesCol = new DataColumn(DataType.TYPE_NUMBER, yvalues);
 
-		// Sample: A array of String
-		String[] labels = new String[] { "P1", "P2", "P3", "P4", "P5" };
-		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
+		try {
+			t = LoadData.ToDataTable("C:/Users/zpeng/OneDrive/Desktop/123.csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		t.addCol("X", xvaluesCol);
-		t.addCol("Y", yvaluesCol);
-		t.addCol("label", labelsCol);
+		//		t.addCol("X", xvaluesCol);
+		//		t.addCol("Y", yvaluesCol);
+		//		t.addCol("label", labelsCol);
 
 
 		DataTable[] output =  splitDataTable(t, 30);
