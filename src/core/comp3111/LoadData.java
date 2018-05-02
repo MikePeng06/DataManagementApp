@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import core.comp3111.*;
 
 public class LoadData {
 	
@@ -96,17 +97,29 @@ public class LoadData {
 			String type = "";
 			char typecheck = table[1][c].charAt(0);
 			if(Character.isDigit(typecheck)) {  
-				type = "java.lang.Number";
+				type = DataType.TYPE_NUMBER;
+				Number[] string = new Number[linenumber-1];
+				for(int row=1;row<=linenumber-1;row++) {
+					string[row-1] = Integer.parseInt(table[row][c]);
+				}
+				DataColumn dc = new DataColumn(type, string);
+				Dataset.addCol(table[0][c], dc);
 			} 
 			else {
-				type = "java.lang.String";
+				type = DataType.TYPE_STRING;
+				String[] string = new String[linenumber-1];
+				for(int row=1;row<=linenumber-1;row++) {
+					string[row-1] = table[row][c];
+				}
+				DataColumn dc = new DataColumn(type, string);
+				Dataset.addCol(table[0][c], dc);
 			}
-			Object[] string = new Object[linenumber];
-			for(int row=1;row<=linenumber-1;row++) {
-				string[row-1] = table[row][c];
-			}
-			DataColumn dc = new DataColumn(type, string);
-			Dataset.addCol(table[0][c], dc);
+//			Object[] string = new Object[linenumber];
+//			for(int row=1;row<=linenumber-1;row++) {
+//				string[row-1] = table[row][c];
+//			}
+//			DataColumn dc = new DataColumn(type, string);
+//			Dataset.addCol(table[0][c], dc);
 		}
 		return Dataset;
 	}

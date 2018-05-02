@@ -12,51 +12,27 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.BarChart;
 
-public class BarChart_ extends Chart {
+public class BarChart_ extends Chart implements java.io.Serializable{
 	
-	private static CategoryAxis xAxis;
-	private static NumberAxis yAxis;
-	protected BarChart<String,Number> bc;
+	//private BarChart_UI ui;
+	DataTableArray dta = new DataTableArray();
 	
 	public BarChart_() {
-		xAxis = null;
-		yAxis = null;
-		bc = null;
+	//	ui = null;
 		dataset = null;
 		type = 0;
 	}
 	
 	public BarChart_(DataTable t) {
-		xAxis = new CategoryAxis();
-		yAxis = new NumberAxis();
-		bc = new BarChart<String,Number>(xAxis,yAxis);
-		setDataset(t);
+		//ui = new BarChart_UI();
+		dataset = t;
+		dta = new DataTableArray();
 	}
 	
-	private Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = new Button("Back");
 
-		xAxis.setLabel(xAxisLabel);
-		yAxis.setLabel(yAxisLabel);
-		bc.setTitle(chartTitle);
-
-		// Layout the UI components
-		VBox container = new VBox(20);
-		container.getChildren().addAll(bc, btLineChartBackMain);
-		container.setAlignment(Pos.CENTER);
-
-		BorderPane pane = new BorderPane();
-		pane.setCenter(container);
-
-		// Apply CSS to style the GUI components
-		pane.getStyleClass().add("screen-background");
-
-		return pane;	
-	}
-	
-	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		return paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
-	}
+//	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
+//		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
+//	}
 	
 	private void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
@@ -66,9 +42,8 @@ public class BarChart_ extends Chart {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	Float[][] data = new Float[numNumericCol][rowSize];
+    	Integer[][] data = new Integer[numNumericCol][rowSize];
     	
-    	bc.getData().clear();
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
@@ -81,35 +56,22 @@ public class BarChart_ extends Chart {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (Float) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
     	}
     	
-    	XYChart.Series [] series = new XYChart.Series[rowSize];
-    	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series();
-    	}
-    
-    	for (int i = 0; i < rowSize ; i++) {
-    		series[i].setName(textCol[i]);
-    		for (int k = 1; k < numKey; k++) {
-    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k-1][i]));
-    		}
-    	}
-		
-    	for (int i = 0; i < rowSize ; i++) {
-    		bc.getData().add(series[i]);
-    	}
+    	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
 	}
 	
 	public void populateDataToChart(){
 		populateDataToBarChart();
 	}
 
-	public BarChart<String, Number> getBC(){
-		return bc;
+	
+	public DataTableArray getDTA() {
+		return dta;
 	}
 	
 	private DataTable generateDummyDataTable() throws DataTableException {

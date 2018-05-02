@@ -11,11 +11,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class ScatterChart_ extends Chart {
+public class ScatterChart_ extends Chart implements java.io.Serializable{
 	
 	private NumberAxis xAxis;
     private NumberAxis yAxis;        
     private ScatterChart<Number,Number> sc;
+    public Button btLineChartBackMain; 
     
     public ScatterChart_() {
     	xAxis = null;
@@ -33,7 +34,7 @@ public class ScatterChart_ extends Chart {
     }
 
     private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = new Button("Back");
+		btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
 		yAxis.setLabel(yAxisLabel);
@@ -65,10 +66,15 @@ public class ScatterChart_ extends Chart {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
+<<<<<<< HEAD
     	float[][] data = new float[numNumericCol][rowSize];
     	
     	sc.getData().clear();
+=======
+    	Integer[][] data = new Integer[numNumericCol][rowSize];
+>>>>>>> refs/remotes/origin/master
     	int j = 1;
+    	sc.getData().clear();
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -80,7 +86,7 @@ public class ScatterChart_ extends Chart {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (float) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
@@ -94,7 +100,7 @@ public class ScatterChart_ extends Chart {
     	for (int i = 1; i< rowSize; i++) {
     		same = false;
     		for (int n = 0; n < i; n++) {
-    			if (textCol[i] == textCol[n]) {
+    			if (textCol[i].equals( textCol[n])) {
     				same = true;
     				break;
     			}
@@ -103,13 +109,17 @@ public class ScatterChart_ extends Chart {
     			numDistinctElement++;
     		}
     	}
+<<<<<<< HEAD
+=======
+    	System.out.println(numDistinctElement);
+>>>>>>> refs/remotes/origin/master
     	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
     	for (int i = 0; i < rowSize; i++) {
     		same = false;
     		for (int k = 0; k < numNonEmptytextColDistinct; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
+    			if (textCol[i].equals( textColDistinct[k])) {
     				same = true;
     			}
     		}
@@ -129,7 +139,7 @@ public class ScatterChart_ extends Chart {
     	}
     	for (int i = 0; i < rowSize; i++) {
     		for (int k = 0; k < numDistinctElement; k++) {
-    			if (textCol[i] == textColDistinct[k]) {
+    			if (textCol[i].equals( textColDistinct[k]) ){
     				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
     				
     			}
@@ -138,7 +148,10 @@ public class ScatterChart_ extends Chart {
     	
     	for (int i = 0; i < numDistinctElement ; i++) {
     		sc.getData().add(series[i]);
+    		
     	}
+    	
+    	System.out.println(series.length);
     	
 	}
 	
