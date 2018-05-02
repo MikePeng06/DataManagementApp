@@ -17,6 +17,7 @@ public class BarChart_ extends Chart {
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
 	protected BarChart<String,Number> bc;
+	public Button btLineChartBackMain;
 	
 	public BarChart_() {
 		xAxis = null;
@@ -33,8 +34,8 @@ public class BarChart_ extends Chart {
 		setDataset(t);
 	}
 	
-	private Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = new Button("Back");
+	   Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
+		Button btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
 		yAxis.setLabel(yAxisLabel);
@@ -66,7 +67,9 @@ public class BarChart_ extends Chart {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	Float[][] data = new Float[numNumericCol][rowSize];
+    	Integer[][] data = new Integer[numNumericCol][rowSize];
+    	
+    	bc.getData().clear();
     	
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
@@ -80,7 +83,7 @@ public class BarChart_ extends Chart {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (Float) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
