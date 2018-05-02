@@ -19,13 +19,16 @@ public class SplitColumn_delimiter {
 	 */
 	public static DataColumn[] splitDataColumn(DataColumn selectCol, String target) {
 
-		Object[] selectData = selectCol.getData();
+
 		int colNum = getNumOfCol(selectCol, target);
+		Object[] selectData = selectCol.getData();
 
-		if(canSplit(selectCol, target) == true) {
 
-			DataColumn cols[] = new DataColumn[colNum];
-			String[][] mulCol = new String[colNum][selectCol.getSize()]; 
+		if(selectCol.getTypeName() == DataType.TYPE_STRING) {
+
+			if(canSplit(selectCol, target) == true) {
+				DataColumn cols[] = new DataColumn[colNum];
+				String[][] mulCol = new String[colNum][selectCol.getSize()]; 
 
 				//get Column Data
 				for(int i = 0; i< selectData.length; i++) {
@@ -39,10 +42,43 @@ public class SplitColumn_delimiter {
 				//set new generated Col, also get the type
 				for(int i = 0; i< colNum; i++)
 					cols[i] = new DataColumn(selectCol.getTypeName(), mulCol[i]);
-			
-			
-			return cols;
+
+				return cols;
+			}
 		}
+
+
+		if(selectCol.getTypeName() == DataType.TYPE_NUMBER) {
+
+			if(canSplit(selectCol, target) == true) {
+				DataColumn cols[] = new DataColumn[colNum];
+				String[][] mulCol = new String[colNum][selectCol.getSize()]; 
+
+				//get Column Data
+				for(int i = 0; i< selectData.length; i++) {
+					String[] temp = (String.valueOf(selectData[i])).split(target);
+					for(int j = 0; j < colNum; j++) {
+						mulCol[j][i] = temp[j];
+					} 
+
+				}
+
+
+				//set new generated Col, also get the type
+				for(int i = 0; i< colNum; i++) {
+					Number[] temp = new Number[selectCol.getSize()];
+					for(int j = 0 ; j< selectCol.getSize(); j++) {
+						temp[j] = Integer.parseInt(mulCol[i][j]);
+					}
+					cols[i] = new DataColumn(selectCol.getTypeName(), temp);
+				}
+
+				return cols;
+			}
+
+		}
+
+
 
 		//handle the case if dont need to split
 		DataColumn[] cols = new DataColumn[1];
@@ -50,13 +86,13 @@ public class SplitColumn_delimiter {
 		return cols;
 	}
 
-	
-	
+
+
 
 	/**return whether canSplit the selected Column
 	 * 
-     * @param selectCol - The column that is selected to be split
-     * 
+	 * @param selectCol - The column that is selected to be split
+	 * 
 	 * @param target - The delimiter/width input in the splitting mode
 	 * 
 	 * @param colNum - The output numOfColumn if it can split
@@ -65,7 +101,7 @@ public class SplitColumn_delimiter {
 	 */
 	public static boolean canSplit(DataColumn selectCol, String target) {
 
-		
+
 		int numOfCol = getNumOfCol(selectCol, target);
 
 		//colNum is 1 means no splitting happen, so return false
@@ -74,48 +110,72 @@ public class SplitColumn_delimiter {
 
 		return true;
 	}
-	
-	
-	
+
+
+
 	//retrun numOfColumn 1 if cantsplit
 	public static int getNumOfCol(DataColumn selectCol, String target) {
-		
+
 		Integer[] lengths = new Integer[selectCol.getSize()];
 		Object[] selectData = selectCol.getData();
 		int num = 1;
-		
-		//check if every rows have same size
-		for(int i = 0; i< selectData.length; i++) {
 
-			String[] temp = ((String) selectData[i]).split(target); 
+		if(selectCol.getTypeName() == DataType.TYPE_STRING) {
+			//check if every rows have same size
+			for(int i = 0; i< selectData.length; i++) {
 
-			// store the i-th rows lengths after splitting
-			lengths[i] = temp.length; 
+				String[] temp = ((String) selectData[i]).split(target); 
 
-			if(i > 0)
-				if(lengths[i] != lengths[i-1])
-					return 1;
+				// store the i-th rows lengths after splitting
+				lengths[i] = temp.length; 
 
-			num =  temp.length;
+				if(i > 0)
+					if(lengths[i] != lengths[i-1])
+						return 1;
+
+				num =  temp.length;
+			}
 		}
 		
+		if(selectCol.getTypeName() == DataType.TYPE_NUMBER) {
+			
+			for(int i = 0; i< selectData.length; i++) {
+
+				String[] temp = (String.valueOf(selectData[i])).split(target); 
+
+				// store the i-th rows lengths after splitting
+				lengths[i] = temp.length; 
+
+				if(i > 0)
+					if(lengths[i] != lengths[i-1])
+						return 1;
+
+				num =  temp.length;
+			}
+			
+		}
+
 		return num;
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 
-		
+
 		// Sample: A array of String
 		String[] labels = new String[] { "P1eroqrueh", "P2ewrgr3", "P3r09r12g", "P4rqewrs", "P56r3kwrbd" };
 		DataColumn labelsCol = new DataColumn(DataType.TYPE_STRING, labels);
 		DataColumn[] outputs = splitDataColumn(labelsCol, "r");
-		
-		for(DataColumn x : outputs)
+
+		Number[] labels2 = new Number[] { 123456, 326587, 962534, 985324, 18521 };
+		DataColumn labelsCol2 = new DataColumn(DataType.TYPE_NUMBER, labels2);
+		DataColumn[] outputs2 = splitDataColumn(labelsCol2, "2");
+
+		for(DataColumn x : outputs2)
 			System.out.println(x);
-		
+
 		//System.out.println(labelsCol.toString());
 
 	}
-	
+
 }
