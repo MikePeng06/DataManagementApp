@@ -103,7 +103,6 @@ public class ScatterChart_ extends Chart {
     			numDistinctElement++;
     		}
     	}
-    	System.out.println(numDistinctElement);
     	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
@@ -126,13 +125,13 @@ public class ScatterChart_ extends Chart {
     	}
     	for (int i = 0; i < numDistinctElement ; i++) {
     		series[i].setName(textColDistinct[i]);
-
     		
     	}
     	for (int i = 0; i < rowSize; i++) {
     		for (int k = 0; k < numDistinctElement; k++) {
     			if (textCol[i] == textColDistinct[k]) {
     				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+    				
     			}
     		}
     	}
