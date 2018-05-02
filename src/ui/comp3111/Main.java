@@ -85,7 +85,7 @@ public class Main extends Application {
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
 	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
-	private ArrayList<Pane> x = new ArrayList<Pane>();
+	private ArrayList<String> ColumnName = new ArrayList<String>();
 
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
@@ -285,9 +285,23 @@ public class Main extends Application {
 			if (result.isPresent()){
 			    System.out.println("Your choice: " + result.get());
 			}
+			DataTable dttemp = new DataTable();
 			if(result.isPresent()) {
 				if(result.get() == "BarChart") {
-					BarChart_  x = new BarChart_(sampleDataTable);
+					for (CheckBox cb: ColumnList.getItems()) {
+						if(cb.isSelected()) {
+							String strtemp = cb.getText().substring(0, cb.getText().indexOf(' '));
+							System.out.println(strtemp);
+							try {
+								dttemp.addCol(cb.getText(), sampleDataTable.getCol(strtemp));
+							} catch (DataTableException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
+					}
+					//sampleDataTable = dttemp;
+					BarChart_  x = new BarChart_(dttemp);
 					x.btLineChartBackMain = this.btLineChartBackMain;
 					ChartObject.add(x);
 					ChartList.getItems().add(sampleDataTable.toString());
@@ -411,6 +425,7 @@ public class Main extends Application {
 		for(int i=0; i<=dataTableList.size()-1;i++) {
 			DataSetList.setItems(FXCollections.observableArrayList(dataTableName));
 		}
+		
 		ChartList =  new ListView<>(FXCollections.observableArrayList());
 		for(int i=0; i<=dataTableList.size()-1;i++) {
 			ChartList.setItems(FXCollections.observableArrayList(charName));
@@ -427,18 +442,26 @@ public class Main extends Application {
         	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
   					sampleDataTable.getNumCol()));
         	  populateSampleDataTableValuesToChart("Sample2");
-        	  System.out.println(sampleDataTable.getCol("W"));
         	  //DataTemp = ov.getValue().toString();
-        	  
-        	
+        	  ColumnName.clear();
           Set<String> set = sampleDataTable.getDC().keySet();
           for(String s : set) {
+        	  s =  s+"    "+"<"+sampleDataTable.getCol(s).getTypeName().substring(10, sampleDataTable.getCol(s).getTypeName().length())+">";
         	  ColumnList.getItems().add(new CheckBox(s));
+        	  ColumnName.add(s);
           }
         	 
         	  //ColumnList.getItems().add(new CheckBox("Second"));
           }
         });
+		
+		ColumnList.getSelectionModel().selectedIndexProperty()
+        .addListener(new ChangeListener<Number>() {
+          public void changed(ObservableValue ov, Number value, Number new_value) {
+          }
+        });
+		
+		
 		
 		ChartList.getSelectionModel().selectedIndexProperty()
         .addListener(new ChangeListener<Number>() {
