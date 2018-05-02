@@ -34,7 +34,7 @@ public class BarChart_ extends Chart {
 		setDataset(t);
 	}
 	
-	private Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
+	   Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
 		Button btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
@@ -68,6 +68,8 @@ public class BarChart_ extends Chart {
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
+    	
+    	bc.getData().clear();
     	
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
