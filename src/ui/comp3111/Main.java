@@ -20,6 +20,9 @@ import core.comp3111.LoadData;
 import core.comp3111.DataPack;
 import core.comp3111.ToProject;
 import core.comp3111.SelectColumn;
+import core.comp3111.Chart;
+import core.comp3111.BarChart_;
+import core.comp3111.ScatterChart_;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -65,16 +68,20 @@ public class Main extends Application {
 	private DataTable sampleDataTable = null;
 
 	// Attributes: Scene and Stage
-	private static final int SCENE_NUM = 2;
+	private static final int SCENE_NUM = 4;
 	private static final int SCENE_MAIN_SCREEN = 0;
 	private static final int SCENE_LINE_CHART = 1;
-	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen" };
+	private static final int SCENE_BAR_CHART = 2;
+	private static final int SCENE_SCATTER_CHART = 3;
+	private int SCENE_INDEX = 0;
+	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Sample Bar Screen", "Sample Scatter Screen" };
 	private Stage stage = null;
 	private Scene[] scenes = null;
 	private ArrayList<String> dataTableName = new ArrayList<String>();
 	private ArrayList<String> charName = new ArrayList<String>();
 	private ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
+	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
 	private ArrayList<Pane> x = new ArrayList<Pane>();
 
@@ -212,7 +219,7 @@ public class Main extends Application {
 
 		// click handler
 		btSampleLineChart.setOnAction(e -> {
-			putSceneOnStage(SCENE_LINE_CHART);
+			putSceneOnStage(SCENE_INDEX);
 		});
 		
 		btSelectFile.setOnAction(e ->{
@@ -257,15 +264,15 @@ public class Main extends Application {
 		
 		btGenerateChart.setOnAction(e -> {
 			
-			ChartList.getItems().add("chart");
-			charName.add("chart");
+//			ChartList.getItems().add("chart");
+//			charName.add("chart");
 			
 			ArrayList<String> choices = new ArrayList<>();
-			choices.add("a");
-			choices.add("b");
-			choices.add("c");
+			choices.add("BarChart");
+			choices.add("ScatterChart");
+			choices.add("AnimateChart");
 
-			ChoiceDialog<String> dialog = new ChoiceDialog<>("b", choices);
+			ChoiceDialog<String> dialog = new ChoiceDialog<>("BarChart", choices);
 			dialog.setTitle("Choice Dialog");
 			dialog.setHeaderText("Look, a Choice Dialog");
 			dialog.setContentText("Choose your letter:");
@@ -274,6 +281,25 @@ public class Main extends Application {
 			Optional<String> result = dialog.showAndWait();
 			if (result.isPresent()){
 			    System.out.println("Your choice: " + result.get());
+			}
+			if(result.isPresent()) {
+				if(result.get() == "BarChart") {
+					BarChart_  x = new BarChart_(sampleDataTable);
+					x.btLineChartBackMain = this.btLineChartBackMain;
+					//sampleDataTable
+//					scenes[SCENE_BAR_CHART] = new Scene(x.paneChart("X", "y", "HELLO"), 800, 600); 
+//					x.populateDataToChart();
+//					SCENE_INDEX = SCENE_BAR_CHART;
+					ChartObject.add(x);
+					ChartList.getItems().add("chart");
+					charName.add("chart");
+				}
+				else if(result.get() =="ScatterChart") {
+//					ScatterChart_ x =new ScatterChart_(sampleDataTable,1,3,1,1,3,1);
+//					scenes[SCENE_SCATTER_CHART] = new Scene(x.paneChart("X", "y", "HELLO"), 800, 600); 
+//					x.populateDataToChart();
+//					SCENE_INDEX = SCENE_SCATTER_CHART;
+				}
 			}
 
 		});
@@ -363,7 +389,7 @@ public class Main extends Application {
 	 */
 	private Pane paneMainScreen() {
 
-		lbMainScreenTitle = new Label("COMP3111 Chart");
+		lbMainScreenTitle = new Label("Fanta-COMP3111");
 		btSampleLineChartData = new Button("Sample 1");
 		btSampleLineChartDataV2 = new Button("Sample 2");
 		btSampleLineChart = new Button("Sample Line Chart");
@@ -400,11 +426,12 @@ public class Main extends Application {
 		ChartList.getSelectionModel().selectedIndexProperty()
         .addListener(new ChangeListener<Number>() {
           public void changed(ObservableValue ov, Number value, Number new_value) {
-        	  sampleDataTable = dataTableList.get(new_value.intValue());
-//        	  lbSampleDataTable.setText(ov.getValue().toString());
+        	 Chart chart =  ChartObject.get(new_value.intValue());
+        	 
         	  lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
     					sampleDataTable.getNumCol()));
-        	  populateSampleDataTableValuesToChart(DataTemp);
+ //       	  populateSampleDataTableValuesToChart(DataTemp);
+        	  
           }
         });
 		

@@ -65,7 +65,7 @@ public class ScatterChart_ extends Chart {
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	float[][] data = new float[numNumericCol][rowSize];
+    	Integer[][] data = new Integer[numNumericCol][rowSize];
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
@@ -78,7 +78,7 @@ public class ScatterChart_ extends Chart {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
     			keyRow[j] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (float) dataset.getCol(key).getData()[i] ;
+    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
     			j++;
     		}
