@@ -21,6 +21,7 @@ import core.comp3111.LoadData;
 import core.comp3111.DataPack;
 import core.comp3111.ToProject;
 import core.comp3111.SelectColumn;
+import core.comp3111.SplitTable;
 import core.comp3111.Chart;
 import core.comp3111.BarChart_;
 import core.comp3111.ScatterChart_;
@@ -86,6 +87,7 @@ public class Main extends Application {
 	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
 	private ArrayList<Pane> x = new ArrayList<Pane>();
+	private ArrayList<String> columnName = new ArrayList<String>();
 
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
@@ -93,7 +95,7 @@ public class Main extends Application {
 
 	// Screen 1: paneMainScreen
 	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
-	btSaveChart, LoadProject, SaveProject;
+	btSaveChart, LoadProject, SaveProject, btSplitTable, btSplitColumn;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -251,7 +253,7 @@ public class Main extends Application {
 //			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 //			dialog.setTitle("Enter the DataSet Name");
 //			dialog.setHeaderText("Enter the DataSet Name");
-//			dialog.setContentText("文本内容");
+//			dialog.setContentText("æ–‡æœ¬å†…å®¹");
 //			dialog.show();
 //			
 //			String savename = "";
@@ -310,7 +312,7 @@ public class Main extends Application {
 
 		});
 		
-		//反序列化
+		//å��åº�åˆ—åŒ–
 		LoadProject.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(
@@ -353,6 +355,24 @@ public class Main extends Application {
 //    			DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName);
 //    			System.out.println(dataTableName.get(0));
 //    			ToProject.SaveProject(dp, file.getPath());            
+		});
+		
+		// click handler
+		btSplitTable.setOnAction(e -> {
+
+			// In this example, we invoke SampleDataGenerator to generate sample data
+			DataTable table = dataTableList.get(dataTableList.indexOf(DataSetList.getSelectionModel().getSelectedItem()));
+			try {
+				DataTable[] handler = SplitTable.splitDataTable(table, 30);
+			} catch (DataTableException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
+
+			populateSampleDataTableValuesToChart("Sample 2");
+
 		});
 		
 	}
@@ -404,6 +424,8 @@ public class Main extends Application {
 		btGenerateChart = new Button("Transfer to Chart");
 		LoadProject = new Button("LoadProject");
 		SaveProject = new Button("SaveProject");
+		btSplitTable = new Button("Split Table");
+		btSplitColumn = new Button("Split Column");
 				
 		// Layout the UI components
 		
@@ -494,8 +516,12 @@ public class Main extends Application {
 		hc2.setAlignment(Pos.CENTER);
 		hc2.getChildren().addAll(btSelectFile, LoadProject, SaveProject);
 
+		HBox hc3 = new HBox(10);
+		hc3.setAlignment(Pos.CENTER);
+		hc3.getChildren().addAll(btSplitTable, btSplitColumn, btSampleLineChart, btGenerateChart);
+		
 		VBox container = new VBox(20);
-		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator(), btSampleLineChart, btGenerateChart,new Separator(), hc2);
+		container.getChildren().addAll(lbMainScreenTitle, hc, lbSampleDataTable, new Separator() , hc3, new Separator(), hc2);
 		container.setAlignment(Pos.CENTER);
 
 		
