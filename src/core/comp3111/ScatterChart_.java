@@ -25,9 +25,9 @@ public class ScatterChart_ extends Chart {
     	type = 1;
     }
     
-    public ScatterChart_(DataTable t, int xAxisBegin, int xAxisEnd, int xAxisInter, int yAxisBegin, int yAxisEnd, int yAxisInter){
-    	xAxis = new NumberAxis(xAxisBegin, xAxisEnd, xAxisInter);
-    	yAxis = new NumberAxis(yAxisBegin, yAxisEnd, yAxisInter);
+    public ScatterChart_(DataTable t){
+    	xAxis = new NumberAxis();
+    	yAxis = new NumberAxis();
     	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
     	setDataset(t);
     }
@@ -66,6 +66,8 @@ public class ScatterChart_ extends Chart {
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	float[][] data = new float[numNumericCol][rowSize];
+    	
+    	sc.getData().clear();
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
@@ -83,6 +85,9 @@ public class ScatterChart_ extends Chart {
     			j++;
     		}
     	}
+    	textCol[0] ="a";
+    	textCol[1] ="b";
+    	textCol[2] = "a";
     	
     	int numDistinctElement = 1;
     	boolean same = false;
@@ -98,6 +103,8 @@ public class ScatterChart_ extends Chart {
     			numDistinctElement++;
     		}
     	}
+    	System.out.println(numDistinctElement);
+    	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
     	for (int i = 0; i < rowSize; i++) {

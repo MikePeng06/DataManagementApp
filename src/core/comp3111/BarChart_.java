@@ -68,6 +68,7 @@ public class BarChart_ extends Chart {
     	String[] keyRow = new String[numKey];
     	Float[][] data = new Float[numNumericCol][rowSize];
     	
+    	bc.getData().clear();
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
