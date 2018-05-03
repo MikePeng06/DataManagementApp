@@ -37,7 +37,7 @@ public class ScatterChart_UI {
     	for (int i = 0; i < dta.rowSize; i++) {
     		for (int k = 0; k < dta.numDistinctElement; k++) {
     			if (dta.textCol[i].equals( dta.textColDistinct[k]) ){
-    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+    				series[k].getData().add(new XYChart.Data(dta.data[1][i], dta.data[0][i]));
     				
     			}
     		}
