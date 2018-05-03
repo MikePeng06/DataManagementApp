@@ -1,5 +1,6 @@
-package core.comp3111;
+package ui.comp3111;
 
+import core.comp3111.DataTableArray;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -37,7 +38,7 @@ public class ScatterChart_UI {
     	for (int i = 0; i < dta.rowSize; i++) {
     		for (int k = 0; k < dta.numDistinctElement; k++) {
     			if (dta.textCol[i].equals( dta.textColDistinct[k]) ){
-    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+    				series[k].getData().add(new XYChart.Data(dta.data[1][i], dta.data[0][i]));
     				
     			}
     		}

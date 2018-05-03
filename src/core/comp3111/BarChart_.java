@@ -35,7 +35,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 //		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
 //	}
 	
-	public void populateDataToBarChart() {
+	private void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
@@ -63,9 +63,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     		}
     	}
     	
-
     	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
-
 	}
 	
 	public void populateDataToChart(){
@@ -77,39 +75,37 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		return dta;
 	}
 	
-
-	public DataTable generateDummyDataTable() throws DataTableException {
-
-
-		DataTable t = new DataTable();
-
-        String[] Year = new String[] {"2003", "2004", "2005"};
-        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
-        
-        
-		Number[] austria = new Float[] { (float) 25601, (float) 57401, (float) 45000};
-		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
-		
-		Number[] brazil = new Float[] { (float) 20148, (float) 41941, (float) 44835};
-		DataColumn brazilCol = new DataColumn(DataType.TYPE_NUMBER, brazil);
-		
-		Number[] france = new Float[] { (float) 10000, (float) 45263, (float) 18722};
-		DataColumn franceCol = new DataColumn(DataType.TYPE_NUMBER, france);
-		
-		Number[] italy = new Float[] { (float) 35407, (float) 117320, (float) 17557};
-		DataColumn italyCol = new DataColumn(DataType.TYPE_NUMBER, italy);
-		
-		Number[] usa = new Float[] { (float) 12000, (float) 14845, (float) 92633};
-		DataColumn usaCol = new DataColumn(DataType.TYPE_NUMBER, usa);
-				
-
-		t.addCol("Year", YearCol);
-		t.addCol("Austria", austriaCol);
-		t.addCol("Brazil", brazilCol);
-		t.addCol("France", franceCol);
-		t.addCol("Italy", italyCol);
-		t.addCol("USA", usaCol);
-		
-		return t;
-	}
+//	public DataTable generateDummyDataTable() throws DataTableException {
+//
+//		DataTable t = new DataTable();
+//
+//        String[] Year = new String[] {"2003", "2004", "2005"};
+//        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
+//        
+//        
+//		Number[] austria = new Float[] { (float) 25601, (float) 57401, (float) 45000};
+//		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
+//		
+//		Number[] brazil = new Float[] { (float) 20148, (float) 41941, (float) 44835};
+//		DataColumn brazilCol = new DataColumn(DataType.TYPE_NUMBER, brazil);
+//		
+//		Number[] france = new Float[] { (float) 10000, (float) 45263, (float) 18722};
+//		DataColumn franceCol = new DataColumn(DataType.TYPE_NUMBER, france);
+//		
+//		Number[] italy = new Float[] { (float) 35407, (float) 117320, (float) 17557};
+//		DataColumn italyCol = new DataColumn(DataType.TYPE_NUMBER, italy);
+//		
+//		Number[] usa = new Float[] { (float) 12000, (float) 14845, (float) 92633};
+//		DataColumn usaCol = new DataColumn(DataType.TYPE_NUMBER, usa);
+//				
+//
+//		t.addCol("Year", YearCol);
+//		t.addCol("Austria", austriaCol);
+//		t.addCol("Brazil", brazilCol);
+//		t.addCol("France", franceCol);
+//		t.addCol("Italy", italyCol);
+//		t.addCol("USA", usaCol);
+//		
+//		return t;
+//	}
 }

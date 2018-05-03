@@ -29,6 +29,7 @@ import core.comp3111.Chart;
 import core.comp3111.BarChart_;
 import core.comp3111.BarChart_UI;
 import core.comp3111.ScatterChart_;
+import core.comp3111.ScatterChart_UI;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -94,6 +95,8 @@ public class Main extends Application {
 	private ArrayList<String> ColumnName = new ArrayList<String>(); 
 	public BarChart_ chartbc;
 	public BarChart_UI chartuibc;
+	public ScatterChart_ chartsc;
+	public ScatterChart_UI chartuisc;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	public DataTableArray tempdta;
 	// To keep this application more structural, 
@@ -114,6 +117,8 @@ public class Main extends Application {
 	private NumberAxis xAxis = null;
 	private NumberAxis yAxis = null;
 	private Button btLineChartBackMain = null;
+
+	
 
 	/**
 	 * create all scenes in this application
@@ -147,8 +152,12 @@ public class Main extends Application {
 		initLineChartScreenHandlers();
 		btSampleLineChart.setOnAction(e -> {
 			//BarChart_UI  chartuibc = new BarChart_UI();
-			System.out.println(ChartObject.size());
-			chartuibc.populateDataToBarChartUI(tempdta);
+			if(SCENE_INDEX == 2) {
+				System.out.println(ChartObject.size());
+				chartuibc.populateDataToBarChartUI(tempdta);
+			}else if (SCENE_INDEX == 3) {
+				chartuisc.populateDataToScatterChartUI(tempdta);
+			}
 			
 //			System.out.println(chartbc.getDTA());
 //			System.out.println(((BarChart_)ChartObject.get(0)));
@@ -346,6 +355,9 @@ public class Main extends Application {
 					ChartObject.add(x);
 					ChartList.getItems().add("chart");
 					charName.add("chart");
+					x.populateDataToChart();
+					DTALIST.add(x.getDTA());
+					chartList.add(dttemp);
 				}
 			}
 
@@ -626,7 +638,7 @@ public class Main extends Application {
 					BarChart_UI chart1UI = new BarChart_UI();
 					chart1UI.btLineChartBackMain = btLineChartBackMain;
 					tempdta = DTALIST.get(new_value.intValue());
-					System.out.println(DTALIST.get(new_value.intValue()));
+					System.out.println(new_value.intValue());
 					chartuibc = chart1UI;	
 					scenes[SCENE_BAR_CHART] = new Scene(chartuibc.paneBarChartScreen("X", "y", "HELLO"), 800, 600); 
 					SCENE_INDEX = SCENE_BAR_CHART;
@@ -637,6 +649,12 @@ public class Main extends Application {
 //					chart1.populateDataToChart();
 //					SCENE_INDEX = SCENE_SCATTER_CHART;
 //					chart1.getSC();
+					ScatterChart_UI chart1UI = new ScatterChart_UI();
+					chart1UI.btLineChartBackMain = btLineChartBackMain;
+					tempdta = DTALIST.get(new_value.intValue());
+					chartuisc = chart1UI;	
+					scenes[SCENE_SCATTER_CHART] = new Scene(chartuisc.paneScatterChartScreen("X", "y", "HELLO"), 800, 600);
+					SCENE_INDEX = SCENE_SCATTER_CHART;
 				}
 
 
