@@ -22,6 +22,7 @@ import core.comp3111.DataPack;
 import core.comp3111.ToProject;
 import core.comp3111.SelectColumn;
 import core.comp3111.SplitTable;
+import core.comp3111.SplitTextColumn_fixedWidth;
 import core.comp3111.Chart;
 import core.comp3111.BarChart_;
 import core.comp3111.ScatterChart_;
@@ -95,7 +96,7 @@ public class Main extends Application {
 
 	// Screen 1: paneMainScreen
 	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
-	btSaveChart, LoadProject, SaveProject, btSplitTable, btSplitColumn;
+	btSaveChart, LoadProject, SaveProject, btSplitTable, btSplitColumn_fixedWidth;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -253,7 +254,7 @@ public class Main extends Application {
 			//			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 			//			dialog.setTitle("Enter the DataSet Name");
 			//			dialog.setHeaderText("Enter the DataSet Name");
-			//			dialog.setContentText("文本内容");
+			//			dialog.setContentText("æ–‡æœ¬å†…å®¹");
 			//			dialog.show();
 			//			
 			//			String savename = "";
@@ -323,7 +324,7 @@ public class Main extends Application {
 
 		});
 
-		//反序列化
+		//å��åº�åˆ—åŒ–
 		LoadProject.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(
@@ -387,8 +388,8 @@ public class Main extends Application {
 
 			}
 		});
-		
-		btSplitColumn.setOnAction(new EventHandler<ActionEvent>() {
+
+		btSplitColumn_fixedWidth.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
 
@@ -399,11 +400,36 @@ public class Main extends Application {
 				// Traditional way to get the response value.
 				Optional<String> result = getfixedWidth.showAndWait();
 				if (result.isPresent()){
-				    System.out.println("Your name: " + result.get());
+					System.out.println( result.get());
 				}
 				// The Java 8 way to get the response value (with lambda expression).
-				result.ifPresent(name -> System.out.println("Your name: " + name));
+				//				result.ifPresent(name -> System.out.println("Your name: " + name));
+				String[] inputs = result.get().split(",");
+				int[] widths = new int[inputs.length];
+				for(int i = 0 ; i< inputs.length; i++) {
+					widths[i] = Integer.parseInt(inputs[i]);
+				}
+				for(int test: widths)
+					System.out.println(test);
+
+				String colName = "";
+				DataColumn ColSelected = new DataColumn();
+				for(CheckBox SelectCol: ColumnList.getItems()) {
+					if(SelectCol.isSelected())
+						colName = SelectCol.getText().substring(0, SelectCol.getText().indexOf(' '));
+					ColSelected = sampleDataTable.getCol(colName);
+				}
+				DataColumn[] results = SplitTextColumn_fixedWidth.splitDataColumn(ColSelected, widths);
 				
+				for(int i = 0; i < results.length; i++) {
+						try {
+							sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
+						} catch (DataTableException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println(results[i]+"added");
+				}
 			}
 		});
 
@@ -456,27 +482,16 @@ public class Main extends Application {
 		btGenerateChart = new Button("Transfer to Chart");
 		LoadProject = new Button("LoadProject");
 		SaveProject = new Button("SaveProject");
-		btSplitColumn = new Button("Split Column");
+		btSplitColumn_fixedWidth = new Button("Split Column(fixedWidth mode)");
 		btSplitTable = new Button("Split Table");
-		
+
 		TextInputDialog getDelimiter = new TextInputDialog("walter");
 		getDelimiter.setTitle("Delimiter Input Dialog");
 		getDelimiter.setHeaderText("Input delimiter and select OK");
 		getDelimiter.setContentText("Please input delimiter");
-		
-		TextInputDialog getfixedWidth = new TextInputDialog("walter");
-		getfixedWidth.setTitle("Input a list of the fixed points");
-		getfixedWidth.setHeaderText("e.g. For Text [testing], input:(1,2), outputs: [t], [e], [sting]");
-		getfixedWidth.setContentText("Please input (list of integer)fixed points separate with comma");
-		// Traditional way to get the response value.
-		Optional<String> result = getfixedWidth.showAndWait();
-		if (result.isPresent()){
-		    System.out.println("Your name: " + result.get());
-		}
-		// The Java 8 way to get the response value (with lambda expression).
-		result.ifPresent(name -> System.out.println("Your name: " + name));
 
-		
+
+
 		// Layout the UI components
 
 		DataSetList =  new ListView<>(FXCollections.observableArrayList()); 
@@ -577,7 +592,7 @@ public class Main extends Application {
 
 		HBox hc3 = new HBox(10);
 		hc3.setAlignment(Pos.CENTER);
-		hc3.getChildren().addAll(btSplitTable, btSplitColumn);
+		hc3.getChildren().addAll(btSplitTable, btSplitColumn_fixedWidth);
 
 		HBox hc4 = new HBox(10);
 		hc4.setAlignment(Pos.CENTER);
