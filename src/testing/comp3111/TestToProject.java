@@ -14,9 +14,8 @@ public class TestToProject {
 		 ArrayList<String> charName = new ArrayList<String>();
 		 ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
 		 ArrayList<DataTable> chartList = new ArrayList<DataTable>();
-		 ArrayList<ModifiedDT> MD = new ArrayList<ModifiedDT>();
 		 
-		 DataPack dp = new DataPack(dataTableList, chartList, dataTableName, charName, MD);
+		 DataPack dp = new DataPack(dataTableList, chartList, dataTableName, charName);
 		 
 		 ToProject tp = new ToProject();  
 		//tp.SaveProject(dp);

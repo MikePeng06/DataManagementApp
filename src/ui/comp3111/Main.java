@@ -87,9 +87,8 @@ public class Main extends Application {
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
 	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
-	private ArrayList<String> ColumnName = new ArrayList<String>();
-	
-
+	private ArrayList<String> ColumnName = new ArrayList<String>(); 
+	public BarChart_ chartbc;
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
