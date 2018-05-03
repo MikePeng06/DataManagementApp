@@ -51,7 +51,7 @@ public class BarChart_Test {
 		
 		assert (bc.getDTA().numKey == 6);
 		
-		System.out.println(bc.getDTA().keyRow[0] + " Year");
+		//System.out.println(bc.getDTA().keyRow[0] + " Year");
 //		assert (bc.getDTA().keyRow[0].equals("Year"));
 //		assert (bc.getDTA().keyRow[1].equals("Austria"));
 //		
