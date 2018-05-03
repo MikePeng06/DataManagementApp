@@ -305,7 +305,7 @@ public class Main extends Application {
 					}
 					//sampleDataTable = dttemp;
 					BarChart_  x = new BarChart_(dttemp);
-					x.btLineChartBackMain = this.btLineChartBackMain;
+					x.getUI().setBackButton(this.btLineChartBackMain);
 					ChartObject.add(x);
 					ChartList.getItems().add(sampleDataTable.toString());
 					charName.add("chart");
