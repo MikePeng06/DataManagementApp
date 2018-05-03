@@ -82,13 +82,4 @@ public class BarChart_UI {
 		btLineChartBackMain = b;
 	}
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-	
-
 }
