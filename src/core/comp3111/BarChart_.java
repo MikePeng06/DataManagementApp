@@ -19,6 +19,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	public BarChart_() {
 	//	ui = null;
+		dta = null;
 		dataset = null;
 		type = 0;
 	}
@@ -61,8 +62,6 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     			j++;
     		}
     	}
-    	
-    	System.out.println(keyRow[0] + "  " + keyRow[1]);
     	
     	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
 	}
