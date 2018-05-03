@@ -11,10 +11,10 @@ public class DataPack implements java.io.Serializable{
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	
 	public DataPack(ArrayList<DataTable> dtl, ArrayList<DataTable> ctl, ArrayList<String> dtn, ArrayList<String> cn, ArrayList<DataTableArray> dl) {
-		dataTableList = dtl;
-		chartList = ctl;
+		dataTableList = dtl; 
+		chartList = ctl; 
 		dataTableName = dtn;
-		charName = cn;
+		charName = cn; 
 		DTALIST = dl;
 //		Chartdatatable = cdt;
 //		ChartType = ct;

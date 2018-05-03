@@ -64,8 +64,8 @@ public class LoadData {
         		if(!table[row][w].isEmpty()) { 
         			check = table[row][w];
         			break; 
-        		}
-        		row++;
+        		}  
+        		row++;  
         	}
         	//(check.charAt(0)<='Z'&&check.charAt(0)>='A')||(check.charAt(0)<='z'&&check.charAt(0)>='a')
         	if(Character.isLetter(check.charAt(0))) { 
@@ -79,7 +79,7 @@ public class LoadData {
         			table[j][w]=check;
         		}
         	}
-        	
+        	 
         }
         
         return table;

@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.BarChart;
-
+ 
 public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	//private BarChart_UI ui;
@@ -23,7 +23,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		dataset = null;
 		type = 0;
 	}
-	
+	 
 	public BarChart_(DataTable t) {
 		//ui = new BarChart_UI();
 		dataset = t;
@@ -108,7 +108,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		t.addCol("Brazil", brazilCol);
 		t.addCol("France", franceCol);
 		t.addCol("Italy", italyCol);
-		t.addCol("USA", usaCol);
+		t.addCol("USA", usaCol); 
 		
 		return t;
 	}
