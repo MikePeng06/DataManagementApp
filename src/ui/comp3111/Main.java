@@ -415,7 +415,13 @@ public class Main extends Application {
 			public void handle(ActionEvent arg0) {
 				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
 				try {
-					DataTable[] buffer = SplitTable.splitDataTable(table, 30);
+					TextInputDialog getDelimiter = new TextInputDialog("");
+					getDelimiter.setTitle("Split A dataTable to two dataTable");
+					getDelimiter.setHeaderText(" Input:30 denotes 30% split into the first Table, and 70% split into the second Table");
+					getDelimiter.setContentText("Please input the percentage of the first Table split");
+					Optional<String> result = getDelimiter.showAndWait();
+					int partition1 = Integer.parseInt(result.get());
+					DataTable[] buffer = SplitTable.splitDataTable(table, partition1);
 					for(DataTable dt: buffer) {
 						dataTableList.add(dt);
 						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
@@ -465,7 +471,7 @@ public class Main extends Application {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						System.out.println(results[i]+"added");
+						System.out.println(results[i]+"added");//test if added
 				}
 			}
 		});
