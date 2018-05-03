@@ -91,12 +91,9 @@ public class Main extends Application {
 	private String DataTemp;
 	private ArrayList<String> ColumnName = new ArrayList<String>(); 
 	public BarChart_ chartbc;
-<<<<<<< HEAD
 	public BarChart_UI chartuibc;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	public DataTableArray tempdta;
-=======
->>>>>>> branch 'master' of https://github.com/ElliotBao/Fanta-COMP3111.git
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
@@ -343,7 +340,7 @@ public class Main extends Application {
 					//					scenes[SCENE_SCATTER_CHART] = new Scene(x.paneChart("X", "y", "HELLO"), 800, 600); 
 					//					x.populateDataToChart();
 					//					SCENE_INDEX = SCENE_SCATTER_CHART;
-					x.btLineChartBackMain = this.btLineChartBackMain;
+					//x.btLineChartBackMain = this.btLineChartBackMain;
 					ChartObject.add(x);
 					ChartList.getItems().add("chart");
 					charName.add("chart");
@@ -413,25 +410,6 @@ public class Main extends Application {
 
 		btSplitTable.setOnAction(new EventHandler<ActionEvent>() {
 
-			public void handle(ActionEvent arg0) {
-				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
-				try {
-					DataTable[] buffer = SplitTable.splitDataTable(table, 30);
-					for(DataTable dt: buffer) {
-						dataTableList.add(dt);
-						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
-						DataSetList.getItems().add(name);
-					}
-
-				} catch (DataTableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-
-			}
-		});
-		
-		btSplitColumn.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
 				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
@@ -502,25 +480,9 @@ public class Main extends Application {
 		SaveProject = new Button("SaveProject");
 		btSplitColumn = new Button("Split Column");
 		btSplitTable = new Button("Split Table");
-		
-		TextInputDialog getDelimiter = new TextInputDialog("walter");
-		getDelimiter.setTitle("Delimiter Input Dialog");
-		getDelimiter.setHeaderText("Input delimiter and select OK");
-		getDelimiter.setContentText("Please input delimiter");
-		
-		TextInputDialog getfixedWidth = new TextInputDialog("walter");
-		getfixedWidth.setTitle("Input a list of the fixed points");
-		getfixedWidth.setHeaderText("e.g. For Text [testing], input:(1,2), outputs: [t], [e], [sting]");
-		getfixedWidth.setContentText("Please input (list of integer)fixed points separate with comma");
-		// Traditional way to get the response value.
-		Optional<String> result = getfixedWidth.showAndWait();
-		if (result.isPresent()){
-		    System.out.println("Your name: " + result.get());
-		}
-		// The Java 8 way to get the response value (with lambda expression).
-		result.ifPresent(name -> System.out.println("Your name: " + name));
 
-		
+
+
 		// Layout the UI components
 
 		DataSetList =  new ListView<>(FXCollections.observableArrayList()); 
@@ -581,11 +543,11 @@ public class Main extends Application {
 					SCENE_INDEX = SCENE_BAR_CHART;
 				}
 				else  if(chart instanceof ScatterChart_) {
-					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
-					scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
-					chart1.populateDataToChart();
-					SCENE_INDEX = SCENE_SCATTER_CHART;
-					chart1.getSC();
+//					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
+//					scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
+//					chart1.populateDataToChart();
+//					SCENE_INDEX = SCENE_SCATTER_CHART;
+//					chart1.getSC();
 				}
 
 
