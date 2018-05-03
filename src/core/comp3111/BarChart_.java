@@ -113,4 +113,3 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		return t;
 	}
 }
-
