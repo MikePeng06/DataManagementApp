@@ -44,20 +44,21 @@ public class BarChart_Test {
 		String[] keyRow = {"Year", "Austria"};
 		
 		
+		
 		assert (bc.getDTA().rowSize == 3);
 		
-		assert (bc.getDTA().textCol[0] == "2003");
-		assert (bc.getDTA().textCol[2] == "2005");
-		
-		assert (bc.getDTA().numKey == 6);
+		assert (bc.getDTA().textCol[0].equals("2003"));
+		assert (bc.getDTA().textCol[2].equals("2005"));
+//		
+		assert (bc.getDTA().numKey == 2);
 		
 		//System.out.println(bc.getDTA().keyRow[0] + " Year");
-//		assert (bc.getDTA().keyRow[0].equals("Year"));
-//		assert (bc.getDTA().keyRow[1].equals("Austria"));
+		assert (bc.getDTA().keyRow[0].equals("Year"));
+		assert (bc.getDTA().keyRow[1].equals("Austria"));
 //		
 //		
-//		assert (bc.getDTA().data[0][0] == 25601);
-//		assert (bc.getDTA().data[0][2] == 45000);
+		assert (bc.getDTA().data[0][0].equals(25601));
+		assert (bc.getDTA().data[0][2].equals(45000));
 		
 	}
 	

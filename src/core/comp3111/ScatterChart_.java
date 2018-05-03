@@ -100,52 +100,52 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
 		return dta;
 	}
 	
-	private DataTable generateDummyDataTable() throws DataTableException {
-		DataTable t = new DataTable();
-        String[] category = new String[25];
-        for (int i = 0; i < 25; i++) {
-        	if (i <= 15) {
-        		category[i] = "Equities";
-        	}else {
-        		category[i] = "Mutual funds";
-        	}
-        }
-        DataColumn categoryCol = new DataColumn(DataType.TYPE_STRING, category);
-        
-        
-        Float[] age = new Float[] {(float) 4.2, (float) 2.8, (float) 6.2, (float) 1, (float) 1.2, 
-        						   (float) 4.4, (float) 8.5, (float) 6.9, (float) 9.9, (float) 0.9, 
-        						   (float) 3.2, (float) 4.8, (float) 7.3, (float) 1.8, (float) 7.3, 
-        						   (float) 2.7, (float) 5.2, (float) 2.4, (float) 3.2, (float) 1.8, 
-        						   (float) 3.2, (float) 7.4, (float) 3.5, (float) 9.3, (float) 8.1};
-		DataColumn ageCol = new DataColumn(DataType.TYPE_NUMBER, age);
-        
-		Float[] returnToDate = new Float[] {(float) 193.2, (float) 33.6, (float) 24.8, (float) 14, (float) 26.4,
-										    (float) 114.4, (float) 323, (float) 289.8, (float) 287.1, (float) -9,
-										    (float) 150.8, (float) 20.8, (float) -42.3, (float)  81.4, (float) 110.3,
-										    (float) 41.2, (float) 229.2, (float) 37.6, (float) 49.8, (float) 134,
-										    (float) 236.2, (float) 114.1, (float) 323, (float) 29.9, (float) 287.4};
-		DataColumn returnToDateCol = new DataColumn(DataType.TYPE_NUMBER, returnToDate);
-		
-		
-		
-		t.addCol("Category", categoryCol);
-		t.addCol("Age", ageCol);
-		t.addCol("Return To Date", returnToDateCol);
-		
-		return t;
-	}
-	
-	public void printDataTable() {
-		Set<String> keys_before = dataset.getDC().keySet();
-    	for (String key_before : keys_before) {
-    		System.out.print(key_before + " ");
-    		for (int i = 0; i < dataset.getNumRow(); i++) {
-    			System.out.print(dataset.getCol(key_before).getData()[i] + " ");
-    		}
-    		System.out.println();
-    	}
-	}
+//	private DataTable generateDummyDataTable() throws DataTableException {
+//		DataTable t = new DataTable();
+//        String[] category = new String[25];
+//        for (int i = 0; i < 25; i++) {
+//        	if (i <= 15) {
+//        		category[i] = "Equities";
+//        	}else {
+//        		category[i] = "Mutual funds";
+//        	}
+//        }
+//        DataColumn categoryCol = new DataColumn(DataType.TYPE_STRING, category);
+//        
+//        
+//        Float[] age = new Float[] {(float) 4.2, (float) 2.8, (float) 6.2, (float) 1, (float) 1.2, 
+//        						   (float) 4.4, (float) 8.5, (float) 6.9, (float) 9.9, (float) 0.9, 
+//        						   (float) 3.2, (float) 4.8, (float) 7.3, (float) 1.8, (float) 7.3, 
+//        						   (float) 2.7, (float) 5.2, (float) 2.4, (float) 3.2, (float) 1.8, 
+//        						   (float) 3.2, (float) 7.4, (float) 3.5, (float) 9.3, (float) 8.1};
+//		DataColumn ageCol = new DataColumn(DataType.TYPE_NUMBER, age);
+//        
+//		Float[] returnToDate = new Float[] {(float) 193.2, (float) 33.6, (float) 24.8, (float) 14, (float) 26.4,
+//										    (float) 114.4, (float) 323, (float) 289.8, (float) 287.1, (float) -9,
+//										    (float) 150.8, (float) 20.8, (float) -42.3, (float)  81.4, (float) 110.3,
+//										    (float) 41.2, (float) 229.2, (float) 37.6, (float) 49.8, (float) 134,
+//										    (float) 236.2, (float) 114.1, (float) 323, (float) 29.9, (float) 287.4};
+//		DataColumn returnToDateCol = new DataColumn(DataType.TYPE_NUMBER, returnToDate);
+//		
+//		
+//		
+//		t.addCol("Category", categoryCol);
+//		t.addCol("Age", ageCol);
+//		t.addCol("Return To Date", returnToDateCol);
+//		
+//		return t;
+//	}
+//	
+//	public void printDataTable() {
+//		Set<String> keys_before = dataset.getDC().keySet();
+//    	for (String key_before : keys_before) {
+//    		System.out.print(key_before + " ");
+//    		for (int i = 0; i < dataset.getNumRow(); i++) {
+//    			System.out.print(dataset.getCol(key_before).getData()[i] + " ");
+//    		}
+//    		System.out.println();
+//    	}
+//	}
 	
 }
 
