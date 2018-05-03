@@ -413,7 +413,7 @@ public class Main extends Application {
 		btSplitTable.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
-				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
+//				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
 				try {
 					TextInputDialog getDelimiter = new TextInputDialog("");
 					getDelimiter.setTitle("Split A dataTable to two dataTable");
@@ -421,7 +421,7 @@ public class Main extends Application {
 					getDelimiter.setContentText("Please input the percentage of the first Table split");
 					Optional<String> result = getDelimiter.showAndWait();
 					int partition1 = Integer.parseInt(result.get());
-					DataTable[] buffer = SplitTable.splitDataTable(table, partition1);
+					DataTable[] buffer = SplitTable.splitDataTable(sampleDataTable, partition1);
 					for(DataTable dt: buffer) {
 						dataTableList.add(dt);
 						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
