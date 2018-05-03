@@ -28,6 +28,7 @@ public class BarChart_UI {
 	}
 	
 	public void populateDataToBarChartUI(DataTableArray dta) {
+	bc.getData().clear();
     	XYChart.Series [] series = new XYChart.Series[dta.rowSize];
     	for (int i = 0; i < series.length ;i++) {
     		series[i] = new  XYChart.Series();
