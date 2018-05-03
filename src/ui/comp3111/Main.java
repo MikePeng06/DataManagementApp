@@ -23,6 +23,7 @@ import core.comp3111.DataPack;
 import core.comp3111.ToProject;
 import core.comp3111.SelectColumn;
 import core.comp3111.SplitTable;
+import core.comp3111.SplitTextColumn_delimiter;
 import core.comp3111.SplitTextColumn_fixedWidth;
 import core.comp3111.Chart;
 import core.comp3111.BarChart_;
@@ -101,7 +102,7 @@ public class Main extends Application {
 
 	// Screen 1: paneMainScreen
 	private Button btSampleLineChartData, btSampleLineChartDataV2, btSampleLineChart, btSelectFile, btGenerateChart, 
-	btSaveChart, LoadProject, SaveProject, btSplitTable, btSplitColumn_fixedWidth;
+	btSaveChart, LoadProject, SaveProject, btSplitTable, btSplitColumn_fixedWidth, btSplitColumn_delimiter;
 	private Label lbSampleDataTable, lbMainScreenTitle;
 	private ChoiceBox<String> cb;
 	private ListView<String> DataSetList = new ListView<>();  
@@ -350,7 +351,7 @@ public class Main extends Application {
 
 		});
 
-		//å��åº�åˆ—åŒ–
+		//
 		LoadProject.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(
@@ -429,28 +430,67 @@ public class Main extends Application {
 			}
 		});
 
+		
+		
+		
+		btSplitColumn_delimiter.setOnAction(new EventHandler<ActionEvent>() {
+
+			public void handle(ActionEvent arg0) {
+
+				TextInputDialog getDelimiter = new TextInputDialog("");
+				getDelimiter.setTitle("Delimiter Input Dialog");
+				getDelimiter.setHeaderText("Input delimiter and select OK");
+				getDelimiter.setContentText("Please input delimiter");
+				// Traditional way to get the response value.
+				Optional<String> result = getDelimiter.showAndWait();
+				if (result.isPresent()){
+					System.out.println( result.get());
+				}
+				
+				String target = result.get();
+
+				String colName = "";
+				DataColumn selectCol = new DataColumn();
+				for(CheckBox SelectCol: ColumnList.getItems()) {
+					if(SelectCol.isSelected())
+						colName = SelectCol.getText().substring(0, SelectCol.getText().indexOf(' '));
+					selectCol = sampleDataTable.getCol(colName);
+				}
+				DataColumn[] results = SplitTextColumn_delimiter.splitDataColumn(selectCol, target);
+				
+				for(int i = 0; i < results.length; i++) {
+						try {
+							sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
+						} catch (DataTableException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						System.out.println(results[i]+"added");
+				}
+			}
+		});
+		
+		
+		
+
 		btSplitColumn_fixedWidth.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
 
-				TextInputDialog getfixedWidth = new TextInputDialog("walter");
+				TextInputDialog getfixedWidth = new TextInputDialog("e.g. 1,3,4");
 				getfixedWidth.setTitle("Input a list of the fixed points");
-				getfixedWidth.setHeaderText("e.g. For Text [testing], input:(1,2), outputs: [t], [e], [sting]");
-				getfixedWidth.setContentText("Please input (list of integer)fixed points separate with comma");
+				getfixedWidth.setHeaderText("e.g. For Text [testing], Input:1,2 Outputs: [t], [e], [sting]");
+				getfixedWidth.setContentText("Please input fixed points separate with comma in increasing order");
 				// Traditional way to get the response value.
 				Optional<String> result = getfixedWidth.showAndWait();
 				if (result.isPresent()){
 					System.out.println( result.get());
 				}
-				// The Java 8 way to get the response value (with lambda expression).
-				//				result.ifPresent(name -> System.out.println("Your name: " + name));
 				String[] inputs = result.get().split(",");
 				int[] widths = new int[inputs.length];
 				for(int i = 0 ; i< inputs.length; i++) {
 					widths[i] = Integer.parseInt(inputs[i]);
 				}
-				for(int test: widths)
-					System.out.println(test);
 
 				String colName = "";
 				DataColumn ColSelected = new DataColumn();
@@ -522,14 +562,9 @@ public class Main extends Application {
 		btGenerateChart = new Button("Transfer to Chart");
 		LoadProject = new Button("LoadProject");
 		SaveProject = new Button("SaveProject");
-		btSplitColumn_fixedWidth = new Button("Split Column(fixedWidth mode)");
+		btSplitColumn_fixedWidth = new Button("Split Column(fixedWidth)");
+		btSplitColumn_delimiter = new Button("Split Column(delimiter)");
 		btSplitTable = new Button("Split Table");
-
-		TextInputDialog getDelimiter = new TextInputDialog("walter");
-		getDelimiter.setTitle("Delimiter Input Dialog");
-		getDelimiter.setHeaderText("Input delimiter and select OK");
-		getDelimiter.setContentText("Please input delimiter");
-
 
 
 		// Layout the UI components
@@ -575,7 +610,6 @@ public class Main extends Application {
 			public void changed(ObservableValue ov, Number value, Number new_value) {
 			}
 		});
-
 
 
 		ChartList.getSelectionModel().selectedIndexProperty()
@@ -641,7 +675,7 @@ public class Main extends Application {
 
 		HBox hc3 = new HBox(10);
 		hc3.setAlignment(Pos.CENTER);
-		hc3.getChildren().addAll(btSplitTable, btSplitColumn_fixedWidth);
+		hc3.getChildren().addAll(btSplitTable, btSplitColumn_delimiter, btSplitColumn_fixedWidth);
 
 		HBox hc4 = new HBox(10);
 		hc4.setAlignment(Pos.CENTER);
