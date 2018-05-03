@@ -21,10 +21,6 @@ public class AnimatedBarChart_UI {
 		
 	}
 	
-	
-	
-	
-	
 	public void populateDataToAnimatedBarChartUI(DataTableArray dta, AnimatedBarChart abc) {
 		for (int i = 0; i < abc.getNumFrame(); i++) {
 			abc.getFrame()[i].getBC().getData().clear();
@@ -36,21 +32,22 @@ public class AnimatedBarChart_UI {
     	
     	for (int i = 0; i < dta.rowSize ; i++) {
     		series[i].setName(dta.textCol[i]);
-
     	}
     	
     	int frameCounter = 0;
     	for (int i = 0; i < dta.rowSize; i++) {
-    		for (int k = 1; k < dta.numKey; k++) {
-    			System.out.println(series.length + " " + dta.keyRow.length + " " + dta.data.length + " " + dta.data[0].length);
-    			series[i].getData().add(new XYChart.Data(dta.keyRow[k], dta.data[k-1][i]));
+			//System.out.println(series.length + " " + dta.keyRow.length + " " + dta.data.length + " " + dta.data[0].length);
+    			series[i].getData().add(new XYChart.Data(dta.keyRow[1], dta.dataSingle[i]));
  //   			for (int m = frameCounter; m < abc.getNumFrame(); m++) {
-    				for (int n = 0; n < dta.rowSize; n++) {
-    					abc.getFrame()[frameCounter].getBC().getData().add(series[n]);
-    				}
+//				for (int n = 0; n < dta.rowSize; n++) {
+//					abc.getFrame()[frameCounter].getBC().getData().add(series[n]);
+//				}
 //    			}
-    			frameCounter++;
-    		}
+    			
+			frameCounter++;
+    	}
+    	for (int i = 0; i < series.length; i++) {
+    		abc.getFrame()[0].getBC().getData().add(series[i]);
     	}
 	}
 	

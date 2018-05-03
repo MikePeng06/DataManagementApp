@@ -17,7 +17,7 @@ public class AnimatedBarChart extends Chart {
 	
 	public AnimatedBarChart(DataTable t) {
 		dataset = t;
-		numFrame = t.getNumRow() * (t.getDC().size() - 1);
+		numFrame = t.getNumRow();
 		frame = new BarChart_UI[numFrame];
 		for (int i = 0; i<frame.length; i++) {
 			frame[i] = new BarChart_UI();
@@ -26,16 +26,14 @@ public class AnimatedBarChart extends Chart {
 	}
 	
 	private void populateDataToAnimatedBarChart() {
-    	int numKey = dataset.getNumCol();
-    	int numTextCol = 1;
-    	int numNumericCol = numKey - numTextCol;
+    	int numKey = 2;
+    	int numNumericCol = 1;
     	int rowSize = dataset.getNumRow();
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
-    	Integer[][] data = new Integer[numNumericCol][rowSize];
+    	Integer[] dataSingle = new Integer[rowSize];
     	
-    	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -45,15 +43,14 @@ public class AnimatedBarChart extends Chart {
     			}
     		}
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
-    			keyRow[j] = key;
+    			keyRow[1] = key;
     			for (int i = 0; i < rowSize ; i++) {
-    				data[j-1][i] = (Integer) dataset.getCol(key).getData()[i] ;
+    				dataSingle[i] = (Integer) dataset.getCol(key).getData()[i] ;
     			}
-    			j++;
     		}
     	}
     	
-    	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
+    	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, dataSingle);
     	
 	}	
 	
