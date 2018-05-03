@@ -26,10 +26,11 @@ import core.comp3111.SplitTable;
 import core.comp3111.SplitTextColumn_delimiter;
 import core.comp3111.SplitTextColumn_fixedWidth;
 import core.comp3111.Chart;
+import core.comp3111.AnimatedBarChart;
+import core.comp3111.AnimatedBarChart_UI;
 import core.comp3111.BarChart_;
 import core.comp3111.BarChart_UI;
 import core.comp3111.ScatterChart_;
-import core.comp3111.ScatterChart_UI;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -77,13 +78,14 @@ public class Main extends Application {
 	private DataTable sampleDataTable = null;
 
 	// Attributes: Scene and Stage
-	private static final int SCENE_NUM = 4;
+	private static final int SCENE_NUM = 5;
 	private static final int SCENE_MAIN_SCREEN = 0;
 	private static final int SCENE_LINE_CHART = 1;
 	private static final int SCENE_BAR_CHART = 2;
 	private static final int SCENE_SCATTER_CHART = 3;
+	private static final int SCENE_ANIMATE_CHART = 4;
 	private int SCENE_INDEX = 0;
-	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Sample Bar Screen", "Sample Scatter Screen" };
+	private static final String[] SCENE_TITLES = { "COMP3111 Chart - [Team Name]", "Sample Line Chart Screen", "Sample Bar Screen", "Sample Scatter Screen", "Sample Animate Screen" };
 	private Stage stage = null;
 	private Scene[] scenes = null;
 	private ArrayList<String> dataTableName = new ArrayList<String>();
@@ -97,6 +99,8 @@ public class Main extends Application {
 	public BarChart_UI chartuibc;
 	public ScatterChart_ chartsc;
 	public ScatterChart_UI chartuisc;
+	public AnimatedBarChart_UI chartuiabc;
+	public AnimatedBarChart chartabc;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	public DataTableArray tempdta;
 	// To keep this application more structural, 
@@ -157,6 +161,8 @@ public class Main extends Application {
 				chartuibc.populateDataToBarChartUI(tempdta);
 			}else if (SCENE_INDEX == 3) {
 				chartuisc.populateDataToScatterChartUI(tempdta);
+			}else if (SCENE_INDEX == 4) {
+				chartuiabc.populateDataToAnimatedBarChartUI(tempdta, chartabc);
 			}
 			
 //			System.out.println(chartbc.getDTA());
@@ -352,6 +358,15 @@ public class Main extends Application {
 					//					x.populateDataToChart();
 					//					SCENE_INDEX = SCENE_SCATTER_CHART;
 					//x.btLineChartBackMain = this.btLineChartBackMain;
+					ChartObject.add(x);
+					ChartList.getItems().add("chart");
+					charName.add("chart");
+					x.populateDataToChart();
+					DTALIST.add(x.getDTA());
+					chartList.add(dttemp);
+				}else if (result.get() == "AnimateChart") {
+					AnimatedBarChart x = new AnimatedBarChart(sampleDataTable);
+					chartabc = x;
 					ChartObject.add(x);
 					ChartList.getItems().add("chart");
 					charName.add("chart");
@@ -655,6 +670,14 @@ public class Main extends Application {
 					chartuisc = chart1UI;	
 					scenes[SCENE_SCATTER_CHART] = new Scene(chartuisc.paneScatterChartScreen("X", "y", "HELLO"), 800, 600);
 					SCENE_INDEX = SCENE_SCATTER_CHART;
+				}
+				else if(chart instanceof AnimatedBarChart) {
+					AnimatedBarChart_UI chart1UI = new AnimatedBarChart_UI();
+					chart1UI.btLineChartBackMain = btLineChartBackMain;
+					tempdta = DTALIST.get(new_value.intValue());
+					chartuiabc = chart1UI;	
+					scenes[SCENE_ANIMATE_CHART] = new Scene(chartuiabc.paneAnimatedBarChart("X", "y", "HELLO", chartabc, 0), 800, 600);
+					SCENE_INDEX = SCENE_ANIMATE_CHART;
 				}
 
 
