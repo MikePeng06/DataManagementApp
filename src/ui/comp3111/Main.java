@@ -87,8 +87,8 @@ public class Main extends Application {
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
 	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
-	private ArrayList<String> ColumnName = new ArrayList<String>();
-
+	private ArrayList<String> ColumnName = new ArrayList<String>(); 
+	public BarChart_ chartbc;
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
@@ -370,6 +370,25 @@ public class Main extends Application {
 
 		btSplitTable.setOnAction(new EventHandler<ActionEvent>() {
 
+			public void handle(ActionEvent arg0) {
+				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
+				try {
+					DataTable[] buffer = SplitTable.splitDataTable(table, 30);
+					for(DataTable dt: buffer) {
+						dataTableList.add(dt);
+						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
+						DataSetList.getItems().add(name);
+					}
+
+				} catch (DataTableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+			}
+		});
+		
+		btSplitColumn.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
 				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
@@ -440,9 +459,25 @@ public class Main extends Application {
 		SaveProject = new Button("SaveProject");
 		btSplitColumn = new Button("Split Column");
 		btSplitTable = new Button("Split Table");
+		
+		TextInputDialog getDelimiter = new TextInputDialog("walter");
+		getDelimiter.setTitle("Delimiter Input Dialog");
+		getDelimiter.setHeaderText("Input delimiter and select OK");
+		getDelimiter.setContentText("Please input delimiter");
+		
+		TextInputDialog getfixedWidth = new TextInputDialog("walter");
+		getfixedWidth.setTitle("Input a list of the fixed points");
+		getfixedWidth.setHeaderText("e.g. For Text [testing], input:(1,2), outputs: [t], [e], [sting]");
+		getfixedWidth.setContentText("Please input (list of integer)fixed points separate with comma");
+		// Traditional way to get the response value.
+		Optional<String> result = getfixedWidth.showAndWait();
+		if (result.isPresent()){
+		    System.out.println("Your name: " + result.get());
+		}
+		// The Java 8 way to get the response value (with lambda expression).
+		result.ifPresent(name -> System.out.println("Your name: " + name));
 
-
-
+		
 		// Layout the UI components
 
 		DataSetList =  new ListView<>(FXCollections.observableArrayList()); 

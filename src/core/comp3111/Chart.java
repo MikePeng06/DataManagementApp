@@ -3,7 +3,7 @@ package core.comp3111;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
-public abstract class Chart {
+public abstract class Chart implements java.io.Serializable{
 	private String[] typeSet = {"BarChart", "ScatterChart", "AnimatedChart"};
 	protected int type = -1;
 	protected DataTable dataset;
