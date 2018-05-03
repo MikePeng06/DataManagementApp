@@ -262,7 +262,7 @@ public class Main extends Application {
 			//			    System.out.println("Your name: " + result.get());
 			//			}
 			//			
-			//			System.out.println(savename);
+			//			System.out.println(savenam`e);
 			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
 			//putSceneOnStage(0);
 		});
@@ -391,20 +391,19 @@ public class Main extends Application {
 		btSplitColumn.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
-				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
-				try {
-					DataTable[] buffer = SplitTable.splitDataTable(table, 30);
-					for(DataTable dt: buffer) {
-						dataTableList.add(dt);
-						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
-						DataSetList.getItems().add(name);
-					}
 
-				} catch (DataTableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				TextInputDialog getfixedWidth = new TextInputDialog("walter");
+				getfixedWidth.setTitle("Input a list of the fixed points");
+				getfixedWidth.setHeaderText("e.g. For Text [testing], input:(1,2), outputs: [t], [e], [sting]");
+				getfixedWidth.setContentText("Please input (list of integer)fixed points separate with comma");
+				// Traditional way to get the response value.
+				Optional<String> result = getfixedWidth.showAndWait();
+				if (result.isPresent()){
+				    System.out.println("Your name: " + result.get());
 				}
-
+				// The Java 8 way to get the response value (with lambda expression).
+				result.ifPresent(name -> System.out.println("Your name: " + name));
+				
 			}
 		});
 
