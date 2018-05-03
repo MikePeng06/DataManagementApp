@@ -152,9 +152,9 @@ public class Main extends Application {
 				System.out.println(ChartObject.size());
 				chartuibc.populateDataToBarChartUI(tempdta);
 			}else if (SCENE_INDEX == 3) {
-				chartuisc.populateDataToScatterChartUI(tempdta);
+				//chartuisc.populateDataToScatterChartUI(tempdta);
 			}
-			
+			 
 //			System.out.println(chartbc.getDTA());
 //			System.out.println(((BarChart_)ChartObject.get(0)));
 //			System.out.println(ChartObject.size());
@@ -358,9 +358,6 @@ public class Main extends Application {
 
 		//
 		LoadProject.setOnAction(e -> {
-			 ListView<String> DataSetList = new ListView<>();  
-			 ListView<String> ChartList = new ListView<>(); 
-			 
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(
 					new FileChooser.ExtensionFilter("comp3311", "*.comp3311")
@@ -410,14 +407,13 @@ public class Main extends Application {
 				DataSetList.getItems().add(str);
 				//sampleDataTable = dataTableList.get(i);
 			}
-			this.DataSetList = DataSetList;
 			//System.out.println(dataTableList.get(0).getNumCol());
 			
 			for(String str: charName) {
 				ChartList.getItems().add(str);
 				//System.out.println(charName.get(i));
 			}
-			this.ChartList = ChartList;
+
 			//dsd
 			
 			for(DataTable dt: chartList) {

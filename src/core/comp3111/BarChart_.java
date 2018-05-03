@@ -24,7 +24,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		type = 0;
 	}
 	 
-	public BarChart_(DataTable t) {
+	public BarChart_(DataTable t) {  
 		//ui = new BarChart_UI();
 		dataset = t;
 		dta = new DataTableArray();

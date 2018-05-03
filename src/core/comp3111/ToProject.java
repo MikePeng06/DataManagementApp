@@ -7,6 +7,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * The ToProject class of this GUI application
+ * It is used for save the whole project (including charts and datasets)
+ * They can be saved as a whole file called (*.comp3111) 
+ * 
+ * After loading a *comp3111 file, you can see the charts and datasets
+ * 
+ * @author Zeyang Bao
+ *
+ */
+
+
 public class ToProject {
 //Save Comp3311 Project
 	

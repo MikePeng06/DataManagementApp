@@ -2,6 +2,15 @@ package core.comp3111;
 
 import java.util.ArrayList;
 
+/**
+ * The DataPack class of this GUI application
+ * It is used for pack the needed data when save and load the project
+ * (Do serialize and deserialize)
+ * 
+ * @author Zeyang Bao
+ *
+ */
+
 public class DataPack implements java.io.Serializable{
 
 	public ArrayList<DataTable> dataTableList = new ArrayList<DataTable>(); 
