@@ -1,5 +1,6 @@
-package core.comp3111;
+package ui.comp3111;
 
+import core.comp3111.DataTableArray;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
