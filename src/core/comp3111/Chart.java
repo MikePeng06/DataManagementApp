@@ -9,14 +9,12 @@ public abstract class Chart {
 	protected DataTable dataset;
 	protected Button btLineChartBackMain = null;
 	
-	abstract Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle);
+//	abstract Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle);
 	
 	abstract void populateDataToChart();
 	
 	public DataTable getDataset() {return dataset;}
-	public void setDataset(DataTable t) {dataset = t;}
 	
 	public String getType() {return typeSet[type];}
-	public void setType(int index) {type = index;}
 	
 }

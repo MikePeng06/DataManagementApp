@@ -66,7 +66,13 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
+<<<<<<< HEAD
+    	float[][] data = new float[numNumericCol][rowSize];
+    	
+    	sc.getData().clear();
+=======
     	Integer[][] data = new Integer[numNumericCol][rowSize];
+>>>>>>> refs/remotes/origin/master
     	int j = 1;
     	sc.getData().clear();
     	Set<String> keys = dataset.getDC().keySet();
@@ -85,6 +91,9 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     			j++;
     		}
     	}
+    	textCol[0] ="a";
+    	textCol[1] ="b";
+    	textCol[2] = "a";
     	
     	int numDistinctElement = 1;
     	boolean same = false;
@@ -100,7 +109,10 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     			numDistinctElement++;
     		}
     	}
+<<<<<<< HEAD
+=======
     	System.out.println(numDistinctElement);
+>>>>>>> refs/remotes/origin/master
     	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
@@ -123,13 +135,13 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	}
     	for (int i = 0; i < numDistinctElement ; i++) {
     		series[i].setName(textColDistinct[i]);
-
     		
     	}
     	for (int i = 0; i < rowSize; i++) {
     		for (int k = 0; k < numDistinctElement; k++) {
     			if (textCol[i].equals( textColDistinct[k]) ){
     				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
+    				
     			}
     		}
     	}
