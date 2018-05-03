@@ -37,7 +37,7 @@ public class SplitTextColumn_fixedWidth {
 
 	public static boolean canSplit(DataColumn selectCol, int widths[]) {
 
-		if(widths[0] <= 0)
+		if((widths[0] <= 0) )
 			return false;
 
 		for(int i = 1; i<widths.length; i++)
