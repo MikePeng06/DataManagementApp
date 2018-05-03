@@ -17,6 +17,7 @@ public class AnimatedBarChart extends Chart {
 	int numFrame;
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
+	public Button btLineChartBackMain;
 	
 	public AnimatedBarChart() {
 		frame = null;
@@ -30,6 +31,9 @@ public class AnimatedBarChart extends Chart {
 		dataset = t;
 		numFrame = t.getNumRow() * (t.getDC().size() - 1);
 		frame = new BarChart_[numFrame];
+		for (int i = 0; i<frame.length; i++) {
+			frame[i] = new BarChart_();
+		}
 	}
 	
 	private void populateDataToAnimatedBarChart() {
@@ -89,7 +93,7 @@ public class AnimatedBarChart extends Chart {
 	}
 	
 	private Pane paneAnimatedBarChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = new Button("Back");
+		btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
 		yAxis.setLabel(yAxisLabel);

@@ -1,6 +1,6 @@
 package core.comp3111;
 
-public class DataTableArray {
+public class DataTableArray implements java.io.Serializable{
 	public int rowSize;
 	public String[] textCol;
 	public int numKey;

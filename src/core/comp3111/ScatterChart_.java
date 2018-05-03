@@ -148,4 +148,3 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
 //	}
 	
 }
-
