@@ -13,50 +13,19 @@ import javafx.scene.layout.VBox;
 
 public class ScatterChart_ extends Chart implements java.io.Serializable{
 	
-	private NumberAxis xAxis;
-    private NumberAxis yAxis;        
-    private ScatterChart<Number,Number> sc;
-    public Button btLineChartBackMain; 
-    
+	private DataTableArray dta;
+	
     public ScatterChart_() {
-    	xAxis = null;
-    	yAxis = null;
-    	sc = null;
+    	dta = null;
     	dataset = null;
     	type = 1;
     }
     
     public ScatterChart_(DataTable t){
-    	xAxis = new NumberAxis();
-    	yAxis = new NumberAxis();
-    	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-    	setDataset(t);
+    	dta = new DataTableArray();
+    	dataset = t;
     }
 
-    private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		btLineChartBackMain = this.btLineChartBackMain;
-
-		xAxis.setLabel(xAxisLabel);
-		yAxis.setLabel(yAxisLabel);
-		sc.setTitle(chartTitle);
-
-		// Layout the UI components
-		VBox container = new VBox(20);
-		container.getChildren().addAll(sc, btLineChartBackMain);
-		container.setAlignment(Pos.CENTER);
-
-		BorderPane pane = new BorderPane();
-		pane.setCenter(container);
-
-		// Apply CSS to style the GUI components
-		pane.getStyleClass().add("screen-background");
-
-		return pane;
-    }
-    
-	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		return paneScatterChartScreen(xAxisLabel, yAxisLabel, chartTitle);
-	}
 	
 	private void populateDataToScatterChart() {
 		int numKey = dataset.getNumCol();
@@ -67,8 +36,8 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
+
     	int j = 1;
-    	sc.getData().clear();
     	Set<String> keys = dataset.getDC().keySet();
     	for (String key : keys) {
     		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
@@ -100,7 +69,7 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     			numDistinctElement++;
     		}
     	}
-    	System.out.println(numDistinctElement);
+
     	
     	String[] textColDistinct = new String[numDistinctElement];
     	int numNonEmptytextColDistinct = 0;
@@ -117,29 +86,9 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     		}
     	}
     	
-    	XYChart.Series [] series = new XYChart.Series[numDistinctElement];
-    	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series();
-    	}
-    	for (int i = 0; i < numDistinctElement ; i++) {
-    		series[i].setName(textColDistinct[i]);
-
-    		
-    	}
-    	for (int i = 0; i < rowSize; i++) {
-    		for (int k = 0; k < numDistinctElement; k++) {
-    			if (textCol[i].equals( textColDistinct[k]) ){
-    				series[k].getData().add(new XYChart.Data(data[1][i], data[0][i]));
-    			}
-    		}
-    	}
+    	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data, numDistinctElement, textColDistinct);
     	
-    	for (int i = 0; i < numDistinctElement ; i++) {
-    		sc.getData().add(series[i]);
-    		
-    	}
     	
-    	System.out.println(series.length);
     	
 	}
 	
@@ -147,8 +96,8 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
 		populateDataToScatterChart();
 	}
 	
-	public ScatterChart<Number, Number> getSC(){
-		return sc;
+	public DataTableArray getDTA() {
+		return dta;
 	}
 	
 	private DataTable generateDummyDataTable() throws DataTableException {

@@ -253,7 +253,7 @@ public class Main extends Application {
 			//			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 			//			dialog.setTitle("Enter the DataSet Name");
 			//			dialog.setHeaderText("Enter the DataSet Name");
-			//			dialog.setContentText("文本内容");
+			//			dialog.setContentText("����捆");
 			//			dialog.show();
 			//			
 			//			String savename = "";
@@ -304,7 +304,7 @@ public class Main extends Application {
 					}
 					//sampleDataTable = dttemp;
 					BarChart_  x = new BarChart_(dttemp);
-					x.btLineChartBackMain = this.btLineChartBackMain;
+					x.getUI().setBackButton(this.btLineChartBackMain);
 					ChartObject.add(x);
 					ChartList.getItems().add(sampleDataTable.toString());
 					charName.add("chart");
@@ -323,7 +323,7 @@ public class Main extends Application {
 
 		});
 
-		//反序列化
+		//������
 		LoadProject.setOnAction(e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().addAll(

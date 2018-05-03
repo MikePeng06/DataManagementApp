@@ -14,50 +14,26 @@ import javafx.scene.chart.BarChart;
 
 public class BarChart_ extends Chart implements java.io.Serializable{
 	
-	private static CategoryAxis xAxis;
-	private static NumberAxis yAxis;
-	public BarChart<String,Number> bc;
-	public Button btLineChartBackMain;
+	//private BarChart_UI ui;
+	private DataTableArray dta;
 	
 	public BarChart_() {
-		xAxis = null;
-		yAxis = null;
-		bc = null;
+	//	ui = null;
+		dta = null;
 		dataset = null;
 		type = 0;
 	}
 	
 	public BarChart_(DataTable t) {
-		xAxis = new CategoryAxis();
-		yAxis = new NumberAxis();
-		bc = new BarChart<String,Number>(xAxis,yAxis);
-		setDataset(t);
+		//ui = new BarChart_UI();
+		dataset = t;
+		dta = new DataTableArray();
 	}
 	
-	   Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		Button btLineChartBackMain = this.btLineChartBackMain;
 
-		xAxis.setLabel(xAxisLabel);
-		yAxis.setLabel(yAxisLabel);
-		bc.setTitle(chartTitle);
-
-		// Layout the UI components
-		VBox container = new VBox(20);
-		container.getChildren().addAll(bc, btLineChartBackMain);
-		container.setAlignment(Pos.CENTER);
-
-		BorderPane pane = new BorderPane();
-		pane.setCenter(container);
-
-		// Apply CSS to style the GUI components
-		pane.getStyleClass().add("screen-background");
-
-		return pane;	
-	}
-	
-	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
-		return paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
-	}
+//	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
+//		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
+//	}
 	
 	public void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
@@ -68,8 +44,6 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
-    	
-    	bc.getData().clear();
     	
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
@@ -89,33 +63,23 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     		}
     	}
     	
-    	XYChart.Series [] series = new XYChart.Series[rowSize];
-    	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series();
-    	}
-    
-    	for (int i = 0; i < rowSize ; i++) {
-    		series[i].setName(textCol[i]);
-    		for (int k = 1; k < numKey; k++) {
-    			series[i].getData().add(new XYChart.Data(keyRow[k], data[k-1][i]));
-    		}
-    	}
-		
-    	for (int i = 0; i < rowSize ; i++) {
-    		System.out.println(series.length);
-    		bc.getData().add(series[i]);
-    	}
+
+    	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
+
 	}
 	
 	public void populateDataToChart(){
 		populateDataToBarChart();
 	}
-
-	public BarChart<String, Number> getBC(){
-		return bc;
+	
+	
+	public DataTableArray getDTA() {
+		return dta;
 	}
 	
-	public static DataTable generateDummyDataTable() throws DataTableException {
+
+	public DataTable generateDummyDataTable() throws DataTableException {
+
 
 		DataTable t = new DataTable();
 
