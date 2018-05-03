@@ -27,7 +27,7 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     }
 
 	
-	private void populateDataToScatterChart() {
+	public void populateDataToScatterChart() {
 		int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
