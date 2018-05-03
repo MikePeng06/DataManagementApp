@@ -1,3 +1,4 @@
+
 package core.comp3111;
 
 import javafx.scene.control.Button;
@@ -9,14 +10,12 @@ public abstract class Chart implements java.io.Serializable{
 	protected DataTable dataset;
 	protected Button btLineChartBackMain = null;
 	
-	abstract Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle);
+//	abstract Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle);
 	
 	abstract void populateDataToChart();
 	
 	public DataTable getDataset() {return dataset;}
-	public void setDataset(DataTable t) {dataset = t;}
 	
 	public String getType() {return typeSet[type];}
-	public void setType(int index) {type = index;}
 	
 }
