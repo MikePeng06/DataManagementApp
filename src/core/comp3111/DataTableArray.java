@@ -16,6 +16,9 @@ public class DataTableArray {
 		numKey = 0;
 		keyRow = null;
 		data = null;
+		
+		numDistinctElement = 0;
+		textColDistinct = null;
 	}
 	
 	public DataTableArray(int rowSize, String[] textCol, int numKey, String[] keyRow, Integer[][] data) {
@@ -43,10 +46,13 @@ public class DataTableArray {
 				this.data[i][j] = data[i][j];
 			}
 		}
+		
+		numDistinctElement = 0;
+		textColDistinct = null;
 	}
 	
 	public DataTableArray(int rowSize, String[] textCol, int numKey, String[] keyRow, Integer[][] data, int numDistinctElement, String[] textColDistinct) {
-this.rowSize = rowSize;
+		this.rowSize = rowSize;
 		
 		
 		this.textCol = new String[textCol.length];
@@ -71,7 +77,9 @@ this.rowSize = rowSize;
 			}
 		}
 		
+		
 		this.numDistinctElement = numDistinctElement;
+		
 		
 		this.textColDistinct = new String[textColDistinct.length];
 		for (int i = 0; i < textColDistinct.length; i++) {
