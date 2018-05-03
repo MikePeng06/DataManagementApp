@@ -87,8 +87,8 @@ public class Main extends Application {
 	private ArrayList<DataTable> chartList = new ArrayList<DataTable>();
 	private ArrayList<Chart> ChartObject = new ArrayList<Chart>();
 	private String DataTemp;
-	private ArrayList<String> ColumnName = new ArrayList<String>();
-
+	private ArrayList<String> ColumnName = new ArrayList<String>(); 
+	public BarChart_ chartbc;
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
@@ -120,6 +120,9 @@ public class Main extends Application {
 		scenes = new Scene[SCENE_NUM];
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 500, 550);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
+		BarChart_ bc = new BarChart_();
+//		scenes[SCENE_BAR_CHART] = new Scene(this.chartbc.paneChart("x", yAxisLabel, chartTitle), 800, 500);
+//		scenes[SCENE_SCATTER_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		for (Scene s : scenes) {
 			if (s != null)
 				// Assumption: all scenes share the same stylesheet
@@ -135,6 +138,15 @@ public class Main extends Application {
 	private void initEventHandlers() {
 		initMainScreenHandlers();
 		initLineChartScreenHandlers();
+		
+		btSampleLineChart.setOnAction(e -> {
+			this.chartbc = (BarChart_)ChartObject.get(0);
+//			System.out.println(((BarChart_)ChartObject.get(0)));
+//			System.out.println(ChartObject.size());
+//		    this.chartbc.populateDataToBarChart();
+			putSceneOnStage(SCENE_INDEX);
+			
+		});
 	}
 
 	/**
@@ -223,9 +235,12 @@ public class Main extends Application {
 		});
 
 		// click handler
-		btSampleLineChart.setOnAction(e -> {
-			putSceneOnStage(SCENE_INDEX);
-		});
+//		btSampleLineChart.setOnAction(e -> {
+//			System.out.println(ChartObject.size());
+//		    this.chartbc.populateDataToBarChart();
+//			putSceneOnStage(SCENE_INDEX);
+//			
+//		});
 
 		btSelectFile.setOnAction(e ->{
 			FileChooser fileChooser = new FileChooser();
@@ -336,15 +351,25 @@ public class Main extends Application {
 			chartList = dp.chartList;
 			charName = dp.charName;
 			dataTableName = dp.dataTableName;
+			ChartObject = new ArrayList<Chart>();
 
 			for(int i =0; i<=dataTableName.size()-1;i++) {
 				DataSetList.getItems().add(dataTableName.get(i));
 			}
 
+			System.out.println(dataTableList.size());
+			
+			
 			for(int i =0; i<=charName.size()-1;i++) {
 				ChartList.getItems().add(charName.get(i));
+				System.out.println(charName.get(i));
 			}
-
+			
+			for(int i =0; i<= chartList.size()-1;i++) {
+				BarChart_ y = new BarChart_(chartList.get(i));
+				ChartObject.add(y);
+			}
+			
 			System.out.println(dp.dataTableName.get(0));
 		});
 
@@ -462,6 +487,7 @@ public class Main extends Application {
 			public void changed(ObservableValue ov, Number value, Number new_value) {
 				ColumnList.getItems().clear();
 				sampleDataTable = dataTableList.get(new_value.intValue());
+				//System.out.println(sampleDataTable.getNumCol());
 				//        	  lbSampleDataTable.setText(ov.getValue().toString());
 				lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
 						sampleDataTable.getNumCol()));
@@ -493,8 +519,13 @@ public class Main extends Application {
 				Chart chart =  ChartObject.get(new_value.intValue());
 				if(chart instanceof BarChart_) {
 					BarChart_  chart1  = (BarChart_)ChartObject.get(new_value.intValue());
+					chart1.btLineChartBackMain = btLineChartBackMain;
+					System.out.println(new_value);
+					//BarChart_ chart1 = new BarChart_(sampleDataTable);
+					//System.out.println(chart1.getType());
 					scenes[SCENE_BAR_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
-					chart1.populateDataToChart();
+					chartbc = chart1;
+					//chart1.populateDataToChart();
 					SCENE_INDEX = SCENE_BAR_CHART;
 				}
 				else  if(chart instanceof ScatterChart_) {
@@ -512,7 +543,11 @@ public class Main extends Application {
 
 			}
 		});
-
+System.out.println("hello");
+		if(SCENE_INDEX == SCENE_BAR_CHART) {
+			chartbc.populateDataToChart();
+			
+		}
 
 		//		HBox hc = new HBox(20);
 		//		hc.setAlignment(Pos.CENTER);

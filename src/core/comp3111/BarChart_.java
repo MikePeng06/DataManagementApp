@@ -16,7 +16,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
-	protected BarChart<String,Number> bc;
+	public BarChart<String,Number> bc;
 	public Button btLineChartBackMain;
 	
 	public BarChart_() {
@@ -59,7 +59,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		return paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
 	}
 	
-	private void populateDataToBarChart() {
+	public void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
@@ -102,6 +102,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     	}
 		
     	for (int i = 0; i < rowSize ; i++) {
+    		System.out.println(series.length);
     		bc.getData().add(series[i]);
     	}
 	}
@@ -114,7 +115,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		return bc;
 	}
 	
-	private DataTable generateDummyDataTable() throws DataTableException {
+	public static DataTable generateDummyDataTable() throws DataTableException {
 
 		DataTable t = new DataTable();
 
