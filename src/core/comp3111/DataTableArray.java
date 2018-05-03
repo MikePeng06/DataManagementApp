@@ -17,10 +17,31 @@ public class DataTableArray {
 	
 	public DataTableArray(int rowSize, String[] textCol, int numKey, String[] keyRow, Integer[][] data) {
 		this.rowSize = rowSize;
-		this.textCol = textCol;
+		
+		
+		this.textCol = new String[textCol.length];
+		for (int i = 0; i < textCol.length; i++) {
+			this.textCol[i] = textCol[i];
+		}
+		
+		
 		this.numKey = numKey;
-		this.keyRow = keyRow;
-		this.data = data;
+		
+		
+		this.keyRow = new String[keyRow.length];
+		for (int i = 0; i < keyRow.length; i++) {
+			this.keyRow[i] = keyRow[i];
+		}
+		
+		
+		this.data = new Integer[numKey - 1][rowSize];
+		for (int i = 0; i < (numKey - 1); i++) {
+			for (int j = 0; j < rowSize; j++) {
+				this.data[i][j] = data[i][j];
+			}
+		}
+		
+		
 	}
 	
 }

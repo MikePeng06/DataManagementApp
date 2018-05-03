@@ -13,24 +13,14 @@ import javafx.scene.layout.VBox;
 
 public class ScatterChart_ extends Chart implements java.io.Serializable{
 	
-	private NumberAxis xAxis;
-    private NumberAxis yAxis;        
-    private ScatterChart<Number,Number> sc;
-    public Button btLineChartBackMain; 
     
     public ScatterChart_() {
-    	xAxis = null;
-    	yAxis = null;
-    	sc = null;
     	dataset = null;
     	type = 1;
     }
     
     public ScatterChart_(DataTable t){
-    	xAxis = new NumberAxis();
-    	yAxis = new NumberAxis();
-    	sc = new ScatterChart<Number,Number>(xAxis,yAxis);
-    	setDataset(t);
+    	dataset = t;
     }
 
     private Pane paneScatterChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {

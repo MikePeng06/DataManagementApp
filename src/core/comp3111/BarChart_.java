@@ -15,7 +15,7 @@ import javafx.scene.chart.BarChart;
 public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	//private BarChart_UI ui;
-	DataTableArray dta = new DataTableArray();
+	private DataTableArray dta;
 	
 	public BarChart_() {
 	//	ui = null;
@@ -62,19 +62,21 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     		}
     	}
     	
+    	System.out.println(keyRow[0] + "  " + keyRow[1]);
+    	
     	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
 	}
 	
 	public void populateDataToChart(){
 		populateDataToBarChart();
 	}
-
+	
 	
 	public DataTableArray getDTA() {
 		return dta;
 	}
 	
-	private DataTable generateDummyDataTable() throws DataTableException {
+	public DataTable generateDummyDataTable() throws DataTableException {
 
 		DataTable t = new DataTable();
 

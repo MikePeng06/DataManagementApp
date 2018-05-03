@@ -1,5 +1,6 @@
-package core.comp3111;
+package ui.comp3111;
 
+import core.comp3111.DataTableArray;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
