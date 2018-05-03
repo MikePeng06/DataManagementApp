@@ -148,7 +148,12 @@ public class Main extends Application {
 		initLineChartScreenHandlers();
 		btSampleLineChart.setOnAction(e -> {
 			//BarChart_UI  chartuibc = new BarChart_UI();
-			chartuibc.populateDataToBarChartUI(tempdta);
+			if(SCENE_INDEX == 2) {
+				System.out.println(ChartObject.size());
+				chartuibc.populateDataToBarChartUI(tempdta);
+			}else if (SCENE_INDEX == 3) {
+				chartuisc.populateDataToScatterChartUI(tempdta);
+			}
 			
 //			System.out.println(chartbc.getDTA());
 //			System.out.println(((BarChart_)ChartObject.get(0)));
