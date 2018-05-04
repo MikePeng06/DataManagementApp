@@ -12,24 +12,50 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.BarChart;
  
+
+/**
+ * BarChart_: a class for constructing a bar chart, it is a sub-class of Chart
+ * it contains all the data members (except those from JavaFX) and methods needed for this purpose.
+ * @author kclamap
+ *
+ */
 public class BarChart_ extends Chart implements java.io.Serializable{
 	
-	//private BarChart_UI ui;
+	/**
+	 * data member of BarChart_
+	 */
 	private DataTableArray dta;
 	
+	/**
+	 * Default constructor of BarChart_,
+	 * it initialize all data members to meaningless value
+	 */
 	public BarChart_() {
 	//	ui = null;
 		dta = null;
 		dataset = null;
 		type = 0;
 	}
-	 
+	
+	/**
+	 * Conversion constructor of BarChart_
+	 * it accepts a DataTable and stores it in the datamember t
+	 * it initialize the data member dta as well
+	 * @param t
+	 * 		contains the data for constructing a bar chart
+	 */
 	public BarChart_(DataTable t) {  
 		//ui = new BarChart_UI();
 		dataset = t;
 		dta = new DataTableArray();
 	}
 	
+	/**
+	 * it checks if the DataTable stored in the object is valid for use to generate a bar chart
+	 * @return
+	 * 		true: if the DataTable is useful
+	 * 		false: if the DataTable cannot be used
+	 */
 	public boolean valid() {
 		int numTextCol = 0;
 		int numNumericCol = 0;
@@ -53,10 +79,10 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 	}
 	
 
-//	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
-//		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
-//	}
-	
+
+	/**
+	 * it converts dataTable into a dataTableArray
+	 */
 	public void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
@@ -67,10 +93,6 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
-    	
-    	
-    	
-    	
     	
     	
     	int j = 1;
@@ -96,46 +118,15 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 
 	}
 	
-	public void populateDataToChart(){
-		populateDataToBarChart();
-	}
 	
-	
+	/**
+	 * a getter
+	 * @return
+	 * 		DataTableArray stored in the object
+	 */
 	public DataTableArray getDTA() {
 		return dta;
 	}
 	
-//	public DataTable generateDummyDataTable() throws DataTableException {
-//
-//		DataTable t = new DataTable();
-//
-//        String[] Year = new String[] {"2003", "2004", "2005"};
-//        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
-//        
-//        
-//		Number[] austria = new Float[] { (float) 25601, (float) 57401, (float) 45000};
-//		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
-//		
-//		Number[] brazil = new Float[] { (float) 20148, (float) 41941, (float) 44835};
-//		DataColumn brazilCol = new DataColumn(DataType.TYPE_NUMBER, brazil);
-//		
-//		Number[] france = new Float[] { (float) 10000, (float) 45263, (float) 18722};
-//		DataColumn franceCol = new DataColumn(DataType.TYPE_NUMBER, france);
-//		
-//		Number[] italy = new Float[] { (float) 35407, (float) 117320, (float) 17557};
-//		DataColumn italyCol = new DataColumn(DataType.TYPE_NUMBER, italy);
-//		
-//		Number[] usa = new Float[] { (float) 12000, (float) 14845, (float) 92633};
-//		DataColumn usaCol = new DataColumn(DataType.TYPE_NUMBER, usa);
-//				
-//
-//		t.addCol("Year", YearCol);
-//		t.addCol("Austria", austriaCol);
-//		t.addCol("Brazil", brazilCol);
-//		t.addCol("France", franceCol);
-//		t.addCol("Italy", italyCol);
-//		t.addCol("USA", usaCol);
-//		
-//		return t;
-//	}
+
 }
