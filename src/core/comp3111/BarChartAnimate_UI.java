@@ -3,6 +3,7 @@ package core.comp3111;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -25,6 +26,8 @@ public class BarChartAnimate_UI {
 	private static NumberAxis yAxis;
 	protected BarChart<String,Number> bc;
 	public Button btLineChartBackMain;
+	private int loopCounterk;
+	private int loopCounteri;
 	
 	public BarChartAnimate_UI() {
 		
@@ -45,38 +48,30 @@ public class BarChartAnimate_UI {
     		series[i].setName(dta.textCol[i]);
     		for (int k = 1; k < dta.numKey; k++) {
     			series[i].getData().add(new XYChart.Data(dta.keyRow[k], 0));
+    			
     		}
     	}
 		
 
     	
         Timeline tl = new Timeline();
-        tl.getKeyFrames().add(new KeyFrame(Duration.millis(500), 
-            new EventHandler<ActionEvent>() {
-                @Override public void handle(ActionEvent actionEvent) {
-                int i = 0;
-                for (XYChart.Series<String, Number> series : bc.getData()) {
-                	int k = 1;
-                    for (XYChart.Data<String, Number> data : series.getData()) {
-                        data.setYValue(dta.data[k-1][i]);
-                        //series[i].getData().add(new XYChart.Data(dta.keyRow[k], dta.data[k-1][i]));
-                        k++;
-                    }
-                    i++;
-                }
-                i = 0;
-                for (XYChart.Series<String, Number> series : bc.getData()) {
-                	int k = 1;
-                    for (XYChart.Data<String, Number> data : series.getData()) {
-                        data.setYValue(Math.abs(dta.data[k-1][i] - Math.random() * 10));
-                        //series[i].getData().add(new XYChart.Data(dta.keyRow[k], d0ta.data[k-1][i]));
-                        k++;
-                    }
-                    i++;
-                }
-                
-            }
-        }));
+        KeyFrame grow = new KeyFrame(Duration.seconds(.0200),
+                new EventHandler<ActionEvent>() {
+	        	public void handle(ActionEvent event) {
+	        		int i = 0;
+	        		for (XYChart.Series<String, Number> series : bc.getData()) {
+	        			int k = 1;
+	                    for (XYChart.Data<String, Number> data : series.getData()) {
+	                    	if ((Double) data.getYValue() < dta.data[k-1][i])
+	                        data.setYValue((Double) data.getYValue() + 1);
+	                    	k++;
+	                    }
+	                    i++;
+	                }
+	        	}
+        
+        });
+        tl.getKeyFrames().add(grow);
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
         
