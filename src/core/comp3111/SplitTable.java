@@ -6,7 +6,14 @@ import java.util.Set;
 public class SplitTable {
 
 
-	//partition1:percentage
+	/**
+	 * split a datatable into two datatable and also control the percentage of split
+	 * 
+	 * @param inputdt - the target datatable 
+	 * @param partition1- the percentage of the first datatable split
+	 * @return an array of two split data table
+	 * @throws DataTableException
+	 */
 	public static DataTable[] splitDataTable(DataTable inputdt, int partition1) throws DataTableException {
 
 		int colNum = inputdt.getNumCol();
@@ -68,39 +75,4 @@ public class SplitTable {
 
 		return result;
 	}
-
-
-
-//	public static void main(String[] args) throws DataTableException {
-//
-//
-//		DataTable t = new DataTable();
-//
-//
-//		try {
-//			t = LoadData.ToDataTable("C:/Users/zpeng/OneDrive/Desktop/123.csv");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//		//		t.addCol("X", xvaluesCol);
-//		//		t.addCol("Y", yvaluesCol);
-//		//		t.addCol("label", labelsCol);
-//
-//
-//		DataTable[] output =  splitDataTable(t, 30);
-//
-//		for(DataTable table: output) {
-//			Set<String> keys = table.getDC().keySet();
-//			for (String key : keys) {
-//
-//				DataColumn tempp = table.getCol(key);
-//				System.out.println(tempp.toString());
-//
-//			}
-//
-//		}
-//
-//	}
 }

@@ -18,7 +18,7 @@ public class SplitTextColumn_fixedWidthTest {
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		int[] widths = {2,3,4 };
 		DataColumn[] buffer = SplitTextColumn_fixedWidth.splitDataColumn(t.getCol("label"), widths);
-		assert (buffer.length == 4);
+		assert (buffer.length == 4); // the input widths is right
 
 	}
 	
@@ -28,7 +28,7 @@ public class SplitTextColumn_fixedWidthTest {
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		int[] widths = {-1, 2, 1};
 		DataColumn[] buffer = SplitTextColumn_fixedWidth.splitDataColumn(t.getCol("label"), widths);
-		assert (buffer.length == 1);
+		assert (buffer.length == 1); //length =1 means failed split
 
 	}
 
@@ -38,7 +38,7 @@ public class SplitTextColumn_fixedWidthTest {
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		int[] widths = {1,2,2,5 };
 		DataColumn[] buffer = SplitTextColumn_fixedWidth.splitDataColumn(t.getCol("label"), widths);
-		assert (buffer.length == 1);
+		assert (buffer.length == 1); //length =1 means failed split
 
 	}
 
@@ -49,7 +49,7 @@ public class SplitTextColumn_fixedWidthTest {
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		int[] widths = {3, 1 , 2 };
 		DataColumn[] buffer = SplitTextColumn_fixedWidth.splitDataColumn(t.getCol("label"), widths);
-		assert (buffer.length == 1);
+		assert (buffer.length == 1); //length =1 means failed split
 
 	}
 
