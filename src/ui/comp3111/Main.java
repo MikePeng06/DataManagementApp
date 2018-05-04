@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 
 import core.comp3111.DataColumn;
 import core.comp3111.DataPack;
-import core.comp3111.DataPackA;
 import core.comp3111.DataTable;
 import core.comp3111.DataTableArray;
 import core.comp3111.DataTableException;

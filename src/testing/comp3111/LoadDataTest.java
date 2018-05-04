@@ -27,7 +27,7 @@ public class LoadDataTest {
 	@Test
 	void testCoverageEmpty()  {   
 		LoadData ld = new LoadData(); 
-		DataTable dt = new DataTable(); 
+		DataTable dt = new DataTable();  
         try {
 			ld.LoadFile("test2.csv") ; 
 		} catch (IOException e) {

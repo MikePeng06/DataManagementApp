@@ -1,5 +1,6 @@
 package testing.comp3111;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,9 @@ public class TestToProject {
 		 ArrayList<String> dataTableName = new ArrayList<String>();
 		 ArrayList<String> charName = new ArrayList<String>();
 		 ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
+		 ArrayList<File> flist = new ArrayList<File>(); 
 		 
-		 DataPack dp = new DataPack(dataTableList, chartList, dataTableName,  charName, DTALIST);
+		 DataPack dp = new DataPack(dataTableList, chartList, dataTableName,  charName, DTALIST, flist);
 		 DataTable dp2 = new DataTable(); 
 		     
 		 ToProject tp = new ToProject();       
