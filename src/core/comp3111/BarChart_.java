@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.chart.BarChart;
-
+ 
 public class BarChart_ extends Chart implements java.io.Serializable{
 	
 	//private BarChart_UI ui;
@@ -23,8 +23,8 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		dataset = null;
 		type = 0;
 	}
-	
-	public BarChart_(DataTable t) {
+	 
+	public BarChart_(DataTable t) {  
 		//ui = new BarChart_UI();
 		dataset = t;
 		dta = new DataTableArray();
@@ -35,7 +35,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 //		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
 //	}
 	
-	private void populateDataToBarChart() {
+	public void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
@@ -63,7 +63,9 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     		}
     	}
     	
+
     	dta = new DataTableArray(rowSize, textCol, numKey, keyRow, data);
+
 	}
 	
 	public void populateDataToChart(){

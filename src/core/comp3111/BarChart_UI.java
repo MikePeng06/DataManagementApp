@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class BarChart_UI {
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
-	protected BarChart<String,Number> bc;
+	public BarChart<String,Number> bc;
 	public Button btLineChartBackMain;
 	
 	public BarChart_UI() {
@@ -31,7 +31,7 @@ public class BarChart_UI {
 	bc.getData().clear();
     	XYChart.Series [] series = new XYChart.Series[dta.rowSize];
     	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series();
+    		series[i] = new  XYChart.Series(); 
     	}
     
     	for (int i = 0; i < dta.rowSize ; i++) {
@@ -40,14 +40,15 @@ public class BarChart_UI {
     			series[i].getData().add(new XYChart.Data(dta.keyRow[k], dta.data[k-1][i]));
     		}
     	}
-		
-    	for (int i = 0; i < dta.rowSize ; i++) {
-    		bc.getData().add(series[i]);
+    	
+    	System.out.println(bc.equals(null));
+    	
+    	for (int i = 0; i < dta.rowSize ; i++) { 
+    		bc.getData().add(series[i]);  
     	}
     	
     	
 	}
-	
 	public Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
 		Button btLineChartBackMain = this.btLineChartBackMain;
 

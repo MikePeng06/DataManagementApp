@@ -16,7 +16,7 @@ public class DataTableArray implements java.io.Serializable{
 		rowSize = 0;
 		textCol = null;
 		numKey = 0;
-		keyRow = null;
+		keyRow = null; 
 		data = null;
 		
 		numDistinctElement = 0;

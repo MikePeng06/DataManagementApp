@@ -7,6 +7,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import core.comp3111.*;
 
+/**
+ * The LoadData class of this GUI application
+ * It is used for loading csv file from the outside application 
+ * and transfer it to DataTable or needed 2D array
+ * 
+ * Also handle some case: null values and lack value
+ * 
+ * @author Zeyang Bao
+ *
+ */
+
+
 public class LoadData {
 	
 	
@@ -64,8 +76,8 @@ public class LoadData {
         		if(!table[row][w].isEmpty()) { 
         			check = table[row][w];
         			break; 
-        		}
-        		row++;
+        		}  
+        		row++;  
         	}
         	//(check.charAt(0)<='Z'&&check.charAt(0)>='A')||(check.charAt(0)<='z'&&check.charAt(0)>='a')
         	if(Character.isLetter(check.charAt(0))) { 
@@ -79,7 +91,7 @@ public class LoadData {
         			table[j][w]=check;
         		}
         	}
-        	
+        	 
         }
         
         return table;
