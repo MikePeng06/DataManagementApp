@@ -118,6 +118,13 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 
 	}
 	
+	/**
+	 * public method for external use to call a private method
+	 */
+	void populateDataToChart() {
+		populateDataToBarChart();
+	}
+	
 	
 	/**
 	 * a getter
