@@ -3,6 +3,7 @@ package testing.comp3111;
 import org.junit.jupiter.api.Test;
 
 import core.comp3111.BarChartAnimate;
+import core.comp3111.BarChart_;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataTableException;
@@ -25,6 +26,27 @@ public class BarChartAnimate_Test {
 		BarChartAnimate bc = new BarChartAnimate(dt); 
 		assert (bc.getDataset() == dt);
 		
+	}
+	
+	@Test
+	void testCoverageValid_positive() throws DataTableException {
+		DataTable dt = new DataTable();
+        String[] Year = new String[] {"2003", "2004", "2005"};
+        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
+		Number[] austria = new Integer[] { 25601, 57401,  45000};
+		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
+		dt.addCol("Year", YearCol);
+		dt.addCol("Austria", austriaCol);
+		
+		BarChartAnimate bc = new BarChartAnimate(dt);
+		assert (bc.valid() == true);
+	}
+	
+	@Test
+	void testCoverageValid_negative() throws DataTableException {
+		DataTable dt = new DataTable();
+		BarChartAnimate bc = new BarChartAnimate(dt);
+		assert (bc.valid() == false);
 	}
 	
 	@Test

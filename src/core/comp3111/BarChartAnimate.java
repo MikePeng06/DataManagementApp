@@ -30,6 +30,28 @@ public class BarChartAnimate extends Chart implements java.io.Serializable{
 		dta = new DataTableArray();
 	}
 	
+	public boolean valid() {
+		int numTextCol = 0;
+		int numNumericCol = 0;
+		
+		
+		Set<String> keys = dataset.getDC().keySet();
+    	for (String key : keys) {
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
+    			numTextCol++;
+    		}
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
+    			numNumericCol++;
+    		}
+    	}
+    	
+    	
+    	if (numTextCol != 1 || numNumericCol < 1) {
+    		return false;
+    	}
+    	return true;
+	}
+	
 
 //	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
 //		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
