@@ -25,6 +25,26 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	dta = new DataTableArray();
     	dataset = t;
     }
+    
+    public boolean valid() {
+    	int numTextCol = 0;
+    	int numNumericCol = 0;
+    	
+    	Set<String> keys = dataset.getDC().keySet();
+    	for (String key : keys) {
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
+    			numTextCol++;
+    		}
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
+    			numNumericCol++;
+    		}
+    	}
+    	
+    	if (numTextCol != 1 || numNumericCol != 2) {
+    		return false;
+    	}
+    	return true;
+    }
 
 	
 	public void populateDataToScatterChart() {

@@ -3,6 +3,7 @@ package testing.comp3111;
 import org.junit.jupiter.api.Test;
 
 import core.comp3111.ScatterChart_;
+import core.comp3111.BarChart_;
 import core.comp3111.DataColumn;
 import core.comp3111.DataTable;
 import core.comp3111.DataTableException;
@@ -25,6 +26,31 @@ public class ScatterChart_Test {
 		ScatterChart_ sc = new ScatterChart_(dt); 
 		assert (sc.getDataset() == dt);
 		
+	}
+	
+	@Test
+	void testCoverageValid_positive() throws DataTableException {
+		DataTable dt = new DataTable();
+        String[] Year = new String[] {"2003", "2004", "2005"};
+        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
+		Number[] austriax = new Integer[] { 25601, 57401,  45000};
+		DataColumn austriaxCol = new DataColumn(DataType.TYPE_NUMBER, austriax);
+		Number[] austriay = new Integer[] { 25601, 57401,  45000};
+		DataColumn austriayCol = new DataColumn(DataType.TYPE_NUMBER, austriay);
+		dt.addCol("Year", YearCol);
+		dt.addCol("Austriax", austriaxCol);
+		dt.addCol("Austriay", austriayCol);
+		
+		
+		ScatterChart_ sc = new ScatterChart_(dt);
+		assert (sc.valid() == true);
+	}
+	
+	@Test
+	void testCoverageValid_negative() throws DataTableException {
+		DataTable dt = new DataTable();
+		ScatterChart_ sc = new ScatterChart_(dt);
+		assert (sc.valid() == false);
 	}
 	
 	@Test
