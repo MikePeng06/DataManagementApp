@@ -52,5 +52,16 @@ public class SplitTextColumn_fixedWidthTest {
 		assert (buffer.length == 1); //length =1 means failed split
 
 	}
+	
+	@Test 
+	void testCoverageInvalidInput4() {
+
+		DataTable t = SampleDataGenerator.generateSampleLineData();
+		int[] widths = {1,2,3,9};
+		DataColumn[] buffer = SplitTextColumn_fixedWidth.splitDataColumn(t.getCol("label"), widths);
+		assert (buffer.length == 1); //length =1 means failed split
+
+	}
+
 
 }
