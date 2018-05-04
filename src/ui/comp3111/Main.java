@@ -29,7 +29,7 @@ import core.comp3111.Chart;
 import core.comp3111.BarChart_;
 import core.comp3111.BarChart_UI;
 import core.comp3111.ScatterChart_;
-import core.comp3111.ScatterChart_UI;
+import ui.comp3111.ScatterChart_UI;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -99,6 +99,7 @@ public class Main extends Application {
 	public ScatterChart_UI chartuisc;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	public DataTableArray tempdta;
+	public DataPack dp;
 	// To keep this application more structural, 
 	// The following UI components are used to keep references after invoking
 	// createScene()
@@ -118,7 +119,7 @@ public class Main extends Application {
 	private NumberAxis yAxis = null;
 	private Button btLineChartBackMain = null;
 
-	
+
 
 	/**
 	 * create all scenes in this application
@@ -133,8 +134,8 @@ public class Main extends Application {
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 500, 550);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		BarChart_ bc = new BarChart_();
-//		scenes[SCENE_BAR_CHART] = new Scene(this.chartbc.paneChart("x", yAxisLabel, chartTitle), 800, 500);
-//		scenes[SCENE_SCATTER_CHART] = new Scene(paneLineChartScreen(), 800, 600);
+		//		scenes[SCENE_BAR_CHART] = new Scene(this.chartbc.paneChart("x", yAxisLabel, chartTitle), 800, 500);
+		//		scenes[SCENE_SCATTER_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		for (Scene s : scenes) {
 			if (s != null)
 				// Assumption: all scenes share the same stylesheet
@@ -158,13 +159,13 @@ public class Main extends Application {
 			}else if (SCENE_INDEX == 3) {
 				chartuisc.populateDataToScatterChartUI(tempdta);
 			}
-			
-//			System.out.println(chartbc.getDTA());
-//			System.out.println(((BarChart_)ChartObject.get(0)));
-//			System.out.println(ChartObject.size());
-//		    this.chartbc.populateDataToBarChart();
+
+			//			System.out.println(chartbc.getDTA());
+			//			System.out.println(((BarChart_)ChartObject.get(0)));
+			//			System.out.println(ChartObject.size());
+			//		    this.chartbc.populateDataToBarChart();
 			putSceneOnStage(SCENE_INDEX);
-			
+
 		});
 	}
 
@@ -254,12 +255,12 @@ public class Main extends Application {
 		});
 
 		// click handler
-//		btSampleLineChart.setOnAction(e -> {
-//			System.out.println(ChartObject.size());
-//		    this.chartbc.populateDataToBarChart();
-//			putSceneOnStage(SCENE_INDEX);
-//			
-//		});
+		//		btSampleLineChart.setOnAction(e -> {
+		//			System.out.println(ChartObject.size());
+		//		    this.chartbc.populateDataToBarChart();
+		//			putSceneOnStage(SCENE_INDEX);
+		//			
+		//		});
 
 		btSelectFile.setOnAction(e ->{
 			FileChooser fileChooser = new FileChooser();
@@ -319,7 +320,7 @@ public class Main extends Application {
 			if (result.isPresent()){
 				System.out.println("Your choice: " + result.get());
 			}
-		
+
 			DataTable dttemp = new DataTable();
 			if(result.isPresent()) {
 				if(result.get() == "BarChart") {
@@ -371,7 +372,7 @@ public class Main extends Application {
 					);
 			fileChooser.setTitle("LoadProject");
 			File file = fileChooser.showOpenDialog(stage);
-			DataPack dp = ToProject.LoadProject(file.getAbsolutePath());
+			dp = ToProject.LoadProject(file.getAbsolutePath());
 			dataTableList = new ArrayList<DataTable>();
 			dataTableList = dp.dataTableList;
 			chartList = dp.chartList;
@@ -381,22 +382,22 @@ public class Main extends Application {
 			DTALIST = dp.DTALIST;
 			for(int i =0; i<=dataTableName.size()-1;i++) {
 				DataSetList.getItems().add(dataTableName.get(i));
-				sampleDataTable = dataTableList.get(i);
+				//sampleDataTable = dataTableList.get(i);
 			}
 			//System.out.println(dataTableList.get(0).getNumCol());
-			
+
 			for(int i =0; i<=charName.size()-1;i++) {
 				ChartList.getItems().add(charName.get(i));
 				//System.out.println(charName.get(i));
 			}
 			//dsd
-			
+
 			for(int i =0; i<= chartList.size()-1;i++) {
 				BarChart_ y = new BarChart_(chartList.get(i));
 				ChartObject.add(y);
 				//sampleDataTable = chartList.get(i);
 			}
-			
+
 			System.out.println(dp.dataTableName.get(0));
 		});
 
@@ -425,7 +426,7 @@ public class Main extends Application {
 		btSplitTable.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
-//				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
+				//				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
 				try {
 					TextInputDialog getDelimiter = new TextInputDialog("");
 					getDelimiter.setTitle("Split A dataTable to two dataTable");
@@ -448,9 +449,9 @@ public class Main extends Application {
 			}
 		});
 
-		
-		
-		
+
+
+
 		btSplitColumn_delimiter.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
@@ -464,7 +465,7 @@ public class Main extends Application {
 				if (result.isPresent()){
 					System.out.println( result.get());
 				}
-				
+
 				String target = result.get();
 
 				String colName = "";
@@ -475,21 +476,21 @@ public class Main extends Application {
 					selectCol = sampleDataTable.getCol(colName);
 				}
 				DataColumn[] results = SplitTextColumn_delimiter.splitDataColumn(selectCol, target);
-				
+
 				for(int i = 0; i < results.length; i++) {
-						try {
-							sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
-						} catch (DataTableException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						System.out.println(results[i]+"added");//test if added
+					try {
+						sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
+					} catch (DataTableException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(results[i]+"added");//test if added
 				}
 			}
 		});
-		
-		
-		
+
+
+
 
 		btSplitColumn_fixedWidth.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -518,15 +519,15 @@ public class Main extends Application {
 					ColSelected = sampleDataTable.getCol(colName);
 				}
 				DataColumn[] results = SplitTextColumn_fixedWidth.splitDataColumn(ColSelected, widths);
-				
+
 				for(int i = 0; i < results.length; i++) {
-						try {
-							sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
-						} catch (DataTableException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						System.out.println(results[i]+"added");
+					try {
+						sampleDataTable.addCol((colName + String.valueOf(i+1)) , results[i]);
+					} catch (DataTableException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(results[i]+"added");
 				}
 			}
 		});
@@ -619,7 +620,7 @@ public class Main extends Application {
 				}
 
 				//ColumnList.getItems().add(new CheckBox("Second"));
-				
+
 			}
 		});
 
@@ -644,11 +645,11 @@ public class Main extends Application {
 					SCENE_INDEX = SCENE_BAR_CHART;
 				}
 				else  if(chart instanceof ScatterChart_) {
-//					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
-//					scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
-//					chart1.populateDataToChart();
-//					SCENE_INDEX = SCENE_SCATTER_CHART;
-//					chart1.getSC();
+					//					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
+					//					scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
+					//					chart1.populateDataToChart();
+					//					SCENE_INDEX = SCENE_SCATTER_CHART;
+					//					chart1.getSC();
 					ScatterChart_UI chart1UI = new ScatterChart_UI();
 					chart1UI.btLineChartBackMain = btLineChartBackMain;
 					tempdta = DTALIST.get(new_value.intValue());
@@ -667,7 +668,7 @@ public class Main extends Application {
 
 		if(SCENE_INDEX == SCENE_BAR_CHART) {
 			chartbc.populateDataToChart();
-			
+
 		}
 
 		//		HBox hc = new HBox(20);
