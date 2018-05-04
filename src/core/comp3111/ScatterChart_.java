@@ -11,21 +11,47 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
+/**
+ * BarChart_: a class for constructing a scatter chart, it is a sub-class of Chart
+ * it contains all the data members (except those from JavaFX) and methods needed for this purpose.
+ * @author kclamap
+ *
+ */
 public class ScatterChart_ extends Chart implements java.io.Serializable{
 	
+	/**
+	 * data member of scatter chart
+	 */
 	private DataTableArray dta;
 	
+	/**
+	 * default constructor of ScatterChart_
+	 * it initialize data members of ScatterChart_ to meaningless value
+	 */
     public ScatterChart_() {
     	dta = null;
     	dataset = null;
     	type = 1;
     }
     
+    /**
+     * conversion consructor of ScatterChart_
+     * it accepts a DataTable and stores it in the data member t
+	 * it initialize the data member dta as well
+     * @param t
+     * 		contains the data for constructing a scatter chart
+     */
     public ScatterChart_(DataTable t){
     	dta = new DataTableArray();
     	dataset = t;
     }
     
+    /**
+	 * it checks if the DataTable stored in the object is valid for use to generate a scatter chart
+	 * @return
+	 * 		true: if the DataTable is useful
+	 * 		false: if the DataTable cannot be used
+	 */
     public boolean valid() {
     	int numTextCol = 0;
     	int numNumericCol = 0;
@@ -46,8 +72,10 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	return true;
     }
 
-	
-	public void populateDataToScatterChart() {
+    /**
+	 * it converts dataTable into a dataTableArray
+	 */
+	private void populateDataToScatterChart() {
 		int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
@@ -112,59 +140,21 @@ public class ScatterChart_ extends Chart implements java.io.Serializable{
     	
 	}
 	
+	/**
+	 * public method for external use to call a private method
+	 */
 	public void populateDataToChart(){
 		populateDataToScatterChart();
 	}
 	
+	/**
+	 * a getter
+	 * @return
+	 * 		DataTableArray stored in the object
+	 */
 	public DataTableArray getDTA() {
 		return dta;
 	}
 	
-//	private DataTable generateDummyDataTable() throws DataTableException {
-//		DataTable t = new DataTable();
-//        String[] category = new String[25];
-//        for (int i = 0; i < 25; i++) {
-//        	if (i <= 15) {
-//        		category[i] = "Equities";
-//        	}else {
-//        		category[i] = "Mutual funds";
-//        	}
-//        }
-//        DataColumn categoryCol = new DataColumn(DataType.TYPE_STRING, category);
-//        
-//        
-//        Float[] age = new Float[] {(float) 4.2, (float) 2.8, (float) 6.2, (float) 1, (float) 1.2, 
-//        						   (float) 4.4, (float) 8.5, (float) 6.9, (float) 9.9, (float) 0.9, 
-//        						   (float) 3.2, (float) 4.8, (float) 7.3, (float) 1.8, (float) 7.3, 
-//        						   (float) 2.7, (float) 5.2, (float) 2.4, (float) 3.2, (float) 1.8, 
-//        						   (float) 3.2, (float) 7.4, (float) 3.5, (float) 9.3, (float) 8.1};
-//		DataColumn ageCol = new DataColumn(DataType.TYPE_NUMBER, age);
-//        
-//		Float[] returnToDate = new Float[] {(float) 193.2, (float) 33.6, (float) 24.8, (float) 14, (float) 26.4,
-//										    (float) 114.4, (float) 323, (float) 289.8, (float) 287.1, (float) -9,
-//										    (float) 150.8, (float) 20.8, (float) -42.3, (float)  81.4, (float) 110.3,
-//										    (float) 41.2, (float) 229.2, (float) 37.6, (float) 49.8, (float) 134,
-//										    (float) 236.2, (float) 114.1, (float) 323, (float) 29.9, (float) 287.4};
-//		DataColumn returnToDateCol = new DataColumn(DataType.TYPE_NUMBER, returnToDate);
-//		
-//		
-//		
-//		t.addCol("Category", categoryCol);
-//		t.addCol("Age", ageCol);
-//		t.addCol("Return To Date", returnToDateCol);
-//		
-//		return t;
-//	}
-//	
-//	public void printDataTable() {
-//		Set<String> keys_before = dataset.getDC().keySet();
-//    	for (String key_before : keys_before) {
-//    		System.out.print(key_before + " ");
-//    		for (int i = 0; i < dataset.getNumRow(); i++) {
-//    			System.out.print(dataset.getCol(key_before).getData()[i] + " ");
-//    		}
-//    		System.out.println();
-//    	}
-//	}
-	
+
 }
