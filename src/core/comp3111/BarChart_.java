@@ -83,7 +83,7 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 	/**
 	 * it converts dataTable into a dataTableArray
 	 */
-	public void populateDataToBarChart() {
+	private void populateDataToBarChart() {
     	int numKey = dataset.getNumCol();
     	int numTextCol = 1;
     	int numNumericCol = numKey - numTextCol;
