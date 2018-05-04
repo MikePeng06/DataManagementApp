@@ -18,14 +18,14 @@ public class TestToProject {
 		 
 		 DataPack dp = new DataPack(dataTableList, chartList, dataTableName,  charName, DTALIST);
 		 DataTable dp2 = new DataTable(); 
-		    
-		 ToProject tp = new ToProject();      
+		     
+		 ToProject tp = new ToProject();       
 		//tp.SaveProject(dp); 
-		 tp.SaveProject(dp, "/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject/testsave.comp3311");  
-		 tp.SaveProject(dp, "/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject2/testsave.comp3311");  
-		 tp.LoadProject("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject/comp3311.comp3311"); 
-		 tp.LoadProject("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject/comp3311.comp3311");
-		 tp.LoadProject("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject/test1.csv"); 
+		 tp.SaveProject(dp, "src/testsave.comp3311");  
+		 tp.SaveProject(dp, "src/ToProject2/testsave.comp3311");  
+		 tp.LoadProject("src/comp3311.comp3311"); 
+		// tp.LoadProject("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/ToProject/comp3311.comp3311");
+		 tp.LoadProject("src/test1.csv"); 
 	}
 	 
 	 

@@ -2,21 +2,15 @@ package core.comp3111;
 
 import java.util.ArrayList;
 
-public class DataPackA {
-	public DataTable[] dataTableList; 
-	public DataTable[] chartList;
-	public String[] dataTableName;
-	public String[] charName;
-	public DataTableArray[] DTALIST;
+public class DataPackA implements java.io.Serializable{
+	public ArrayList<DataTable> chartList;
+	public ArrayList<String> charName;
+	public ArrayList<String> path;
 	
-//	public DataPack(DataTable dtl, ArrayList<DataTable> ctl, ArrayList<String> dtn, ArrayList<String> cn, ArrayList<DataTableArray> dl) {
-//		dataTableList = dtl; 
-//		chartList = ctl; 
-//		dataTableName = dtn;
-//		charName = cn; 
-//		DTALIST = dl;
-////		Chartdatatable = cdt;
-////		ChartType = ct;
-//	} 
+	public DataPackA(ArrayList<DataTable> ctl, ArrayList<String> cn, ArrayList<String> p) {
+		chartList = ctl; 
+		charName = cn; 
+		path = p;
+	} 
 	
 }

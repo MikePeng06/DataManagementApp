@@ -17,7 +17,7 @@ import core.comp3111.*;
  * @author Zeyang Bao
  *
  */
-
+ 
 
 public class LoadData {
 	
@@ -126,42 +126,47 @@ public class LoadData {
 				DataColumn dc = new DataColumn(type, string);
 				Dataset.addCol(table[0][c], dc);
 			}
-//			Object[] string = new Object[linenumber];
-//			for(int row=1;row<=linenumber-1;row++) {
-//				string[row-1] = table[row][c];
-//			}
-//			DataColumn dc = new DataColumn(type, string);
-//			Dataset.addCol(table[0][c], dc);
 		}
 		return Dataset;
 	}
 	
 	
-//	public static void main(String[] args) throws IOException{
-//		
-//		String[][] table = LoadFile("/Users/ZeyangBao/Desktop/test1.csv");
-//		
-//		int linenumber = table.length;
-//		int columnnumber = table[0].length;
-//		
-//		for (int k =0;k<=linenumber-1;k++) {
-//        	for (int j=0; j<= columnnumber-1;j++) {
-//        		System.out.print(table[k][j]);
-//        	}
-//        	System.out.println("");
-//        }
-//        
-//		try {
-//			DataTable dt = ToDataTable("/Users/ZeyangBao/Desktop/test1.csv") ;
-//			dt.getNumCol();
-//			System.out.print("length: ");
-//			System.out.println(dt.getNumCol());
-//		} catch (DataTableException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
+	
+	public static DataTable ToDataTablefile(String str) throws DataTableException, IOException {
+		DataTable Dataset = new DataTable();
+		String[][] table = LoadFile(str);
+		int linenumber = table.length;
+		int columnnumber = table[0].length;
+		
+		for(int c=0;c<= columnnumber-1;c++) {
+			String type = "";
+			char typecheck = table[1][c].charAt(0);
+			if(Character.isDigit(typecheck)) {  
+				type = DataType.TYPE_NUMBER;
+				Number[] string = new Number[linenumber-1];
+				for(int row=1;row<=linenumber-1;row++) {
+					string[row-1] = Integer.parseInt(table[row][c]);
+				}
+				DataColumn dc = new DataColumn(type, string);
+				Dataset.addCol(table[0][c], dc);
+			} 
+			else {
+				type = DataType.TYPE_STRING;
+				String[] string = new String[linenumber-1];
+				for(int row=1;row<=linenumber-1;row++) {
+					string[row-1] = table[row][c];
+				}
+				DataColumn dc = new DataColumn(type, string);
+				Dataset.addCol(table[0][c], dc);
+			}
+		}
+		return Dataset;
+	}
+	
+	
+	
+	
+	
+	
 	
 }
