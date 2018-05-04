@@ -12,11 +12,11 @@ import core.comp3111.SplitTextColumn_delimiter;
 public class SplitTextColumn_delimiterTest {
 	
 	@Test 
-	void testCoverageInvalidCases1() {
+	void testCanSplitCase() {
 		SplitTextColumn_delimiter stc = new SplitTextColumn_delimiter();
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		DataColumn[] buffer = SplitTextColumn_delimiter.splitDataColumn(t.getCol("label"), "e");
-		assert (buffer.length == 2);
+		assert (buffer.length == 2); // can split the column with the right delimiter
 }
 	
 	@Test 
@@ -24,7 +24,7 @@ public class SplitTextColumn_delimiterTest {
 
 		DataTable t = SampleDataGenerator.generateSampleLineData();
 		DataColumn[] buffer = SplitTextColumn_delimiter.splitDataColumn(t.getCol("label"), "q");
-		assert (buffer.length == 1);
+		assert (buffer.length == 1); //length == 1 means it didn't split with the incorrect delimiter
 }
 	
 	

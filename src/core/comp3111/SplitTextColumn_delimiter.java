@@ -80,7 +80,12 @@ public class SplitTextColumn_delimiter {
 
 
 
-	//retrun numOfColumn 1 if cantsplit
+	/**
+	 * show the number of columns after splitting
+	 * @param selectCol - the original column
+	 * @param target - the delimiter
+	 * @return (int)the number of columns after splitting
+	 */
 	public static int getNumOfCol(DataColumn selectCol, String target) {
 
 		Integer[] lengths = new Integer[selectCol.getSize()];
@@ -103,25 +108,6 @@ public class SplitTextColumn_delimiter {
 				num =  temp.length;
 			}
 		}
-		
-//		if(selectCol.getTypeName() == DataType.TYPE_NUMBER) {
-//			
-//			for(int i = 0; i< selectData.length; i++) {
-//
-//				String[] temp = (String.valueOf(selectData[i])).split(target); 
-//
-//				// store the i-th rows lengths after splitting
-//				lengths[i] = temp.length; 
-//
-//				if(i > 0)
-//					if(lengths[i] != lengths[i-1])
-//						return 1;
-//
-//				num =  temp.length;
-//			}
-//			
-//		}
-
 		return num;
 	}
 

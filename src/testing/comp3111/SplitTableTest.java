@@ -24,7 +24,7 @@ public class SplitTableTest {
 			e.printStackTrace();
 		}
 		
-		assert (buffer.length == 2);
+		assert (buffer.length == 2);//sucessfully split into two data table
 
 	}
 

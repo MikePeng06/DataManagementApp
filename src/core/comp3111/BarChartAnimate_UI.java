@@ -1,7 +1,14 @@
 package core.comp3111;
 
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -12,14 +19,17 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-public class BarChart_UI {
+public class BarChartAnimate_UI {
 	private static CategoryAxis xAxis;
 	private static NumberAxis yAxis;
-	public BarChart<String,Number> bc;
+	protected BarChart<String,Number> bc;
 	public Button btLineChartBackMain;
+	private int loopCounterk;
+	private int loopCounteri;
 	
-	public BarChart_UI() {
+	public BarChartAnimate_UI() {
 		
 		xAxis = new CategoryAxis();
 		yAxis = new NumberAxis();
@@ -27,29 +37,50 @@ public class BarChart_UI {
 		btLineChartBackMain = new Button();
 	}
 	
-	public void populateDataToBarChartUI(DataTableArray dta) {
+	public void populateDataToBarCharAnimatetUI(DataTableArray dta) {
 	bc.getData().clear();
     	XYChart.Series [] series = new XYChart.Series[dta.rowSize];
     	for (int i = 0; i < series.length ;i++) {
-    		series[i] = new  XYChart.Series(); 
+    		series[i] = new  XYChart.Series();
     	}
     
     	for (int i = 0; i < dta.rowSize ; i++) {
     		series[i].setName(dta.textCol[i]);
     		for (int k = 1; k < dta.numKey; k++) {
-    			series[i].getData().add(new XYChart.Data(dta.keyRow[k], dta.data[k-1][i]));
+    			series[i].getData().add(new XYChart.Data(dta.keyRow[k], 0));
+    			
     		}
     	}
+		
+
     	
-    	System.out.println(bc.equals(null));
-    	
-    	for (int i = 0; i < dta.rowSize ; i++) { 
-    		bc.getData().add(series[i]);  
+        Timeline tl = new Timeline();
+        KeyFrame grow = new KeyFrame(Duration.seconds(.0200),
+                new EventHandler<ActionEvent>() {
+	        	public void handle(ActionEvent event) {
+	        		int i = 0;
+	        		for (XYChart.Series<String, Number> series : bc.getData()) {
+	        			int k = 1;
+	                    for (XYChart.Data<String, Number> data : series.getData()) {
+	                    	if ((Double) data.getYValue() < dta.data[k-1][i])
+	                        data.setYValue((Double) data.getYValue() + 1);
+	                    	k++;
+	                    }
+	                    i++;
+	                }
+	        	}
+        
+        });
+        tl.getKeyFrames().add(grow);
+        tl.setCycleCount(Animation.INDEFINITE);
+        tl.play();
+        
+    	for (int i = 0; i < dta.rowSize ; i++) {
+    		bc.getData().add(series[i]);
     	}
-    	
-    	
 	}
-	public Pane paneBarChartScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
+	
+	public Pane paneBarChartAnimateScreen(String xAxisLabel, String yAxisLabel, String chartTitle) {
 		Button btLineChartBackMain = this.btLineChartBackMain;
 
 		xAxis.setLabel(xAxisLabel);
@@ -87,3 +118,4 @@ public class BarChart_UI {
 	}
 
 }
+

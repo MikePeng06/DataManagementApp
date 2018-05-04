@@ -2,7 +2,12 @@ package core.comp3111;
 
 public class SplitTextColumn_fixedWidth {
 
-
+/**
+ * Split a text column into multiple column in fixed width mode
+ * @param selectCol -the origin target column 
+ * @param widths - an array of integer that denotes each fixed points
+ * @return an array of datacolumn that contain the outcome of the splitting column(s)
+ */
 	public static DataColumn[] splitDataColumn(DataColumn selectCol, int[] widths) {
 
 		Object[] selectData = selectCol.getData();
@@ -34,7 +39,12 @@ public class SplitTextColumn_fixedWidth {
 		return cols;
 	}
 
-
+/**
+ * check if we can split the column
+ * @param -the origin column 
+ * @param widths - an array of integer that denotes each fixed points
+ * @return boolean value show if we can split the column
+ */
 	public static boolean canSplit(DataColumn selectCol, int widths[]) {
 
 		if((widths[0] <= 0) )
@@ -67,7 +77,12 @@ public class SplitTextColumn_fixedWidth {
 		return true;
 	}  
 
-
+/**
+ * split a text follow the fixed width points into multi-strings
+ * @param original- the text of one row in the column
+ * @param widths - an array of integer that denotes each fixed points
+ * @return the split results of the text
+ */
 	public static String[] splitFixedWidth(String original, int[] widths)
 	{
 		String[] results = new String[widths.length+1];
