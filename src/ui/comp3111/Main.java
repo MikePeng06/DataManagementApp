@@ -98,6 +98,8 @@ public class Main extends Application {
 	private ArrayList<String> ColumnName = new ArrayList<String>(); 
 	public BarChart_ chartbc;
 	public BarChart_UI chartuibc;
+	public ScatterChart_ chartsc;
+	public ScatterChart_UI chartuisc;
 //	public AnimatedBarChart_UI chartuiabc;
 //	public AnimatedBarChart chartabc;
 	public BarChartAnimate chartbara;
@@ -159,7 +161,7 @@ public class Main extends Application {
 				System.out.println(ChartObject.size());
 				chartuibc.populateDataToBarChartUI(tempdta);
 			}else if (SCENE_INDEX == 3) {
-				//chartuisc.populateDataToScatterChartUI(tempdta);
+				chartuisc.populateDataToScatterChartUI(tempdta);
 			}else if (SCENE_INDEX == 4) {
 				chartuibara.populateDataToBarCharAnimatetUI(tempdta);
 			}
@@ -365,6 +367,9 @@ public class Main extends Application {
 					ChartObject.add(x);
 					ChartList.getItems().add("chart");
 					charName.add("chart");
+					x.populateDataToChart();
+					DTALIST.add(x.getDTA());
+					chartList.add(dttemp);
 				}else if (result.get() == "AnimateChart") {
 					BarChartAnimate x = new BarChartAnimate(sampleDataTable);
 					ChartObject.add(x);
@@ -694,11 +699,12 @@ public class Main extends Application {
 					
 				}
 				else  if(chart instanceof ScatterChart_) {
-//					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
-//					scenes[SCENE_SCATTER_CHART] = new Scene(chart1.paneChart("X", "y", "HELLO"), 800, 600); 
-//					chart1.populateDataToChart();
-//					SCENE_INDEX = SCENE_SCATTER_CHART;
-//					chart1.getSC();
+					ScatterChart_UI  chart1UI  = new ScatterChart_UI();
+					chart1UI.btLineChartBackMain = btLineChartBackMain;
+					tempdta = DTALIST.get(new_value.intValue());
+					chartuisc = chart1UI;	
+					scenes[SCENE_SCATTER_CHART] = new Scene(chartuisc.paneScatterChartScreen("X", "y", "HELLO"), 800, 600); 
+					SCENE_INDEX = SCENE_SCATTER_CHART;
 				}
 				else if(chart instanceof BarChartAnimate) {
 					BarChartAnimate_UI chart1UI = new BarChartAnimate_UI();

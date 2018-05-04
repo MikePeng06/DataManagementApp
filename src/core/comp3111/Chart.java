@@ -8,7 +8,7 @@ public abstract class Chart implements java.io.Serializable{
 	private String[] typeSet = {"BarChart", "ScatterChart", "AnimatedChart"};
 	protected int type = -1;
 	protected DataTable dataset;
-	protected Button btLineChartBackMain = null;
+	public Button btLineChartBackMain = null;
 	
 //	abstract Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle);
 	
