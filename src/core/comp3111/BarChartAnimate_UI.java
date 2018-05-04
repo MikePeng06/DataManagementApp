@@ -69,7 +69,7 @@ public class BarChartAnimate_UI {
                 	int k = 1;
                     for (XYChart.Data<String, Number> data : series.getData()) {
                         data.setYValue(Math.abs(dta.data[k-1][i] - Math.random() * 10));
-                        //series[i].getData().add(new XYChart.Data(dta.keyRow[k], dta.data[k-1][i]));
+                        //series[i].getData().add(new XYChart.Data(dta.keyRow[k], d0ta.data[k-1][i]));
                         k++;
                     }
                     i++;
