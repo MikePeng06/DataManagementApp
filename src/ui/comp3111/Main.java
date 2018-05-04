@@ -532,9 +532,9 @@ public class Main extends Application {
 						if (result.isPresent()){
 							int partition1 = Integer.parseInt(result.get());
 							DataTable[] buffer = SplitTable.splitDataTable(table, partition1);
-							for(DataTable dt: buffer) {
-								dataTableList.add(dt);
-								String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
+							for(int i = 0; i < buffer.length; i++) {
+								dataTableList.add(buffer[i]);
+								String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex()) + String.valueOf(i);
 								DataSetList.getItems().add(name);
 							}
 						}
@@ -584,7 +584,9 @@ public class Main extends Application {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							System.out.println(results[i]+"added");//test if added
+					
+							ColumnList.getItems().add(new CheckBox(colName+"Split"+String.valueOf(i+1)+"    "+"<"+sampleDataTable.getCol(colName).getTypeName().substring(10, sampleDataTable.getCol(colName).getTypeName().length())+">"));
+							System.out.println(results[i]+"added");
 						}
 					}
 					else errorDialog("select string column, delimiter shoud satisfy each row");
