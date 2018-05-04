@@ -19,7 +19,7 @@ public class SplitTable {
 
 		Set<String> keys = inputdt.getDC().keySet();
 
-		for(String key: keys) {
+		for(String key: keys) { 
 
 			DataColumn temp = inputdt.getCol(key);
 
