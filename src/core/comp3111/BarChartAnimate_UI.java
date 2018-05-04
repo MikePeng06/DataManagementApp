@@ -26,8 +26,7 @@ public class BarChartAnimate_UI {
 	private static NumberAxis yAxis;
 	protected BarChart<String,Number> bc;
 	public Button btLineChartBackMain;
-	private int loopCounterk;
-	private int loopCounteri;
+	private int maxItem;
 	
 	public BarChartAnimate_UI() {
 		
@@ -35,6 +34,8 @@ public class BarChartAnimate_UI {
 		yAxis = new NumberAxis();
 		bc = new BarChart<String,Number>(xAxis,yAxis);
 		btLineChartBackMain = new Button();
+		maxItem = 0;
+	
 	}
 	
 	public void populateDataToBarCharAnimatetUI(DataTableArray dta) {
@@ -48,6 +49,9 @@ public class BarChartAnimate_UI {
     		series[i].setName(dta.textCol[i]);
     		for (int k = 1; k < dta.numKey; k++) {
     			series[i].getData().add(new XYChart.Data(dta.keyRow[k], 0));
+    			if (dta.data[k-1][i] > maxItem) {
+    				maxItem = dta.data[k-1][i];
+    			}
     			
     		}
     	}
@@ -55,25 +59,50 @@ public class BarChartAnimate_UI {
 
     	
         Timeline tl = new Timeline();
-        KeyFrame grow = new KeyFrame(Duration.seconds(.0200),
+        KeyFrame grow = new KeyFrame(Duration.seconds(.200),
                 new EventHandler<ActionEvent>() {
 	        	public void handle(ActionEvent event) {
-	        		int i = 0;
-	        		for (XYChart.Series<String, Number> series : bc.getData()) {
-	        			int k = 1;
-	                    for (XYChart.Data<String, Number> data : series.getData()) {
-	                    	if ((Double) data.getYValue() < dta.data[k-1][i])
-	                        data.setYValue((Double) data.getYValue() + 1);
-	                    	k++;
-	                    }
-	                    i++;
-	                }
+	        		
+	        		int counter = 0;
+	        		while (counter < maxItem) {
+		        		int i = 0;
+		        		for (XYChart.Series<String, Number> series : bc.getData()) {
+		        			int k = 1;
+		                    for (XYChart.Data<String, Number> data : series.getData()) {
+		                    	if ((Double) data.getYValue() < dta.data[k-1][i]) {
+		                    		data.setYValue((Double) data.getYValue() + 1);
+		                    	}
+		                    	k++;
+		                    }
+		                    i++;
+		                }
+		        		counter++;
+	        		}
+	        		
 	        	}
-        
         });
+        
+        
         tl.getKeyFrames().add(grow);
+
+//        tl.getKeyFrames().add(pause);
+//        tl.getKeyFrames().add(reset);
+//        tl.getKeyFrames().add(reset);
+//        tl.getKeyFrames().add(grow);
+        //tl.getKeyFrames().add(pause);
+//        tl.getKeyFrames().add(reset);
+//        tl.getKeyFrames().add(grow);
+//        tl.getKeyFrames().add(grow);
+//        tl.getKeyFrames().add(grow);
+//        tl.getKeyFrames().add(grow);
+//        tl.getKeyFrames().add(grow);
+        
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
+        
+
+        
+        
         
     	for (int i = 0; i < dta.rowSize ; i++) {
     		bc.getData().add(series[i]);

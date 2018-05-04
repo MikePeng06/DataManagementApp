@@ -28,6 +28,27 @@ public class BarChart_Test {
 	}
 	
 	@Test
+	void testCoverageValid_positive() throws DataTableException {
+		DataTable dt = new DataTable();
+        String[] Year = new String[] {"2003", "2004", "2005"};
+        DataColumn YearCol = new DataColumn(DataType.TYPE_STRING, Year);
+		Number[] austria = new Integer[] { 25601, 57401,  45000};
+		DataColumn austriaCol = new DataColumn(DataType.TYPE_NUMBER, austria);
+		dt.addCol("Year", YearCol);
+		dt.addCol("Austria", austriaCol);
+		
+		BarChart_ bc = new BarChart_(dt);
+		assert (bc.valid() == true);
+	}
+	
+	@Test
+	void testCoverageValid_negative() throws DataTableException {
+		DataTable dt = new DataTable();
+		BarChart_ bc = new BarChart_(dt);
+		assert (bc.valid() == false);
+	}
+	
+	@Test
 	void testCoveragePopulateDataToChart() throws DataTableException {
 		DataTable dt = new DataTable();
         String[] Year = new String[] {"2003", "2004", "2005"};

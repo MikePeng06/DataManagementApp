@@ -30,6 +30,28 @@ public class BarChart_ extends Chart implements java.io.Serializable{
 		dta = new DataTableArray();
 	}
 	
+	public boolean valid() {
+		int numTextCol = 0;
+		int numNumericCol = 0;
+		
+		
+		Set<String> keys = dataset.getDC().keySet();
+    	for (String key : keys) {
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_STRING) {
+    			numTextCol++;
+    		}
+    		if (dataset.getCol(key).getTypeName() == DataType.TYPE_NUMBER) {
+    			numNumericCol++;
+    		}
+    	}
+    	
+    	
+    	if (numTextCol != 1 || numNumericCol < 1) {
+    		return false;
+    	}
+    	return true;
+	}
+	
 
 //	public Pane paneChart(String xAxisLabel, String yAxisLabel, String chartTitle) {
 //		return ui.paneBarChartScreen(xAxisLabel, yAxisLabel, chartTitle);
@@ -41,9 +63,15 @@ public class BarChart_ extends Chart implements java.io.Serializable{
     	int numNumericCol = numKey - numTextCol;
     	int rowSize = dataset.getNumRow();
     	
+    	
     	String[] textCol = new String[rowSize];
     	String[] keyRow = new String[numKey];
     	Integer[][] data = new Integer[numNumericCol][rowSize];
+    	
+    	
+    	
+    	
+    	
     	
     	int j = 1;
     	Set<String> keys = dataset.getDC().keySet();
