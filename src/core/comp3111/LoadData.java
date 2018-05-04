@@ -37,8 +37,8 @@ public class LoadData {
                if(linenumber==1) {
                columnnumber = country.length;
                }
-            }
-
+            } 
+ 
        
         
         String[][] table = new String[linenumber][columnnumber]; 
