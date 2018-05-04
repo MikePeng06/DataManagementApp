@@ -100,8 +100,8 @@ public class Main extends Application {
 	public BarChart_UI chartuibc;
 	public ScatterChart_ chartsc;
 	public ScatterChart_UI chartuisc;
-//	public AnimatedBarChart_UI chartuiabc;
-//	public AnimatedBarChart chartabc;
+	//	public AnimatedBarChart_UI chartuiabc;
+	//	public AnimatedBarChart chartabc;
 	public BarChartAnimate chartbara;
 	public BarChartAnimate_UI chartuibara;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
@@ -140,8 +140,8 @@ public class Main extends Application {
 		scenes[SCENE_MAIN_SCREEN] = new Scene(paneMainScreen(), 500, 550);
 		scenes[SCENE_LINE_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		BarChart_ bc = new BarChart_();
-//		scenes[SCENE_BAR_CHART] = new Scene(this.chartbc.paneChart("x", yAxisLabel, chartTitle), 800, 500);
-//		scenes[SCENE_SCATTER_CHART] = new Scene(paneLineChartScreen(), 800, 600);
+		//		scenes[SCENE_BAR_CHART] = new Scene(this.chartbc.paneChart("x", yAxisLabel, chartTitle), 800, 500);
+		//		scenes[SCENE_SCATTER_CHART] = new Scene(paneLineChartScreen(), 800, 600);
 		for (Scene s : scenes) {
 			if (s != null)
 				// Assumption: all scenes share the same stylesheet
@@ -167,18 +167,18 @@ public class Main extends Application {
 			}else if (SCENE_INDEX == 4) {
 				chartuibara.populateDataToBarCharAnimatetUI(tempdta);
 			}
-			 
-//			System.out.println(chartbc.getDTA());
-//			System.out.println(((BarChart_)ChartObject.get(0)));
-//			System.out.println(ChartObject.size());
-//		    this.chartbc.populateDataToBarChart();
+
+			//			System.out.println(chartbc.getDTA());
+			//			System.out.println(((BarChart_)ChartObject.get(0)));
+			//			System.out.println(ChartObject.size());
+			//		    this.chartbc.populateDataToBarChart();
 			putSceneOnStage(SCENE_INDEX);
-			
-//			if (SCENE_INDEX == 4) {
-//				
-//				scenes[SCENE_ANIMATE_CHART] = new Scene(chartuiabc.paneAnimatedBarChart("X", "y", "HELLO", chartabc, 1), 800, 600);
-//			}
-			
+
+			//			if (SCENE_INDEX == 4) {
+			//				
+			//				scenes[SCENE_ANIMATE_CHART] = new Scene(chartuiabc.paneAnimatedBarChart("X", "y", "HELLO", chartabc, 1), 800, 600);
+			//			}
+
 		});
 	}
 
@@ -237,7 +237,7 @@ public class Main extends Application {
 		}
 
 	}
-	
+
 	/**
 	 *  pop out Error Dialog windows and show the error msg
 	 */
@@ -266,48 +266,48 @@ public class Main extends Application {
 			file = fileChooser.showOpenDialog(stage);
 			//DataSetList.getItems().add(file.getName());
 			if(file!=null){
-			try {
-				dataTableList.add(LoadData.ToDataTable(file.getAbsolutePath()));
-//				dataTableName.add(file.getName());
-//				DataSetList.getItems().add(file.getName());
-				path.add(file.getAbsolutePath());
-				flist.add(file);
-			} catch (DataTableException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				System.out.print("IO ERROR");
-				e1.printStackTrace();
-			}
-			
-			TextInputDialog dialog = new TextInputDialog(file.toString());
-			dialog.setTitle("Enter Name");
-			dialog.setHeaderText("Enter the name");
-			dialog.setContentText("Enter the name for the selected dataset");
+				try {
+					dataTableList.add(LoadData.ToDataTable(file.getAbsolutePath()));
+					//				dataTableName.add(file.getName());
+					//				DataSetList.getItems().add(file.getName());
+					path.add(file.getAbsolutePath());
+					flist.add(file);
+				} catch (DataTableException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					System.out.print("IO ERROR");
+					e1.printStackTrace();
+				}
 
-			
-			Optional result = dialog.showAndWait();
-			if (result.isPresent()) {
-				DataSetList.getItems().add(result.get().toString());
-				dataTableName.add(result.get().toString());
-			   System.out.println(result.get());
-			}
-			//			TextInputDialog dialog = new TextInputDialog(file.getName()); 
-			//			dialog.setTitle("Enter the DataSet Name");
-			//			dialog.setHeaderText("Enter the DataSet Name");
-			//			dialog.setContentText("æ–‡æœ¬å†…å®¹");
-			//			dialog.show();
-			//			
-			//			String savename = "";
-			//			Optional<String> result = dialog.showAndWait();
-			//			if (result.isPresent()){
-			//			    System.out.println("Your name: " + result.get());
-			//			}
-			//			
-			//			System.out.println(savenam`e);
-			//scenes[0] = new Scene(paneMainScreen(), 400, 500);
-			//putSceneOnStage(0);
+				TextInputDialog dialog = new TextInputDialog(file.toString());
+				dialog.setTitle("Enter Name");
+				dialog.setHeaderText("Enter the name");
+				dialog.setContentText("Enter the name for the selected dataset");
+
+
+				Optional result = dialog.showAndWait();
+				if (result.isPresent()) {
+					DataSetList.getItems().add(result.get().toString());
+					dataTableName.add(result.get().toString());
+					System.out.println(result.get());
+				}
+				//			TextInputDialog dialog = new TextInputDialog(file.getName()); 
+				//			dialog.setTitle("Enter the DataSet Name");
+				//			dialog.setHeaderText("Enter the DataSet Name");
+				//			dialog.setContentText("æ–‡æœ¬å†…å®¹");
+				//			dialog.show();
+				//			
+				//			String savename = "";
+				//			Optional<String> result = dialog.showAndWait();
+				//			if (result.isPresent()){
+				//			    System.out.println("Your name: " + result.get());
+				//			}
+				//			
+				//			System.out.println(savenam`e);
+				//scenes[0] = new Scene(paneMainScreen(), 400, 500);
+				//putSceneOnStage(0);
 			}});
 
 		btGenerateChart.setOnAction(e -> {
@@ -330,9 +330,9 @@ public class Main extends Application {
 			if (result.isPresent()){
 				System.out.println("Your choice: " + result.get());
 			}
-		
-			
-			
+
+
+
 			TextInputDialog dialog2 = new TextInputDialog("chart");
 			dialog2.setTitle("Enter Name");
 			dialog2.setHeaderText("Enter the name");
@@ -342,10 +342,10 @@ public class Main extends Application {
 			if (result.isPresent()) {
 				charName.add(result2.get().toString());
 				ChartList.getItems().add(result2.get().toString());
-				
-			   System.out.println(result.get());
+
+				System.out.println(result.get());
 			}
-			
+
 			DataTable dttemp = new DataTable();
 			if(result.isPresent()) {
 				if(result.get() == "BarChart") {
@@ -379,16 +379,16 @@ public class Main extends Application {
 					//					SCENE_INDEX = SCENE_SCATTER_CHART;
 					//x.btLineChartBackMain = this.btLineChartBackMain;
 					ChartObject.add(x);
-//					ChartList.getItems().add("chart");
-//					charName.add("chart");
+					//					ChartList.getItems().add("chart");
+					//					charName.add("chart");
 					x.populateDataToChart();
 					DTALIST.add(x.getDTA());
 					chartList.add(dttemp);
 				}else if (result.get() == "AnimateChart") {
 					BarChartAnimate x = new BarChartAnimate(sampleDataTable);
 					ChartObject.add(x);
-//					ChartList.getItems().add("chart");
-//					charName.add("chart");
+					//					ChartList.getItems().add("chart");
+					//					charName.add("chart");
 					x.populateDataToChart();
 					DTALIST.add(x.getDTA());
 					chartList.add(dttemp);
@@ -408,90 +408,90 @@ public class Main extends Application {
 			file = fileChooser.showOpenDialog(stage);
 			DataPack dp;
 			if(file!=null) {
-			try {
-				dp = ToProject.LoadProject(file.getAbsolutePath());
+				try {
+					dp = ToProject.LoadProject(file.getAbsolutePath());
 
-				
-				for(File str: dp.flist) {
-					if(!str.exists()) {
-						System.out.println("error");
-						Alert alert = new Alert(AlertType.INFORMATION);
-						alert.setTitle("Information Dialog");
-						alert.setHeaderText("Source file miss");
-						alert.setContentText("Please make source dataset in the right path");
 
-						alert.showAndWait();
-						break;
+					for(File str: dp.flist) {
+						if(!str.exists()) {
+							System.out.println("error");
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Information Dialog");
+							alert.setHeaderText("Source file miss");
+							alert.setContentText("Please make source dataset in the right path");
+
+							alert.showAndWait();
+							break;
+						}
+						dataTableList.add(LoadData.ToDataTable(str.getAbsolutePath()));
+						dataTableName.add(file.getName());
+
+						//path.add(file.getAbsolutePath());
 					}
-					dataTableList.add(LoadData.ToDataTable(str.getAbsolutePath()));
-					dataTableName.add(file.getName());
-					
-					//path.add(file.getAbsolutePath());
-				}
-				
-				for(String str: dp.dataTableName) {
-					DataSetList.getItems().add(str);
-				}
-//				for(DataTable dt: dp.dataTableList) {
-//				dataTableList.add(dt);
-//			}
-			//dataTableList = dp.dataTableList;
-			for(DataTable dt: dp.chartList) {
-				chartList.add(dt);
-			}
-			//chartList = dp.chartList;
-			for(String str: dp.charName) {
-				charName.add(str);
-			}
-			//charName = dp.charName;
-//			dataTableName = new ArrayList<String>();
-//			for(String str: dp.dataTableName) {
-//				dataTableName.add(str);
-//			}
-			//dataTableName = dp.dataTableName;
-//			ChartObject = new ArrayList<Chart>();
-			for(DataTableArray str: dp.DTALIST) {
-				DTALIST.add(str);
-			}
-				
-				
-				
-				//DTALIST = dp.DTALIST;
-			} catch (ClassNotFoundException | DataTableException | IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
-			
-			
-//			dataTableList = new ArrayList<DataTable>();
-//			dataTableList = dp.dataTableList;
-//			chartList = dp.chartList;
-//			charName = dp.charName;
-//			dataTableName = dp.dataTableName;
-//			ChartObject = new ArrayList<Chart>();
-//			DTALIST = dp.DTALIST;
-			
-			
-//			for(String str : dataTableName) {
-//				DataSetList.getItems().add(str);
-//				//sampleDataTable = dataTableList.get(i);
-//			}
-			//System.out.println(dataTableList.get(0).getNumCol());
-			
-			for(String str: charName) {
-				ChartList.getItems().add(str);
-				//System.out.println(charName.get(i));
-			}
 
-			//dsd
-			
-			for(DataTable dt: chartList) {
-				BarChart_ y = new BarChart_(dt);
-				ChartObject.add(y);
-				//sampleDataTable = chartList.get(i);
-			}
-			
-//			System.out.println(dp.dataTableName.get(0));
+					for(String str: dp.dataTableName) {
+						DataSetList.getItems().add(str);
+					}
+					//				for(DataTable dt: dp.dataTableList) {
+					//				dataTableList.add(dt);
+					//			}
+					//dataTableList = dp.dataTableList;
+					for(DataTable dt: dp.chartList) {
+						chartList.add(dt);
+					}
+					//chartList = dp.chartList;
+					for(String str: dp.charName) {
+						charName.add(str);
+					}
+					//charName = dp.charName;
+					//			dataTableName = new ArrayList<String>();
+					//			for(String str: dp.dataTableName) {
+					//				dataTableName.add(str);
+					//			}
+					//dataTableName = dp.dataTableName;
+					//			ChartObject = new ArrayList<Chart>();
+					for(DataTableArray str: dp.DTALIST) {
+						DTALIST.add(str);
+					}
+
+
+
+					//DTALIST = dp.DTALIST;
+				} catch (ClassNotFoundException | DataTableException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+
+
+				//			dataTableList = new ArrayList<DataTable>();
+				//			dataTableList = dp.dataTableList;
+				//			chartList = dp.chartList;
+				//			charName = dp.charName;
+				//			dataTableName = dp.dataTableName;
+				//			ChartObject = new ArrayList<Chart>();
+				//			DTALIST = dp.DTALIST;
+
+
+				//			for(String str : dataTableName) {
+				//				DataSetList.getItems().add(str);
+				//				//sampleDataTable = dataTableList.get(i);
+				//			}
+				//System.out.println(dataTableList.get(0).getNumCol());
+
+				for(String str: charName) {
+					ChartList.getItems().add(str);
+					//System.out.println(charName.get(i));
+				}
+
+				//dsd
+
+				for(DataTable dt: chartList) {
+					BarChart_ y = new BarChart_(dt);
+					ChartObject.add(y);
+					//sampleDataTable = chartList.get(i);
+				}
+
+				//			System.out.println(dp.dataTableName.get(0));
 			}});
 
 		SaveProject.setOnAction(e -> {
@@ -508,8 +508,8 @@ public class Main extends Application {
 			System.out.println(chartList.size());
 			if (file != null) {
 				DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName, DTALIST, flist);
-				
-				
+
+
 				System.out.println(file.toString());
 				ToProject.SaveProject(dp, file.toString());       			
 			}
@@ -521,32 +521,38 @@ public class Main extends Application {
 		btSplitTable.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
-				DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
-				try {
-					TextInputDialog getDelimiter = new TextInputDialog("");
-					getDelimiter.setTitle("Split A dataTable to two dataTable");
-					getDelimiter.setHeaderText(" Input:30 denotes 30% split into the first Table, and 70% split into the second Table");
-					getDelimiter.setContentText("Please input the percentage of the first Table split");
-					Optional<String> result = getDelimiter.showAndWait();
-					int partition1 = Integer.parseInt(result.get());
-					DataTable[] buffer = SplitTable.splitDataTable(table, partition1);
-					for(DataTable dt: buffer) {
-						dataTableList.add(dt);
-						String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
-						DataSetList.getItems().add(name);
-					}
+				if(sampleDataTable != null) {
+					DataTable table = dataTableList.get(DataSetList.getSelectionModel().getSelectedIndex());
+					try {
+						TextInputDialog getDelimiter = new TextInputDialog("");
+						getDelimiter.setTitle("Split A dataTable to two dataTable");
+						getDelimiter.setHeaderText(" Input:30 denotes 30% split into the first Table, and 70% split into the second Table");
+						getDelimiter.setContentText("Please input the percentage of the first Table split");
+						Optional<String> result = getDelimiter.showAndWait();
+						if (result.isPresent()){
+							int partition1 = Integer.parseInt(result.get());
+							DataTable[] buffer = SplitTable.splitDataTable(table, partition1);
+							for(DataTable dt: buffer) {
+								dataTableList.add(dt);
+								String name= dataTableName.get(DataSetList.getSelectionModel().getSelectedIndex());
+								DataSetList.getItems().add(name);
+							}
+						}
+						else errorDialog("invalid input");
 
-				} catch (DataTableException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					} catch (DataTableException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
+				else errorDialog("Please select a data table");
 
 			}
 		});
 
-		
-		
-		
+
+
+
 		btSplitColumn_delimiter.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
@@ -725,7 +731,7 @@ public class Main extends Application {
 				}
 
 				//ColumnList.getItems().add(new CheckBox("Second"));
-				
+
 			}
 		});
 
@@ -748,7 +754,7 @@ public class Main extends Application {
 					chartuibc = chart1UI;	
 					scenes[SCENE_BAR_CHART] = new Scene(chartuibc.paneBarChartScreen("X", "y", "HELLO"), 800, 600); 
 					SCENE_INDEX = SCENE_BAR_CHART;
-					
+
 				}
 				else  if(chart instanceof ScatterChart_) {
 					ScatterChart_UI  chart1UI  = new ScatterChart_UI();
@@ -768,16 +774,16 @@ public class Main extends Application {
 				}
 
 
-//				lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
-//						sampleDataTable.getNumCol()));
-//				//       	  populateSampleDataTableValuesToChart(DataTemp);
+				//				lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+				//						sampleDataTable.getNumCol()));
+				//				//       	  populateSampleDataTableValuesToChart(DataTemp);
 
 			}
 		});
 
 		if(SCENE_INDEX == SCENE_BAR_CHART) {
 			chartbc.populateDataToChart();
-			
+
 		}
 
 		//		HBox hc = new HBox(20);
