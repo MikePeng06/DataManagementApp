@@ -27,8 +27,6 @@ import core.comp3111.SplitTable;
 import core.comp3111.SplitTextColumn_delimiter;
 import core.comp3111.SplitTextColumn_fixedWidth;
 import core.comp3111.Chart;
-import core.comp3111.AnimatedBarChart;
-import core.comp3111.AnimatedBarChart_UI;
 import core.comp3111.BarChartAnimate;
 import core.comp3111.BarChartAnimate_UI;
 import core.comp3111.BarChart_;
