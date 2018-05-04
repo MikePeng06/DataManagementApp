@@ -17,19 +17,19 @@ public class LoadDataTest {
 	void testCoverageFullTable() throws DataTableException, IOException {
 		LoadData ld = new LoadData();
 		DataTable dt = new DataTable();
-		    dt = ld.ToDataTable("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/LoadData/test1.csv") ;
-			dt.getNumCol(); 
-			System.out.print("length: ");
+		    dt = ld.ToDataTable("src/test1.csv") ;   
+			dt.getNumCol();  
+			System.out.print("length: "); 
 			System.out.println(dt.getNumCol());
-		
+		 
 	}  
 	
 	@Test
 	void testCoverageEmpty()  {   
-		LoadData ld = new LoadData();
-		DataTable dt = new DataTable(); 
+		LoadData ld = new LoadData(); 
+		DataTable dt = new DataTable();  
         try {
-			ld.LoadFile("/Users/ZeyangBao/Desktop/comp3311workspace/UnitTest/LoadData/test2.csv") ; 
+			ld.LoadFile("test2.csv") ; 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace(); 
