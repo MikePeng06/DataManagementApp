@@ -47,39 +47,6 @@ public class SplitTextColumn_delimiter {
 			}
 		}
 
-
-//		if(selectCol.getTypeName() == DataType.TYPE_NUMBER) {
-//
-//			if(canSplit(selectCol, target) == true) {
-//				DataColumn cols[] = new DataColumn[colNum];
-//				String[][] mulCol = new String[colNum][selectCol.getSize()]; 
-//
-//				//get Column Data
-//				for(int i = 0; i< selectData.length; i++) {
-//					String[] temp = (String.valueOf(selectData[i])).split(target);
-//					for(int j = 0; j < colNum; j++) {
-//						mulCol[j][i] = temp[j];
-//					} 
-//
-//				}
-//
-//
-//				//set new generated Col, also get the type
-//				for(int i = 0; i< colNum; i++) {
-//					Number[] temp = new Number[selectCol.getSize()];
-//					for(int j = 0 ; j< selectCol.getSize(); j++) {
-//						temp[j] = Integer.parseInt(mulCol[i][j]);
-//					}
-//					cols[i] = new DataColumn(selectCol.getTypeName(), temp);
-//				}
-//
-//				return cols;
-//			}
-//
-//		}
-
-
-
 		//handle the case if dont need to split
 		DataColumn[] cols = new DataColumn[1];
 		cols[0] = selectCol;

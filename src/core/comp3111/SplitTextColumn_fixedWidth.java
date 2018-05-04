@@ -41,7 +41,7 @@ public class SplitTextColumn_fixedWidth {
 			return false;
 
 		for(int i = 1; i<widths.length; i++)
-			if (widths[i] < widths[i-1])
+			if (widths[i] <= widths[i-1])
 				return false;
 
 	
