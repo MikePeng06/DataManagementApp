@@ -17,7 +17,7 @@ import core.comp3111.*;
  * @author Zeyang Bao
  *
  */
-
+ 
 
 public class LoadData {
 	
@@ -37,8 +37,8 @@ public class LoadData {
                if(linenumber==1) {
                columnnumber = country.length;
                }
-            }
-
+            } 
+ 
        
         
         String[][] table = new String[linenumber][columnnumber]; 
@@ -126,42 +126,15 @@ public class LoadData {
 				DataColumn dc = new DataColumn(type, string);
 				Dataset.addCol(table[0][c], dc);
 			}
-//			Object[] string = new Object[linenumber];
-//			for(int row=1;row<=linenumber-1;row++) {
-//				string[row-1] = table[row][c];
-//			}
-//			DataColumn dc = new DataColumn(type, string);
-//			Dataset.addCol(table[0][c], dc);
 		}
 		return Dataset;
 	}
 	
 	
-//	public static void main(String[] args) throws IOException{
-//		
-//		String[][] table = LoadFile("/Users/ZeyangBao/Desktop/test1.csv");
-//		
-//		int linenumber = table.length;
-//		int columnnumber = table[0].length;
-//		
-//		for (int k =0;k<=linenumber-1;k++) {
-//        	for (int j=0; j<= columnnumber-1;j++) {
-//        		System.out.print(table[k][j]);
-//        	}
-//        	System.out.println("");
-//        }
-//        
-//		try {
-//			DataTable dt = ToDataTable("/Users/ZeyangBao/Desktop/test1.csv") ;
-//			dt.getNumCol();
-//			System.out.print("length: ");
-//			System.out.println(dt.getNumCol());
-//		} catch (DataTableException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		
-//	}
+	
+	
+	
+	
+	
 	
 }
