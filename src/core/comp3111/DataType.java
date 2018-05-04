@@ -5,8 +5,8 @@ package core.comp3111;
  * 
  * @author cspeter
  *
- */
-public class DataType { 
+ */ 
+public class DataType {  
 
 	public static final String TYPE_OBJECT = "java.lang.Object";
 	public static final String TYPE_NUMBER = "java.lang.Number";

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 
 import core.comp3111.DataColumn;
 import core.comp3111.DataPack;
+import core.comp3111.DataPackA;
 import core.comp3111.DataTable;
 import core.comp3111.DataTableArray;
 import core.comp3111.DataTableException;
@@ -29,7 +30,6 @@ import core.comp3111.Chart;
 import core.comp3111.BarChart_;
 import core.comp3111.BarChart_UI;
 import core.comp3111.ScatterChart_;
-import core.comp3111.ScatterChart_UI;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -95,8 +95,6 @@ public class Main extends Application {
 	private ArrayList<String> ColumnName = new ArrayList<String>(); 
 	public BarChart_ chartbc;
 	public BarChart_UI chartuibc;
-	public ScatterChart_ chartsc;
-	public ScatterChart_UI chartuisc;
 	public ArrayList<DataTableArray> DTALIST = new ArrayList<DataTableArray>();
 	public DataTableArray tempdta;
 	// To keep this application more structural, 
@@ -117,8 +115,6 @@ public class Main extends Application {
 	private NumberAxis xAxis = null;
 	private NumberAxis yAxis = null;
 	private Button btLineChartBackMain = null;
-
-	
 
 	/**
 	 * create all scenes in this application
@@ -156,9 +152,9 @@ public class Main extends Application {
 				System.out.println(ChartObject.size());
 				chartuibc.populateDataToBarChartUI(tempdta);
 			}else if (SCENE_INDEX == 3) {
-				chartuisc.populateDataToScatterChartUI(tempdta);
+				//chartuisc.populateDataToScatterChartUI(tempdta);
 			}
-			
+			 
 //			System.out.println(chartbc.getDTA());
 //			System.out.println(((BarChart_)ChartObject.get(0)));
 //			System.out.println(ChartObject.size());
@@ -281,7 +277,7 @@ public class Main extends Application {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-
+			
 			//			TextInputDialog dialog = new TextInputDialog(file.getName()); 
 			//			dialog.setTitle("Enter the DataSet Name");
 			//			dialog.setHeaderText("Enter the DataSet Name");
@@ -355,9 +351,6 @@ public class Main extends Application {
 					ChartObject.add(x);
 					ChartList.getItems().add("chart");
 					charName.add("chart");
-					x.populateDataToChart();
-					DTALIST.add(x.getDTA());
-					chartList.add(dttemp);
 				}
 			}
 
@@ -371,33 +364,65 @@ public class Main extends Application {
 					);
 			fileChooser.setTitle("LoadProject");
 			File file = fileChooser.showOpenDialog(stage);
-			DataPack dp = ToProject.LoadProject(file.getAbsolutePath());
-			dataTableList = new ArrayList<DataTable>();
-			dataTableList = dp.dataTableList;
-			chartList = dp.chartList;
-			charName = dp.charName;
-			dataTableName = dp.dataTableName;
-			ChartObject = new ArrayList<Chart>();
-			DTALIST = dp.DTALIST;
-			for(int i =0; i<=dataTableName.size()-1;i++) {
-				DataSetList.getItems().add(dataTableName.get(i));
-				sampleDataTable = dataTableList.get(i);
+			DataPack dp;
+			try {
+				dp = ToProject.LoadProject(file.getAbsolutePath());
+				dataTableList = new ArrayList<DataTable>();
+				for(DataTable dt: dp.dataTableList) {
+					dataTableList.add(dt);
+				}
+				//dataTableList = dp.dataTableList;
+				for(DataTable dt: dp.chartList) {
+					chartList.add(dt);
+				}
+				//chartList = dp.chartList;
+				for(String str: dp.charName) {
+					charName.add(str);
+				}
+				//charName = dp.charName;
+				dataTableName = new ArrayList<String>();
+				for(String str: dp.dataTableName) {
+					dataTableName.add(str);
+				}
+				//dataTableName = dp.dataTableName;
+				ChartObject = new ArrayList<Chart>();
+				for(DataTableArray str: dp.DTALIST) {
+					DTALIST.add(str);
+				}
+				//DTALIST = dp.DTALIST;
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+//			dataTableList = new ArrayList<DataTable>();
+//			dataTableList = dp.dataTableList;
+//			chartList = dp.chartList;
+//			charName = dp.charName;
+//			dataTableName = dp.dataTableName;
+//			ChartObject = new ArrayList<Chart>();
+//			DTALIST = dp.DTALIST;
+			
+			
+			for(String str : dataTableName) {
+				DataSetList.getItems().add(str);
+				//sampleDataTable = dataTableList.get(i);
 			}
 			//System.out.println(dataTableList.get(0).getNumCol());
 			
-			for(int i =0; i<=charName.size()-1;i++) {
-				ChartList.getItems().add(charName.get(i));
+			for(String str: charName) {
+				ChartList.getItems().add(str);
 				//System.out.println(charName.get(i));
 			}
+
 			//dsd
 			
-			for(int i =0; i<= chartList.size()-1;i++) {
-				BarChart_ y = new BarChart_(chartList.get(i));
+			for(DataTable dt: chartList) {
+				BarChart_ y = new BarChart_(dt);
 				ChartObject.add(y);
 				//sampleDataTable = chartList.get(i);
 			}
 			
-			System.out.println(dp.dataTableName.get(0));
+//			System.out.println(dp.dataTableName.get(0));
 		});
 
 		SaveProject.setOnAction(e -> {
@@ -413,7 +438,9 @@ public class Main extends Application {
 			System.out.print("CharList");
 			System.out.println(chartList.size());
 			if (file != null) {
-				DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName, DTALIST);
+			DataPack  dp = new DataPack(dataTableList, chartList, dataTableName, charName, DTALIST);
+				
+				
 				System.out.println(file.toString());
 				ToProject.SaveProject(dp, file.toString());       			
 			}
@@ -638,10 +665,11 @@ public class Main extends Application {
 					BarChart_UI chart1UI = new BarChart_UI();
 					chart1UI.btLineChartBackMain = btLineChartBackMain;
 					tempdta = DTALIST.get(new_value.intValue());
-					System.out.println(new_value.intValue());
+					System.out.println(DTALIST.get(new_value.intValue()));
 					chartuibc = chart1UI;	
 					scenes[SCENE_BAR_CHART] = new Scene(chartuibc.paneBarChartScreen("X", "y", "HELLO"), 800, 600); 
 					SCENE_INDEX = SCENE_BAR_CHART;
+					
 				}
 				else  if(chart instanceof ScatterChart_) {
 //					ScatterChart_  chart1  = (ScatterChart_)ChartObject.get(new_value.intValue());
@@ -649,18 +677,12 @@ public class Main extends Application {
 //					chart1.populateDataToChart();
 //					SCENE_INDEX = SCENE_SCATTER_CHART;
 //					chart1.getSC();
-					ScatterChart_UI chart1UI = new ScatterChart_UI();
-					chart1UI.btLineChartBackMain = btLineChartBackMain;
-					tempdta = DTALIST.get(new_value.intValue());
-					chartuisc = chart1UI;	
-					scenes[SCENE_SCATTER_CHART] = new Scene(chartuisc.paneScatterChartScreen("X", "y", "HELLO"), 800, 600);
-					SCENE_INDEX = SCENE_SCATTER_CHART;
 				}
 
 
-				lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
-						sampleDataTable.getNumCol()));
-				//       	  populateSampleDataTableValuesToChart(DataTemp);
+//				lbSampleDataTable.setText(String.format("SampleDataTable: %d rows, %d columns", sampleDataTable.getNumRow(),
+//						sampleDataTable.getNumCol()));
+//				//       	  populateSampleDataTableValuesToChart(DataTemp);
 
 			}
 		});
