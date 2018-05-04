@@ -1,6 +1,7 @@
-package core.comp3111;
+package ui.comp3111;
 
 
+import core.comp3111.DataTableArray;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
